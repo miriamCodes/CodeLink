@@ -1,0 +1,19 @@
+{
+  "name": "codelink",
+  "version": "1.0.0",
+  "description": "super cool group thesis project",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "prepare": "husky install"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "eslint": "^8.46.0",
+    "typescript": "^5.1.6",
+    "husky": "^8.0.0"
+  }
+}
