@@ -1,11 +1,10 @@
 import { Sequelize } from 'sequelize';
-import 'dotenv/config'
+import 'dotenv/config';
 
 const config = {
   host: 'localhost',
   dialect: 'postgres',
   logging: false
-
 } as object;
 
 
