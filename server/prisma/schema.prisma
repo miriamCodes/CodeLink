@@ -26,25 +26,50 @@ model Profile {
   bio    String?
   user   User    @relation(fields: [userId], references: [id])
   userId Int     @unique
-  skills Skill[]?
+  Skill  Skill[]
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  firstName    String?
-  lastName    String?
-  posts   Post[]
-  profile Profile?
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  posts     Post[]
+  profile   Profile?
 }
 
 model Skill {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  experience Int
-  level     String?
-  typeOfSkill String?
+  id               Int              @id @default(autoincrement())
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  experience       Int?
+  level            String?
+  programmingSkill programmingSkill
+  Profile          Profile?         @relation(fields: [profileId], references: [id])
+  profileId        Int?
+}
+
+enum programmingSkill {
+  JAVA
+  JAVASCRIPT
+  CSHARP     @map("C#")
+  CPP        @map("C++")
+  PYTHON
+  C
+  RUBY
+  SQL
+  POSTGRESQL
+  HTML
+  CSS
+  SWIFT
+  KOTLIN
+  REACT
+  ANGULAR
+  VUE
+  NEXT
+  NODE
+  DJANGO
+  MONGODB
+  HASKELL
+  REDUX
 }
