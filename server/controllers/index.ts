@@ -6,7 +6,8 @@ async function main() {
   // ... we write our Prisma Client queries here
   await prisma.user.create({
     data: {
-      name: 'Alice',
+      firstName: 'Alice',
+      lastName:  'Wonder',
       email: 'alice@prisma.io',
       posts: {
         create: { title: 'Hello World' },
@@ -15,15 +16,15 @@ async function main() {
         create: { bio: 'I like turtles' },
       },
     },
-  })
+  });
 
   const allUsers = await prisma.user.findMany({
     include: {
       posts: true,
       profile: true,
     },
-  })
-  console.dir(allUsers, { depth: null })
+  });
+  console.dir(allUsers, { depth: null });
 }
 
 main()
