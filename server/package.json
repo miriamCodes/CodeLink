@@ -31,6 +31,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-oauth-server": "^2.0.0",
+    "express-openid-connect": "^2.16.0",
+    "oauth2-server": "^3.1.1",
     "pg": "^8.11.2",
     "sequelize": "^6.32.1"
   }
