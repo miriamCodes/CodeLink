@@ -1,0 +1,14 @@
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px; /* Set the desired width of the navbar */
+  height: 100%;
+  background-color: red; /* Optional background color */
+  margin-top: 50px;
+
+}
+
+.main-content {
+  margin-left: 200px; /* This should match the width of the navbar */
+}
