@@ -4,7 +4,9 @@
   left: 0;
   width: 200px; /* Set the desired width of the navbar */
   height: 100%;
-  background-color: #f3f3f3; /* Optional background color */
+  background-color: red; /* Optional background color */
+  margin-top: 50px;
+
 }
 
 .main-content {
