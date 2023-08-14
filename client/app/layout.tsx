@@ -1,21 +1,26 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata } from 'next';
+import { Roboto } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '500', '700', '900'],
+});
 
 export const metadata: Metadata = {
   title: 'CodeLink',
-  description: 'Codeworks Thesis Project',
-}
+  description: 'CodeWorks Thesis Project',
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={roboto.className} style={{ margin: '0' }}>
+        {children}
+      </body>
     </html>
-  )
+  );
 }
