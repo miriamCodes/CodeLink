@@ -39,24 +39,35 @@ export default function NavBar({
         {/* May be a better way to do this by passing useCase to handleClick or some other way. */}
         {!loggedIn && (
           <li className="nav-item">
-            <Button useCase={'Register'} onClick={() => handleClick('Register')} />
+            <Button
+              useCase={'Register'}
+              onClick={() => handleClick('Register')}
+            />
           </li>
         )}
         {/* If logged out */}
         {!loggedIn && (
           <li className="nav-item">
-            <Button useCase={'Log in'} onClick={() => handleClick('Logged in')} />
+            <Button
+              useCase={'Log in'}
+              onClick={() => handleClick('Logged in')}
+            />
           </li>
         )}
         {/* If logged in */}
         {loggedIn && (
           <li className="nav-item">
-            <Button useCase={'Log out'} onClick={() => handleClick('Log out')} />
+            <Button
+              useCase={'Log out'}
+              onClick={() => handleClick('Log out')}
+            />
           </li>
         )}
         {/* Consider mapping */}
         <li className="nav-item">
-          <a href="/news">News</a>
+          <Link href="news">
+            News
+          </Link>
         </li>
         <li className="nav-item">
           <a href="/discussion">Discussion</a>
