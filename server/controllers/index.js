@@ -14,6 +14,25 @@ const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         // ... we write our Prisma Client queries here
+        yield prisma.user.create({
+            data: {
+                name: 'Alice',
+                email: 'alice@prisma.io',
+                posts: {
+                    create: { title: 'Hello World' },
+                },
+                profile: {
+                    create: { bio: 'I like turtles' },
+                },
+            },
+        });
+        const allUsers = yield prisma.user.findMany({
+            include: {
+                posts: true,
+                profile: true,
+            },
+        });
+        console.dir(allUsers, { depth: null });
     });
 }
 main()
