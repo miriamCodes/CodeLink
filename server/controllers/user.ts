@@ -3,8 +3,6 @@ import { Request, Response } from 'express';
 
 const prisma = new PrismaClient();
 async function postUser(req: Request, res: Response){
-  console.log('GOT HERE BABY');
-  console.log(req.body);
   const { firstName, lastName, email, bio } = req.body;
   
   await prisma.user.create({
@@ -17,7 +15,7 @@ async function postUser(req: Request, res: Response){
       },
     },
   });
-  res.status(201).send('USER CREATED');
+  res.status(201).send({key:'USER CREATED'});
 }
 
 export { postUser };
