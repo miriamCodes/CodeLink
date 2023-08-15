@@ -2,22 +2,25 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+
+/*
 async function main() {
   // ... we write our Prisma Client queries here
-  await prisma.user.create({
-    data: {
-      firstName: 'Alice',
-      lastName:  'Wonder',
-      email: 'alice@prisma.io',
-      posts: {
-        create: { title: 'Hello World' },
-      },
-      profile: {
-        create: { bio: 'I like turtles' },
-      },
-    },
+
+  await prisma.profile.update({
+    where: { id: 10 },
+    data: {       
+      skill: {
+      create: {programmingSkill: 'Java', experience: 2, level: 'beginner' }
+    }}
   });
 
+  await prisma.skill.create({
+    data: {
+      programmingSkill: 'React', experience: 4, level: 'advanced',  profileId: 9
+    },
+  });
+  
   const allUsers = await prisma.user.findMany({
     include: {
       posts: true,
@@ -25,6 +28,11 @@ async function main() {
     },
   });
   console.dir(allUsers, { depth: null });
+  const post = await prisma.post.update({
+    where: { id: 2 },
+    data: { published: true, title: 'This title has been changed'},
+  });
+  console.log(post);
 }
 
 main()
@@ -36,3 +44,5 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+*/
+
