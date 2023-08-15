@@ -1,5 +1,4 @@
-'use client'
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 export default function ProfileForm() {
   const [firstName, setFirstName] = useState('');
@@ -14,16 +13,16 @@ export default function ProfileForm() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({firstName, lastName, email, bio}),
-    }).then((res) => console.log(res)
-    ).catch((err) => console.log(err)
-    );
-    /*
+
+      body: JSON.stringify({ firstName, lastName, email, bio }),
+    })
+      .then((res) => res.json())
+      .catch((error) => console.log(error));
     setFirstName('');
     setLastName('');
     setEmail('');
     setBio('');
-    */
+
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -44,7 +43,7 @@ export default function ProfileForm() {
   }
   return (
     <>
-      <form id='form' onSubmit={(event) => handleSubmit(event)}>
+      <form id="profile-form" onSubmit={(event) => handleSubmit(event)}>
         <label htmlFor="first-name">First name</label>
         <input
           onChange={(event) => handleChange(event)}
@@ -78,7 +77,7 @@ export default function ProfileForm() {
           type="text"
         />
       </form>
-      <button type="submit" form='form'>
+      <button type="submit" form="profile-form">
         Save
       </button>
     </>
