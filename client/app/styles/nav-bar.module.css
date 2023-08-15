@@ -1,0 +1,43 @@
+.brand_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.brand_name {
+  color: #293241;
+  font-size: 3vw;
+  margin-right: 10px;
+}
+
+.nav_item {
+  text-decoration: none;
+  color: black;
+  margin: 1vh 1vw 1vh 1vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 3vh;
+  color: #293241;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.nav_list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  width: 66%;
+}
+
+.nav_bar {
+  width: 25%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #e0fbfc;
+  padding: 10px;
+}
