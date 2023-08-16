@@ -26,7 +26,7 @@ model Profile {
   bio    String?
   user   User    @relation(fields: [userId], references: [id])
   userId Int     @unique
-  Skill  Skill[]
+  skill  Skill[]
 }
 
 model User {
@@ -44,12 +44,13 @@ model Skill {
   id               Int              @id @default(autoincrement())
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
-  experience       Int?
+  experience       String?
   level            String?
-  programmingSkill programmingSkill
+  programmingSkill String
   Profile          Profile?         @relation(fields: [profileId], references: [id])
-  profileId        Int?
+  profileId Int    
 }
+
 
 enum programmingSkill {
   JAVA
@@ -75,3 +76,4 @@ enum programmingSkill {
   HASKELL
   REDUX
 }
+

@@ -1,7 +1,9 @@
 import express, { Router } from 'express';
 import checkJwt from './auth/authMiddleware';
 import { PrismaClient } from '@prisma/client';
-import { AuthRequest } from './auth/authTypes';
+import { AuthRequest } from './auth/authTypes';import { postUser } from './controllers/user';
+import { postSkill } from './controllers/skill';
+
 const router: Router = express.Router();
 
 const prisma = new PrismaClient();
@@ -10,7 +12,8 @@ router.get('/home', );
 
 router.post('/register', );
 router.post('/login', );
-
+router.post('/create-profile', postUser);
+router.post('/create-skill', postSkill);
 router.get('/profile', checkJwt, async (req: AuthRequest, res) => {
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
