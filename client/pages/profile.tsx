@@ -47,16 +47,18 @@ export default function Profile() {
                   Edit profile
                 </button>
               </div>
-              <div>
+              <div className="display_click">
                 {addSkill && (
                   <SkillForm addSkill={addSkill} setAddSkill={setAddSkill} />
                 )}
-                {editProfile && (
-                  <ProfileForm
-                    editProfile={editProfile}
-                    setEditProfile={setEditProfile}
-                  />
-                )}
+                <div className="display_form">
+                  {editProfile && (
+                    <ProfileForm
+                      editProfile={editProfile}
+                      setEditProfile={setEditProfile}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>
