@@ -30,9 +30,9 @@ router.get('/profile', checkJwt, async (req: AuthRequest, res) => {
         res.status(404).send('Profile not found');
     }
 }); // Maybe userId
-router.get('/home/username', checkJwt, async (req, res) => {
+router.get('/home/:username', checkJwt, async (req, res) => {
     const username = req.params.username;
-    const user = await prisma.user.findUnique({ where: { username: username } });
+    const user = await prisma.user.findUnique({ where: { username } });
 
     if (user) {
         res.json(user);
