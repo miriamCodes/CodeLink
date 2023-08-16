@@ -10,11 +10,11 @@ async function updateProfile(req: Request, res: Response) {
       bio
     }
   });
-  res.status(200).send({key:'PROFILE CORRECTLY UPDATED'});
+  res.status(200).send({ key: 'PROFILE CORRECTLY UPDATED' });
 }
 
 async function getProfile(req: Request, res: Response) {
-  const { id } = req.body;
+  const id = +req.params.id;
   const profile = await prisma.profile.findUnique({
     where: {
       id

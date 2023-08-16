@@ -12,7 +12,7 @@ router.post('/login', );
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
 router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
-router.get('/profile', getProfile);
+router.get('/profile/:id', getProfile);
 router.put('/update-profile', updateProfile); // MAYBE ALSO ADD ID
 router.get('/home/username', );
 
