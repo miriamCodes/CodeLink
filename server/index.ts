@@ -5,7 +5,10 @@ import authRouter from './auth/authRoutes';
 import 'dotenv/config';
 
 const app: Express = express();
-app.use(cors());
+app.use(cors({
+  origin: 'localhost:3000',
+  credentials: true
+}));
 app.use(express.json());
 
 
