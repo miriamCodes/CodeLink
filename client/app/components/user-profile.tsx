@@ -21,7 +21,15 @@ export default function UserProfile() {
   }, []);
   return (
     <div className={styles.profile_div}>
-      <Image />
+      <div className={styles.profile_image}>
+        <Image
+          className={styles.default_image}
+          alt="CodeLink logo"
+          width="100"
+          height="100"
+          src="/logo-exemplar.png"
+        />
+      </div>
       <div className={styles.profile_field}>
         <div className={styles.profile_title}>
           <h2>{profile.user.firstName}</h2>

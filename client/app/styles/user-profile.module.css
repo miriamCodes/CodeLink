@@ -1,5 +1,4 @@
 .profile_div {
-  border-style: solid;
   display: flex;
   flex-direction: column;
   margin: 5vh 5vw 5vh 5vw;
@@ -9,7 +8,6 @@
 .profile_field {
   width: 100%;
   display: flex;
-  border-style: solid;
   justify-content: space-between;
   height: 100%;
 }
@@ -17,5 +15,18 @@
 .profile_title {
   display: flex;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: center;
+}
+
+.profile_image {
+  display: flex;
+  justify-content: center;
+  padding: 2vh 0 2vh 0;
+}
+
+.default_image {
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 100%;
 }

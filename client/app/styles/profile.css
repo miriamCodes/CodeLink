@@ -4,7 +4,6 @@
 }
 
 .profile_div {
-  border-style: solid;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -17,7 +16,6 @@
 }
 
 .profile_buttons {
-  border-style: solid;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -25,23 +23,23 @@
 }
 
 .profile_view {
-  border-style: solid;
   display: flex;
   flex-direction: column;
   align-self: center;
   width: 50%;
   height: 50%;
+  border-radius: 3px;
+  box-shadow: 1px 1px 10px #293241;
 }
 
 .button {
-  width: 100%;
+  width: 30%;
   padding: 1vh 0 1vh 0;
   font-size: 20px;
   font-weight: 500;
   color: white;
   border-style: none;
   background: linear-gradient(0deg, rgba(209,95,68,1) 0%, rgba(238,108,77,1) 100%);
-  margin-top: 4vh;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -50,4 +48,5 @@
   display: flex;
   width: 100%;
   justify-content: space-evenly;
+  margin: 0 0 6vh 0;
 }
