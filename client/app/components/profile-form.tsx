@@ -1,22 +1,68 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/app/styles/profile-form.module.css';
 import Button from './button';
 
-export default function ProfileForm() {
+interface Properties {
+  editProfile: boolean;
+  setEditProfile: (editProfile: boolean) => void;
+}
+
+export default function ProfileForm({ editProfile, setEditProfile }: Properties) {
+  const [profile, setProfile] = useState({
+    bio: '',
+    user: { firstName: '', lastName: '', email: '' },
+  });
+  const id = 1; // Change this when auth is up and running
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/profile/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setProfile(data))
+      .catch((error) => console.log(error));
+  }, []);
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
 
+  // if (editProfile) {
+  //   setFirstName(profile.user.firstName);
+  //   setLastName(profile.user.lastName);
+  //   setEmail(profile.user.email);
+  //   setBio(profile.bio);
+  // }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    // if (editProfile) {
+    //   event.preventDefault();
+    //   await fetch('http://localhost:3001/create-profile', {
+    //     method: 'PUT',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ firstName, lastName, email, bio }),
+    //   })
+    //     .then((res) => res.json())
+    //     .catch((error) => console.log(error));
+    //   setFirstName('');
+    //   setLastName('');
+    //   setEmail('');
+    //   setBio('');
+    //   setEditProfile(false);
+    // }
     event.preventDefault();
     await fetch('http://localhost:3001/create-profile', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-
       body: JSON.stringify({ firstName, lastName, email, bio }),
     })
       .then((res) => res.json())

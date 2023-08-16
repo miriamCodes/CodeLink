@@ -7,6 +7,7 @@ import ProfileForm from '@/app/components/profile-form';
 import NavBar from '@/app/components/nav-bar';
 import { Roboto } from 'next/font/google';
 import '@/app/styles/profile.css';
+import Button from '@/app/components/button';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -27,21 +28,36 @@ export default function Profile() {
       <div className={roboto.className}>
         <div className="profile_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          <div>
-            <UserProfile />
-            <div>
-              <button id="skill" onClick={(event) => handleClick(event)}>
-                Add skill
-              </button>
-              <button id="edit" onClick={(event) => handleClick(event)}>
-                Edit profile
-              </button>
-            </div>
-            <div>
-              {addSkill && (
-                <SkillForm addSkill={addSkill} setAddSkill={setAddSkill} />
-              )}
-              {editProfile && <ProfileForm />}
+          <div className="profile_buttons">
+            <div className="profile_view">
+              <UserProfile />
+              <div className="button_div">
+                <button
+                  className="button"
+                  id="skill"
+                  onClick={(event) => handleClick(event)}
+                >
+                  Add skill
+                </button>
+                <button
+                  className="button"
+                  id="edit"
+                  onClick={(event) => handleClick(event)}
+                >
+                  Edit profile
+                </button>
+              </div>
+              <div>
+                {addSkill && (
+                  <SkillForm addSkill={addSkill} setAddSkill={setAddSkill} />
+                )}
+                {editProfile && (
+                  <ProfileForm
+                    editProfile={editProfile}
+                    setEditProfile={setEditProfile}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
