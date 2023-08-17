@@ -38,12 +38,14 @@ export default function Feed() {
       {news.map((article) => (
         <div key="article" className={styles.article}>
           <div className={styles.news_image} key="image">
-            <Image
-              alt="News article image"
-              src={article.urlToImage}
-              width={700}
-              height={400}
-            />
+            {article.urlToImage && (
+              <Image
+                alt="News article image"
+                src={article.urlToImage}
+                width={700}
+                height={400}
+              />)
+            }
           </div>
           <div className={styles.news_text}>
             <div className={styles.news_title} key="title">
