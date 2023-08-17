@@ -32,19 +32,24 @@ export default function Feed() {
     fetchNews();
   }, []);
 
-  console.log(news);
   return (
     <div className={styles.feed}>
       {news.map((article) => (
         <div key="article" className={styles.article}>
           <div className={styles.news_image} key="image">
-            {article.urlToImage && (
+            {article.urlToImage ? (
               <Image
                 alt="News article image"
                 src={article.urlToImage}
                 width={700}
                 height={400}
-              />)
+              />) :
+              <Image
+                alt="News article image"
+                src='/news-default.jpg'
+                width={700}
+                height={400}
+              />
             }
           </div>
           <div className={styles.news_text}>

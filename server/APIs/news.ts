@@ -15,7 +15,6 @@ async function fetchNews(req: Request, res: Response) {
   const news = await fetch(`https://newsapi.org/v2/top-headlines?category=technology&language=en&apiKey=${KEY}`, options)
     .then((article) => article.json())
     .catch(err => console.log(err));
-  console.log(news.articles);
   res.send(news.articles);
 }
 

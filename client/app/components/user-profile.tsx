@@ -69,18 +69,25 @@ export default function UserProfile({value} : Properties) {
       <div className={styles.profile_field}>
         <p>
           <b>Skills</b>
-        </p>
-        {profile.skill.map((s) => (
-          <div key="skill">
-            <p key={s.programmingSkill}>{capitalize(s.programmingSkill)}</p>
-            <p key={s.experience}>
-              <i>{capitalize(s.experience)}</i>
-            </p>
-            <p key={s.level}>
-              <i>{capitalize(s.level)}</i>
-            </p>
-          </div>
-        ))}
+        </p>{profile.skill.length > 0 ? (
+        <div>
+          {
+            profile.skill.map((s) => (
+              <div key="skill">
+                <p key={s.programmingSkill}>{capitalize(s.programmingSkill)}</p>
+                <p key={s.experience}>
+                  <i>{capitalize(s.experience)}</i>
+                </p>
+                <p key={s.level}>
+                  <i>{capitalize(s.level)}</i>
+                </p>
+              </div>
+            ))
+            }
+            </div>
+        ) : (
+            <div>No skills to display yet - click on add skills below.</div>
+        )}
       </div>
     </div>
   );
