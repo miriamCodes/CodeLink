@@ -9,16 +9,16 @@ const router: Router = express.Router();
 
 const prisma = new PrismaClient();
 
-router.get('/home', );
+router.get('/home',);
 
-router.post('/register', );
-router.post('/login', );
+router.post('/register',);
+router.post('/login',);
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
-router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
+router.get('/profile/:id',); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
 router.put('/update-profile', updateProfile); // MAYBE ALSO ADD ID
-router.get('/home/username', );
+router.get('/home/username',);
 router.get('/profile', checkJwt, async (req: AuthRequest, res) => {
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
