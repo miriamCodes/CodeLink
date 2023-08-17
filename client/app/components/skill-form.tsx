@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import styles from '@/app/styles/skill-form.module.css';
+import Button from '@/app/components/button';
 interface Properties {
   addSkill: boolean;
   setAddSkill: (loggedIn: boolean) => void;
@@ -10,18 +11,18 @@ export default function SkillForm({ addSkill, setAddSkill }: Properties) {
   const [experience, setExperience] = useState('');
   const [level, setLevel] = useState('');
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-      event.preventDefault();
-      await fetch('http://localhost:3001/create-skill', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: 9, skill, experience, level }),
-      })
-        .then((res) => res.json())
-        .catch((error) => console.log(error));
-      setAddSkill(false);
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    await fetch('http://localhost:3001/create-skill', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: 1, skill, experience, level }),
+    })
+      .then((res) => res.json())
+      .catch((error) => console.log(error));
+    setAddSkill(false);
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -38,39 +39,64 @@ export default function SkillForm({ addSkill, setAddSkill }: Properties) {
     }
   }
   return (
-    <>
-      <form id="skill-form" onSubmit={(event) => handleSubmit(event)}>
-        <label htmlFor="skill">Skill</label>
-        <input
-          placeholder="Python, JavaScript..."
-          name="skill"
-          type="text"
-          onChange={(event) => handleChange(event)}
-        />
-        {/* In future we could convert this to a dropdown menu and allow badges for key high level skills */}
-        {/* <select title="Skills dropdown menu" name="skill">
+      <div className={styles.skill_div}>
+        <h2 className={styles.skill_title}>Add a skill:</h2>
+        <form
+          className={styles.skill_form}
+          id="skill-form"
+          onSubmit={(event) => handleSubmit(event)}
+        >
+          <div className={styles.label_input}>
+            <label className={styles.label} htmlFor="skill">
+              Skill
+            </label>
+            <input
+              className={styles.input}
+              placeholder="Python, JavaScript..."
+              name="skill"
+              type="text"
+              onChange={(event) => handleChange(event)}
+            />
+          </div>
+          {/* In future we could convert this to a dropdown menu and allow badges for key high level skills */}
+          {/* <select title="Skills dropdown menu" name="skill">
         <option></option>
       </select> */}
-        <label htmlFor="experience">Experience in months</label>
-        <input
-          placeholder="6 months, 3 years..."
-          name="experience"
-          type="text"
-          onChange={(event) => handleChange(event)}
-        />
-        <label htmlFor="level">Current level</label>
-        <input
-          placeholder="Beginner, intermediate..."
-          name="level"
-          type="text"
-          onChange={(event) => handleChange(event)}
-        />
-        {/* Changing experience (in years) to a string in models/backend */}
-      </form>
-      {/* Need to change this button to button component */}
-      <button type="submit" form="skill-form">
+          <div className={styles.label_input}>
+            <label className={styles.label} htmlFor="experience">
+              Experience
+            </label>
+            <input
+              className={styles.input}
+              placeholder="6 months, 3 years..."
+              name="experience"
+              type="text"
+              onChange={(event) => handleChange(event)}
+            />
+          </div>
+          <div className={styles.label_input}>
+            <label className={styles.label} htmlFor="level">
+              Current level
+            </label>
+            <input
+              className={styles.input}
+              placeholder="Beginner, intermediate..."
+              name="level"
+              type="text"
+              onChange={(event) => handleChange(event)}
+            />
+          </div>
+          {/* Changing experience (in years) to a string in models/backend */}
+        </form>
+        {/* Need to change this button to button component */}
+        <div className={styles.button_div}>
+          <div className={styles.save_button}>
+            <Button useCase={'Save'} form={'skill-form'} />
+          </div>
+          {/* <button type="submit" form="skill-form">
         Save
-      </button>
-    </>
+      </button> */}
+        </div>
+      </div>
   );
 }

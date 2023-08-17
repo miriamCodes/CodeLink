@@ -13,12 +13,16 @@ const roboto = Roboto({
 
 export default function CreateProfile() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [editProfile, setEditProfile] = useState(false);
   return (
     <main className="dashboard">
       <div className={roboto.className}>
         <div className="profile_div">
-            <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-            <ProfileForm />
+          <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+          <ProfileForm
+            editProfile={editProfile}
+            setEditProfile={setEditProfile}
+          />
         </div>
       </div>
     </main>

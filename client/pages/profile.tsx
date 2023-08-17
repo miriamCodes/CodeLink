@@ -17,19 +17,18 @@ const roboto = Roboto({
 export default function Profile() {
   const [addSkill, setAddSkill] = useState(false);
   const [editProfile, setEditProfile] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   function handleClick(event: React.MouseEvent<HTMLElement>) {
     if (event.target.id === 'skill') setAddSkill(true);
     if (event.target.id === 'edit') setEditProfile(true);
   }
   return (
-    <main className={roboto.className}>
+    <main>
       <div className={roboto.className}>
         <div className="profile_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <div className="profile_buttons">
-            <div className="profile_view">
               <UserProfile />
               <div className="button_div">
                 <button
@@ -47,21 +46,20 @@ export default function Profile() {
                   Edit profile
                 </button>
               </div>
-              <div className="display_click">
                 {addSkill && (
-                  <SkillForm addSkill={addSkill} setAddSkill={setAddSkill} />
+                  <div className="skill_div">
+                    <SkillForm addSkill={addSkill} setAddSkill={setAddSkill} />
+                  </div>
                 )}
-                <div className="display_form">
                   {editProfile && (
-                    <ProfileForm
-                      editProfile={editProfile}
-                      setEditProfile={setEditProfile}
-                    />
+                    <div className="edit_div">
+                      <ProfileForm
+                        editProfile={editProfile}
+                        setEditProfile={setEditProfile}
+                      />
+                    </div>
                   )}
-                </div>
-              </div>
             </div>
-          </div>
         </div>
       </div>
     </main>

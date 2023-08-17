@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 }
 
 .profile_view {
@@ -27,7 +28,7 @@
   flex-direction: column;
   align-self: center;
   width: 50%;
-  height: 50%;
+  height: 75%;
   border-radius: 3px;
   box-shadow: 1px 1px 10px #293241;
   position: relative;
@@ -50,12 +51,4 @@
   width: 100%;
   justify-content: space-evenly;
   margin: 0 0 6vh 0;
-}
-
-.display_form {
-  position: absolute;
-}
-
-.display_click {
-  position: absolute;
 }

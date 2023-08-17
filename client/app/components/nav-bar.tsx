@@ -52,7 +52,7 @@ export default function NavBar({
           {/* Consider mapping */}
           {loggedIn && (
             <li>
-              <Link href="/home" className={styles.nav_item}>
+              <Link href="/" className={styles.nav_item}>
                 Home
               </Link>
             </li>
@@ -83,15 +83,6 @@ export default function NavBar({
               />
             </li>
           )}
-          {/* If logged in */}
-          {loggedIn && (
-            <li>
-              <Button
-                useCase={'Log out'}
-                onClick={() => handleClick('Log out')}
-              />
-            </li>
-          )}
           {/* Consider mapping */}
           <li>
             <Link href="news" className={styles.nav_item}>
@@ -108,6 +99,15 @@ export default function NavBar({
               Job board
             </Link>
           </li>
+          {/* If logged in */}
+          {loggedIn && (
+            <li>
+              <Button
+                useCase={'Log out'}
+                onClick={() => handleClick('Log out')}
+              />
+            </li>
+          )}
         </ul>
       </nav>
     </div>
