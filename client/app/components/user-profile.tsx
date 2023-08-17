@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from '@/app/styles/user-profile.module.css';
 import Image from 'next/image';
 
-export default function UserProfile() {
+interface Properties {
+  value: boolean;
+}
+
+export default function UserProfile({value} : Properties) {
   const [profile, setProfile] = useState({
     bio: '',
     user: { firstName: '', lastName: '', email: '' },
@@ -25,7 +29,7 @@ export default function UserProfile() {
       .then((res) => res.json())
       .then((data) => setProfile(data))
       .catch((error) => console.log(error));
-  }, []);
+  }, [value]);
 
   function capitalize (word: string) {
     return word

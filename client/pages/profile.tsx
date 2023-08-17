@@ -18,6 +18,10 @@ export default function Profile() {
   const [addSkill, setAddSkill] = useState(false);
   const [editProfile, setEditProfile] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
+  const [value, setValue] = useState(false);
+
+
+  ///
 
   function handleClick(event: React.MouseEvent<HTMLElement>) {
     if (event.target.id === 'skill') setAddSkill(true);
@@ -29,7 +33,7 @@ export default function Profile() {
         <div className="profile_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <div className="profile_buttons">
-              <UserProfile />
+            <UserProfile value={value} />
               <div className="button_div">
                 <button
                   className="button"
@@ -48,7 +52,7 @@ export default function Profile() {
               </div>
                 {addSkill && (
                   <div className="skill_div">
-                    <SkillForm addSkill={addSkill} setAddSkill={setAddSkill} />
+                <SkillForm setValue={setValue} value={value} addSkill={addSkill} setAddSkill={setAddSkill} />
                   </div>
                 )}
                   {editProfile && (

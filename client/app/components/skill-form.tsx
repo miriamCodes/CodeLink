@@ -4,9 +4,11 @@ import Button from '@/app/components/button';
 interface Properties {
   addSkill: boolean;
   setAddSkill: (loggedIn: boolean) => void;
+  value: boolean;
+  setValue: (value: boolean) => void;
 }
 
-export default function SkillForm({ addSkill, setAddSkill }: Properties) {
+export default function SkillForm({ addSkill, setAddSkill, value, setValue }: Properties) {
   const [skill, setSkill] = useState('');
   const [experience, setExperience] = useState('');
   const [level, setLevel] = useState('');
@@ -23,6 +25,7 @@ export default function SkillForm({ addSkill, setAddSkill }: Properties) {
       .then((res) => res.json())
       .catch((error) => console.log(error));
     setAddSkill(false);
+    setValue(!value);
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {

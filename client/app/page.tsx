@@ -17,14 +17,14 @@ export default function Home() {
       <div className={roboto.className}>
         <div className="home_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          <div className="welcome_div">
-            <h2>Welcome to CodeLink!</h2>
-            <h3>
-              A new platform for developers to meet and share their skills.
-            </h3>
-          </div>
-          <div className="news_div">
-
+          <div className="homepage_div">
+            <div className="welcome_div">
+              <h2 className="welcome">Welcome to CodeLink!</h2>
+              <h3 className="welcome">
+                A new platform for developers to meet and share their skills.
+              </h3>
+            </div>
+            <div className="news_div"></div>
           </div>
         </div>
       </div>
