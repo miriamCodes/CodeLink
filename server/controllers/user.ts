@@ -31,4 +31,14 @@ async function getUser(req: Request, res: Response) {
   res.status(200).send(user);
 }
 
-export { postUser, getUser };
+async function updateUser(firstName: string, lastName: string, id: number) {
+  await prisma.user.update({
+    where: { id },
+    data: {
+      firstName,
+      lastName
+    }
+  });
+}
+
+export { postUser, getUser, updateUser };

@@ -26,7 +26,8 @@ export default function NavBar({
       router.push('/login');
     }
     if (useCase === 'Register') {
-      router.push('/register');
+      // router.push('/register');
+      router.push('/create-profile')
     }
   }
   return (

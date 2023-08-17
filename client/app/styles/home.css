@@ -7,11 +7,7 @@
   display: flex;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(224, 251, 252, 1) 100%
-  );
+  background: linear-gradient(135deg, rgba(61,90,128,1) 0%, rgba(152,193,217,1) 100%);
 }
 
 .welcome_div {
@@ -21,20 +17,23 @@
   flex-direction: column;
   width: 100%;
   align-items: center;
-  height: 20%;
+  height: 30%;
   justify-content: center;
 }
 
 .news_div {
-  border-style: solid;
 }
 
 .welcome {
   font-weight: 500;
+  margin: 2vh 0 2vh 0;
+  padding: 0 3vw 0 3vw;
+  text-align: center;
 }
 
 .homepage_div {
   width: 100%;
-  margin: 0 0 0 5vw;
-  border-style: solid;
+  height: 100%;
+  overflow-y: scroll;
 }
+

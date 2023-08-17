@@ -6,9 +6,16 @@ import Button from './button';
 interface Properties {
   editProfile: boolean;
   setEditProfile: (editProfile: boolean) => void;
+  value: boolean;
+  setValue: (value: boolean) => void;
 }
 
-export default function ProfileForm({ editProfile, setEditProfile }: Properties) {
+export default function ProfileForm({
+  editProfile,
+  setEditProfile,
+  value,
+  setValue
+}: Properties) {
   const [profile, setProfile] = useState({
     bio: '',
     user: { firstName: '', lastName: '', email: '' },
@@ -32,6 +39,26 @@ export default function ProfileForm({ editProfile, setEditProfile }: Properties)
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
 
+  useEffect(() => {
+    if (editProfile) {
+      const fetchData = async () => {
+        await fetch(`http://localhost:3001/profile/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => setProfile(data))
+          .catch((error) => console.log(error));
+      };
+      fetchData();
+      setFirstName(profile.user.firstName);
+      setLastName(profile.user.lastName);
+      setBio(profile.bio);
+    }
+  }, [editProfile, profile.bio, profile.user.firstName, profile.user.lastName]);
+
   // if (editProfile) {
   //   setFirstName(profile.user.firstName);
   //   setLastName(profile.user.lastName);
@@ -40,37 +67,39 @@ export default function ProfileForm({ editProfile, setEditProfile }: Properties)
   // }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    // if (editProfile) {
-    //   event.preventDefault();
-    //   await fetch('http://localhost:3001/create-profile', {
-    //     method: 'PUT',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ firstName, lastName, email, bio }),
-    //   })
-    //     .then((res) => res.json())
-    //     .catch((error) => console.log(error));
-    //   setFirstName('');
-    //   setLastName('');
-    //   setEmail('');
-    //   setBio('');
-    //   setEditProfile(false);
-    // }
-    event.preventDefault();
-    await fetch('http://localhost:3001/create-profile', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ firstName, lastName, email, bio }),
-    })
-      .then((res) => res.json())
-      .catch((error) => console.log(error));
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setBio('');
+    if (editProfile) {
+      event.preventDefault();
+      await fetch(`http://localhost:3001/update-profile/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName, lastName, bio }),
+      })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+      setValue(!value);
+      setEditProfile(false);
+      // setFirstName('');
+      // setLastName('');
+      // setEmail('');
+      // setBio('');
+    } else {
+      event.preventDefault();
+      await fetch('http://localhost:3001/create-profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName, lastName, email, bio }),
+      })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setBio('');
+    }
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -93,7 +122,11 @@ export default function ProfileForm({ editProfile, setEditProfile }: Properties)
     <div className={styles.profile_div}>
       <div className={styles.profile_form}>
         <div className={styles.profile_submit}>
-          <h2 className={styles.form_title}>Create a profile:</h2>
+          {!editProfile ? (
+            <h2 className={styles.form_title}>Create a profile:</h2>
+          ) : (
+            <h2 className={styles.form_title}>Update profile:</h2>
+          )}
           <form
             className={styles.form_inputs}
             id="profile-form"
@@ -125,19 +158,21 @@ export default function ProfileForm({ editProfile, setEditProfile }: Properties)
                 type="text"
               />
             </div>
-            <div className={styles.label_input}>
-              <label className={styles.form_label} htmlFor="email">
-                Email
-              </label>
-              <input
-                className={styles.form_input}
-                onChange={(event) => handleChange(event)}
-                value={email}
-                placeholder="you@email.com"
-                id="email"
-                type="email"
-              />
-            </div>
+            {!editProfile && (
+              <div className={styles.label_input}>
+                <label className={styles.form_label} htmlFor="email">
+                  Email
+                </label>
+                <input
+                  className={styles.form_input}
+                  onChange={(event) => handleChange(event)}
+                  value={email}
+                  placeholder="you@email.com"
+                  id="email"
+                  type="email"
+                />
+              </div>
+            )}
             <div className={styles.label_input}>
               <label className={styles.form_label} htmlFor="bio">
                 Bio

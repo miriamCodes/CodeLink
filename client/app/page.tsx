@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from './components/nav-bar';
 import '@/app/styles/home.css';
 import { Roboto } from 'next/font/google';
+import Feed from '@/app/components/feed';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -12,6 +13,7 @@ const roboto = Roboto({
 
 export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <main>
       <div className={roboto.className}>
@@ -24,7 +26,9 @@ export default function Home() {
                 A new platform for developers to meet and share their skills.
               </h3>
             </div>
-            <div className="news_div"></div>
+            <div className="news_div">
+              <Feed/>
+            </div>
           </div>
         </div>
       </div>

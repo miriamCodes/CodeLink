@@ -20,9 +20,6 @@ export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(true);
   const [value, setValue] = useState(false);
 
-
-  ///
-
   function handleClick(event: React.MouseEvent<HTMLElement>) {
     if (event.target.id === 'skill') setAddSkill(true);
     if (event.target.id === 'edit') setEditProfile(true);
@@ -34,36 +31,43 @@ export default function Profile() {
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <div className="profile_buttons">
             <UserProfile value={value} />
-              <div className="button_div">
-                <button
-                  className="button"
-                  id="skill"
-                  onClick={(event) => handleClick(event)}
-                >
-                  Add skill
-                </button>
-                <button
-                  className="button"
-                  id="edit"
-                  onClick={(event) => handleClick(event)}
-                >
-                  Edit profile
-                </button>
-              </div>
-                {addSkill && (
-                  <div className="skill_div">
-                <SkillForm setValue={setValue} value={value} addSkill={addSkill} setAddSkill={setAddSkill} />
-                  </div>
-                )}
-                  {editProfile && (
-                    <div className="edit_div">
-                      <ProfileForm
-                        editProfile={editProfile}
-                        setEditProfile={setEditProfile}
-                      />
-                    </div>
-                  )}
+            <div className="button_div">
+              <button
+                className="button"
+                id="skill"
+                onClick={(event) => handleClick(event)}
+              >
+                Add skill
+              </button>
+              <button
+                className="button"
+                id="edit"
+                onClick={(event) => handleClick(event)}
+              >
+                Edit profile
+              </button>
             </div>
+            {addSkill && (
+              <div className="skill_div">
+                <SkillForm
+                  setValue={setValue}
+                  value={value}
+                  addSkill={addSkill}
+                  setAddSkill={setAddSkill}
+                />
+              </div>
+            )}
+            {editProfile && (
+              <div className="edit_div">
+                <ProfileForm
+                  setValue={setValue}
+                  value={value}
+                  editProfile={editProfile}
+                  setEditProfile={setEditProfile}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </main>
