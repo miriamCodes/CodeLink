@@ -17,7 +17,7 @@ router.post('/login', );
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
 
-router.get('/profile', checkJwt, async (req: AuthRequest, res) => {
+router.get('http://localhost:3000/profile', checkJwt, async (req: AuthRequest, res) => {
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
     console.log('User ID from JWT:', userId); 

@@ -14,10 +14,10 @@ const config = {
   baseURL: process.env.BASE_URL,
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
-  afterCallback: (req, res, session) => {
+  afterCallback: (req: Request, res) => {
     console.log('After Callback Triggered');
     res.redirect('http://localhost:3000/profile');
-    return session;
+  
   },
   authorizationParams: {
     response_type: 'code',
