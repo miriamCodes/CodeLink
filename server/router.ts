@@ -5,43 +5,57 @@ import { PrismaClient } from '@prisma/client';
 import { AuthRequest } from './auth/authTypes';
 import { postSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
+import {
+  getProjects,
+  postProject,
+  getProjectComments,
+  postProjectComment,
+  postProjectVote,
+} from './controllers/discussionboard';
 const router: Router = express.Router();
 
 const prisma = new PrismaClient();
 
-router.get('/home', );
+router.get('/home');
 
-router.post('/register', );
-router.post('/login', );
+router.post('/register');
+router.post('/login');
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
-router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
+router.get('/profile/:id'); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
 router.put('/update-profile', updateProfile); // MAYBE ALSO ADD ID
-router.get('/home/username', );
+router.get('/home/username');
 router.get('/profile', checkJwt, async (req: AuthRequest, res) => {
-    console.log(req.headers.authorization);
-    const userId = req.user?.sub;
-    const userProfile = await prisma.user.findUnique({ where: { auth0Id: userId }, include: { profile: true } });
+  console.log(req.headers.authorization);
+  const userId = req.user?.sub;
+  const userProfile = await prisma.user.findUnique({
+    where: { auth0Id: userId },
+    include: { profile: true },
+  });
 
-    if (userProfile) {
-        res.json(userProfile);
-    } else {
-        res.status(404).send('Profile not found');
-    }
+  if (userProfile) {
+    res.json(userProfile);
+  } else {
+    res.status(404).send('Profile not found');
+  }
 }); // Maybe userId
 router.get('/home/:username', checkJwt, async (req, res) => {
-    const username = req.params.username;
-    const user = await prisma.user.findUnique({ where: { username } });
+  const username = req.params.username;
+  const user = await prisma.user.findUnique({ where: { username } });
 
-    if (user) {
-        res.json(user);
-    }
-    else {
-        res.status(404).send('User not found');
-    }
-    //prima logic
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).send('User not found');
+  }
+  //prima logic
 });
 
+router.get('/project', getProjects);
+router.post('/project', postProject);
+router.get('/project/:id/comment', getProjectComments);
+router.post('/project/:id/comment', postProjectComment);
+router.post('/project/:id/vote', postProjectVote);
 
 export { router };
