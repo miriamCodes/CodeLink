@@ -23,7 +23,7 @@ export default function NavBar({
       setLoggedIn(false);
     }
     if (useCase === 'Log in') {
-      router.push('/login');
+      router.replace('http://localhost:3001/login');
     }
     if (useCase === 'Register') {
       // router.push('/register');
