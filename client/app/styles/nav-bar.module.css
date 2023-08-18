@@ -9,17 +9,17 @@
   color: #293241;
   font-size: 3vw;
   margin-right: 10px;
+  font-weight: 400;
 }
 
 .nav_item {
   text-decoration: none;
   color: black;
-  margin: 1vh 1vw 1vh 1vw;
+  margin: 4vh 1vw 1vh 1vw;
   display: flex;
   justify-content: center;
-  margin-top: 3vh;
   color: #293241;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 20px;
 }
 
@@ -28,16 +28,24 @@
   display: flex;
   flex-direction: column;
   align-self: center;
-  margin: 0;
+  margin: 2vh;
   padding: 0;
   width: 66%;
 }
 
 .nav_bar {
-  width: 25%;
-  height: 100vh;
+  height: 92%;
   display: flex;
   flex-direction: column;
-  background-color: #e0fbfc;
-  padding: 10px;
+  background: linear-gradient(135deg, rgba(224,251,252,1) 0%, rgba(152,193,217,1) 100%);
+  padding: 5vh 2vw 3vh 2vw;
+  box-shadow: 1px 1px 10px #293241;
+}
+
+.nav_div {
+  width: 25%;
+}
+
+.nav_link {
+  text-decoration: none;
 }
