@@ -19,6 +19,7 @@ const customSecretFunction = async (
     return new Promise((resolve, reject) => {
         secretRetriever(req, req.headers.authorization || '', token?.header || {}, (err: Error, secret?: Secret) => {
             if (err) {
+                console.log('Error in customSecretFunction:', err);
                 reject(err);
             } else {
                 resolve(secret as Secret);

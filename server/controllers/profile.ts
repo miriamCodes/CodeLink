@@ -1,30 +1,40 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { AuthRequest } from '../auth/authTypes';
+import { Response } from 'express';
 const prisma = new PrismaClient();
 
-async function updateProfile(req: Request, res: Response) {
-  const { id, bio } = req.body;
+async function updateProfile(req: AuthRequest, res: Response) {
+  const userId = req.user?.sub;
+
+  const user = await prisma.user.findUnique({ where: { auth0Id: userId } });
+  if (!user) {
+    return res.status(404).send('User not found');
+  }
   await prisma.profile.update({
-    where: { id },
+    where: { userId: user.id },
     data: {
-      bio
+      bio: req.body.bio
     }
   });
   res.status(200).send({ key: 'PROFILE CORRECTLY UPDATED' });
 }
 
-async function getProfile(req: Request, res: Response) {
-  const id = +req.params.id;
+async function getProfile(req: AuthRequest, res: Response) {
+  const userId = req.user?.sub;
   const profile = await prisma.profile.findUnique({
     where: {
-      id
+      userId: userId
     },
     include: {
       user: true,
       skill: true,
     },
   });
-  res.status(200).send(profile);
+  if (profile) {
+    res.status(200).send(profile);
+  } else {
+    res.status(404).send('Profile not found');
+  }
 }
 
 export { updateProfile, getProfile };

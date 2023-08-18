@@ -9,10 +9,12 @@ export default function ProfileForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const token = localStorage.getItem('token');
     await fetch('http://localhost:3001/create-profile', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
 
       body: JSON.stringify({ firstName, lastName, email, bio }),
