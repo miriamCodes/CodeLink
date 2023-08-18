@@ -60,6 +60,8 @@ model Project {
   timeline    String
   votes       Int         @default(0)
   comments    Comment[]
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
 }
 
 model Comment {
@@ -67,6 +69,8 @@ model Comment {
   text     String
   project  Project @relation(fields: [projectId], references: [id])
   projectId String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
 }
 
 enum programmingSkill {
