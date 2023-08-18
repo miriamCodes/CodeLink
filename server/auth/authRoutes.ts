@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { auth, requiresAuth } from 'express-openid-connect';
+import {  requiresAuth } from 'express-openid-connect';
 import 'dotenv/config';
 
 const authRouter: Router = Router();
@@ -39,7 +39,7 @@ authRouter.get('/profile', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
 });
 
-authRouter.get('/callback', (req, res, next) => {
+authRouter.get('/callback', (req, res) => {
     res.redirect('/profile');
 });
 
