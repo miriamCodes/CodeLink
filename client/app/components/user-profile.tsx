@@ -4,9 +4,10 @@ import Image from 'next/image';
 
 interface Properties {
   value: boolean;
+  value1: boolean;
 }
 
-export default function UserProfile({value} : Properties) {
+export default function UserProfile({value, value1} : Properties) {
   const [profile, setProfile] = useState({
     bio: '',
     user: { firstName: '', lastName: '', email: '' },
@@ -29,7 +30,7 @@ export default function UserProfile({value} : Properties) {
       .then((res) => res.json())
       .then((data) => setProfile(data))
       .catch((error) => console.log(error));
-  }, [value]);
+  }, [value, value1]);
 
   function capitalize (word: string) {
     return word

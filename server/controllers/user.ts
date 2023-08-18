@@ -24,7 +24,6 @@ async function getUser(req: Request, res: Response) {
       id
     },
     include: {
-      posts: true,
       profile: true,
     },
   });
@@ -32,6 +31,7 @@ async function getUser(req: Request, res: Response) {
 }
 
 async function updateUser(firstName: string, lastName: string, id: number) {
+  id = 4;
   await prisma.user.update({
     where: { id },
     data: {

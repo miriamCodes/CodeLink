@@ -14,11 +14,6 @@ const roboto = Roboto({
 export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const handleLogin = (token) => {
-    localStorage.setItem('token', token);
-    setLoggedIn(true);
-  };  
-  
   return (
     <main>
       <div className={roboto.className}>
