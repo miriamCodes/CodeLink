@@ -4,7 +4,7 @@ import session from 'express-session';
 import authRouter from './auth/authRoutes';
 import { auth } from 'express-openid-connect';
 import 'dotenv/config';
-
+import { router } from './router';
 
 const config = {
   authRequired: false,
@@ -59,7 +59,7 @@ app.get('/logout', (req, res) => {
 app.use(auth(config));
 
 
-
+app.use(router);
 
 app.use(authRouter);
 

@@ -1,6 +1,6 @@
 
 import express, { Router } from 'express';
-import { postUser, getUser } from './controllers/user';
+import { postUser } from './controllers/user';
 import { postSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
@@ -21,6 +21,7 @@ const router: Router = express.Router();
 const prisma = new PrismaClient();
 
 router.get('/home', );
+router.get('/news', fetchNews);
 
 router.post('/register', );
 router.post('/login', );
@@ -30,7 +31,7 @@ router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
 router.put('/update-profile/:id', updateProfile); // MAYBE ALSO ADD ID
 router.get('/home/username',);
-router.get('/news', fetchNews);
+
 router.get('http://localhost:3000/profile', checkJwt, async (req: AuthRequest, res) => {
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
