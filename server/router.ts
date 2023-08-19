@@ -4,6 +4,7 @@ import { postUser } from './controllers/user';
 import { postSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
+import { fetchRepositories } from './APIs/github';
 import { PrismaClient } from '@prisma/client';
 import checkJwt from './auth/authMiddleware';
 import { AuthRequest } from './auth/authTypes';
@@ -22,7 +23,7 @@ const prisma = new PrismaClient();
 
 router.get('/home', );
 router.get('/news', fetchNews);
-
+router.get('/repos', fetchRepositories);
 router.post('/register', );
 router.post('/login', );
 router.post('/create-profile', postUser);
@@ -35,7 +36,7 @@ router.get('/home/username',);
 router.get('http://localhost:3000/profile', checkJwt, async (req: AuthRequest, res) => {
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
-    console.log('User ID from JWT:', userId); 
+    console.log('User ID from JWT:', userId);
     const userProfile = await prisma.user.findUnique({ where: { auth0Id: userId }, include: { profile: true } });
 
     if (userProfile) {

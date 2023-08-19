@@ -3,12 +3,13 @@ import { Request, Response } from 'express';
 const prisma = new PrismaClient();
 
 async function postUser(req: Request, res: Response) {
-  const { firstName, lastName, email, bio } = req.body;
+  const { firstName, lastName, email, bio, gitHub } = req.body;
   await prisma.user.create({
     data: {
       firstName,
       lastName,
       email,
+      gitHub,
       profile: {
         create: { bio },
       },
@@ -30,13 +31,14 @@ async function getUser(req: Request, res: Response) {
   res.status(200).send(user);
 }
 
-async function updateUser(firstName: string, lastName: string, id: number) {
-  id = 4;
+async function updateUser(firstName: string, lastName: string, gitHub: string, id: number) {
+  id = 1;
   await prisma.user.update({
     where: { id },
     data: {
       firstName,
-      lastName
+      lastName,
+      gitHub
     }
   });
 }

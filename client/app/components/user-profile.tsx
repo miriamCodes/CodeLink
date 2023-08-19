@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '@/app/styles/user-profile.module.css';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Properties {
   value: boolean;
@@ -10,7 +11,7 @@ interface Properties {
 export default function UserProfile({value, value1} : Properties) {
   const [profile, setProfile] = useState({
     bio: '',
-    user: { firstName: '', lastName: '', email: '' },
+    user: { firstName: '', lastName: '', email: '', gitHub: '' },
     skill: [
       {
         experience: '',
@@ -52,7 +53,9 @@ export default function UserProfile({value, value1} : Properties) {
       </div>
       <div className={styles.profile_field}>
         <div className={styles.profile_title}>
-          <h2>{capitalize(`${profile.user.firstName} ${profile.user.lastName}`)}</h2>
+          <h2>
+            {capitalize(`${profile.user.firstName} ${profile.user.lastName}`)}
+          </h2>
         </div>
       </div>
       <div className={styles.profile_field}>
@@ -63,6 +66,16 @@ export default function UserProfile({value, value1} : Properties) {
       </div>
       <div className={styles.profile_field}>
         <p>
+          <b>GitHub Username</b>
+        </p>
+        <p>
+          <Link href={`http://github.com/${profile.user.gitHub}`}>
+            {profile.user.gitHub}
+          </Link>
+        </p>
+      </div>
+      <div className={styles.profile_field}>
+        <p>
           <b>Bio</b>
         </p>
         <p>{profile.bio}</p>
@@ -70,10 +83,10 @@ export default function UserProfile({value, value1} : Properties) {
       <div className={styles.profile_field}>
         <p>
           <b>Skills</b>
-        </p>{profile.skill.length > 0 ? (
-        <div>
-          {
-            profile.skill.map((s) => (
+        </p>
+        {profile.skill.length > 0 ? (
+          <div>
+            {profile.skill.map((s) => (
               <div key="skill">
                 <p key={s.programmingSkill}>{capitalize(s.programmingSkill)}</p>
                 <p key={s.experience}>
@@ -83,11 +96,10 @@ export default function UserProfile({value, value1} : Properties) {
                   <i>{capitalize(s.level)}</i>
                 </p>
               </div>
-            ))
-            }
-            </div>
+            ))}
+          </div>
         ) : (
-            <div>No skills to display yet - click on add skills below.</div>
+          <div>No skills to display yet - click on add skills below.</div>
         )}
       </div>
     </div>
