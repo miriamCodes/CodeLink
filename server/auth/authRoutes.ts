@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {  requiresAuth } from 'express-openid-connect';
+import { requiresAuth } from 'express-openid-connect';
 import 'dotenv/config';
 
 const authRouter: Router = Router();
@@ -12,6 +12,7 @@ const authRouter: Router = Router();
     baseURL: process.env.BASE_URL,
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: process.env.ISSUER_BASE_URL,
+};
     afterCallback: (req, res, session, state) => {
         console.log('After Callback Triggered');
         res.redirect('http://localhost:3000/profile');
@@ -33,6 +34,7 @@ authRouter.get('/test', (req, res) => {
     console.log('Test endpoint hit');
     res.send('Test route is working');
 });
+
 
 authRouter.get('/profile', requiresAuth(), (req, res) => {
     console.log('OIDC User Object:', JSON.stringify(req.oidc.user));

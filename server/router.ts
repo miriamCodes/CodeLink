@@ -1,10 +1,11 @@
 
 import express, { Router } from 'express';
-import { postUser, getUser } from './controllers/user';
+import { postUser } from './controllers/user';
 import { postSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
 import { PrismaClient } from '@prisma/client';
+import checkJwt from './auth/authMiddleware';
 
 const router: Router = express.Router();
 
@@ -15,6 +16,11 @@ router.post('/login',);
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
 
+// router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
+router.get('/profile/:id', getProfile);
+router.put('/update-profile/:id', updateProfile); // MAYBE ALSO ADD ID
+router.get('/home/username',);
+router.get('/news', fetchNews);
 router.get('http://localhost:3000/profile', checkJwt, async (req: AuthRequest, res) => {
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
