@@ -1,10 +1,10 @@
 import express, { Express } from 'express';
 import cors from 'cors';
 import session from 'express-session';
-import { router } from './router';
 import authRouter from './auth/authRoutes';
-import { auth } from 'express-openid-connect'; 
+import { auth } from 'express-openid-connect';
 import 'dotenv/config';
+
 
 const config = {
   authRequired: false,
@@ -14,6 +14,7 @@ const config = {
   baseURL: process.env.BASE_URL,
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
+  /* postLogoutRedirectUri: 'http://localhost:3000', */
   afterCallback: (req: Request, res) => {
     console.log('After Callback Triggered');
     res.redirect('http://localhost:3000/profile');
@@ -26,6 +27,7 @@ const config = {
 };
 
 const app: Express = express();
+
 
 app.use(cors({
   origin: ['http://localhost:3000', 'https://dev-ufx4hgreuueebbg6.us.auth0.com'],
@@ -44,11 +46,25 @@ app.use(session({
   }
 }));
 
+
+
+app.get('/logout', (req, res) => {
+  console.log('Logout endpoint hit');
+  const returnTo = encodeURIComponent('http://localhost:3000');
+  const logoutURL = `${process.env.ISSUER_BASE_URL}/v2/logout?client_id=${process.env.CLIENT_ID}&returnTo=${returnTo}`;
+  console.log('Constructed Logout URL:', logoutURL);
+  res.redirect(logoutURL);
+});
+
+
 app.use(auth(config));
+
+
+
 
 app.use(authRouter);
 
-app.use('/profile', router);
+
 
 const PORT = 3001;
 

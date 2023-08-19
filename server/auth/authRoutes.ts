@@ -4,8 +4,6 @@ import 'dotenv/config';
 
 const authRouter: Router = Router();
 
-console.log('Environment Variables:', process.env);
-
 /* const config = {
     authRequired: false,
     auth0Logout: true,
@@ -27,10 +25,12 @@ console.log('Environment Variables:', process.env);
 
 
 authRouter.get('/', (req, res) => {
+    console.log('route endpoint hit');
     res.send('Test auth route<a href="/login">Log in</a>.');
 });
 
 authRouter.get('/test', (req, res) => {
+    console.log('Test endpoint hit');
     res.send('Test route is working');
 });
 
