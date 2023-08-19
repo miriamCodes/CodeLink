@@ -38,6 +38,8 @@ model User {
   lastName  String?
   posts     Post[]
   profile   Profile?
+  projects  Project[]
+  comments  Comment[]
 }
 
 model Skill {
