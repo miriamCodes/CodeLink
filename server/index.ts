@@ -1,10 +1,10 @@
-import express, { Express } from 'express';
+import express, { Express, Response } from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import authRouter from './auth/authRoutes';
 import { auth } from 'express-openid-connect';
 import 'dotenv/config';
-
+import { router } from './router';
 
 const config = {
   authRequired: false,
@@ -15,7 +15,7 @@ const config = {
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
   /* postLogoutRedirectUri: 'http://localhost:3000', */
-  afterCallback: (req: Request, res) => {
+  afterCallback: (req: Request, res: Response) => {
     console.log('After Callback Triggered');
     res.redirect('http://localhost:3000/profile');
   
@@ -59,7 +59,7 @@ app.get('/logout', (req, res) => {
 app.use(auth(config));
 
 
-
+app.use(router);
 
 app.use(authRouter);
 
