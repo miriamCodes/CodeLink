@@ -1,0 +1,162 @@
+openapi: 3.0.3
+info:
+  title: CodeLink - discussion/project-colab board
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.0.1
+servers:
+  - url: http://localhost:3001
+tags:
+  - name: projects
+    description: Project related stuff
+
+paths:
+  /project:
+    get:
+      tags:
+        - projects
+      summary: Get projects
+      description: 'Get paged projects'
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+    post:
+      tags:
+        - projects
+      summary: Post projects
+      description: 'Post projects'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+  /project/{id}/comment:
+    get:
+      tags:
+        - projects
+      summary: Get comments for project
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+    post:
+      tags:
+        - projects
+      summary: Post comments for project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /project/{id}/vote:
+    post:
+      tags:
+        - projects
+      summary: Vote on a project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DoVote'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+      
+
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: "10"
+        title:
+          type: string
+          example: Amazing thing!
+        description:
+          type: string
+          example: The freaking thing is freaking cool!
+        stack:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
+        timeline:
+          type: string
+          example: Starting so soon to the moon.
+        votes:
+          type: number
+          readOnly: true
+          example: 9000
+        comments:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/CommentIds'
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: an id!
+        text:
+          type: string
+          example: great idea. I am in!
+
+    DoVote:
+      type: object
+      properties:
+        vote:
+          type: string
+          enum:
+            - UP
+            # - DOWN
+
+    Technology:
+      type: string
+      example: 'Next.js'
+    CommentIds:
+      type: string
+      example: "1011"
+
+
