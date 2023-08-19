@@ -2,19 +2,19 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/app/styles/profile-form.module.css';
 import Button from './button';
-
+import { useRouter } from 'next/navigation';
 interface Properties {
   editProfile: boolean;
   setEditProfile: (editProfile: boolean) => void;
-  value: boolean;
-  setValue: (value: boolean) => void;
+  value1: boolean;
+  setValue1: (value: boolean) => void;
 }
 
 export default function ProfileForm({
   editProfile,
   setEditProfile,
-  value,
-  setValue
+  value1,
+  setValue1,
 }: Properties) {
   const [profile, setProfile] = useState({
     bio: '',
@@ -59,13 +59,6 @@ export default function ProfileForm({
     }
   }, [editProfile, profile.bio, profile.user.firstName, profile.user.lastName]);
 
-  // if (editProfile) {
-  //   setFirstName(profile.user.firstName);
-  //   setLastName(profile.user.lastName);
-  //   setEmail(profile.user.email);
-  //   setBio(profile.bio);
-  // }
-
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     if (editProfile) {
       event.preventDefault();
@@ -78,12 +71,8 @@ export default function ProfileForm({
       })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-      setValue(!value);
+      setValue1(!value1);
       setEditProfile(false);
-      // setFirstName('');
-      // setLastName('');
-      // setEmail('');
-      // setBio('');
     } else {
       event.preventDefault();
       await fetch('http://localhost:3001/create-profile', {
@@ -117,6 +106,10 @@ export default function ProfileForm({
         setBio(event.target.value);
         break;
     }
+  }
+  const router = useRouter();
+  function handleClick() {
+    router.replace('/profile');
   }
   return (
     <div className={styles.profile_div}>
@@ -189,7 +182,11 @@ export default function ProfileForm({
           </form>
           <div className={styles.button_div}>
             <div className={styles.save_button}>
-              <Button useCase={'Save'} form={'profile-form'} />
+              <Button
+                onClick={handleClick}
+                useCase={'Save'}
+                form={'profile-form'}
+              />
             </div>
           </div>
         </div>

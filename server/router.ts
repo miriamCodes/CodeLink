@@ -1,13 +1,12 @@
 
 import express, { Router } from 'express';
-import { postUser, getUser } from './controllers/user';
+import { postUser } from './controllers/user';
 import { postSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
-import checkJwt from './auth/authMiddleware';
 import { PrismaClient } from '@prisma/client';
+import checkJwt from './auth/authMiddleware';
 import { AuthRequest } from './auth/authTypes';
-
 
 import {
   getProjects,
@@ -22,6 +21,7 @@ const router: Router = express.Router();
 const prisma = new PrismaClient();
 
 router.get('/home', );
+router.get('/news', fetchNews);
 
 router.post('/register', );
 router.post('/login', );
@@ -29,11 +29,13 @@ router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
 router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
-router.put('/update-profile', updateProfile); // MAYBE ALSO ADD ID
-router.get('/home/username', );
-router.get('/profile', checkJwt, async (req: AuthRequest, res) => {
+router.put('/update-profile/:id', updateProfile); // MAYBE ALSO ADD ID
+router.get('/home/username',);
+
+router.get('http://localhost:3000/profile', checkJwt, async (req: AuthRequest, res) => {
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
+    console.log('User ID from JWT:', userId); 
     const userProfile = await prisma.user.findUnique({ where: { auth0Id: userId }, include: { profile: true } });
 
     if (userProfile) {

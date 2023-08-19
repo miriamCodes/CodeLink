@@ -10,17 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-}
-
 model Profile {
   id     Int     @id @default(autoincrement())
   bio    String?
@@ -33,10 +22,9 @@ model User {
   id        Int      @id @default(autoincrement())
   username String?   @unique
   auth0Id  String?   @unique
-  email     String   @unique
+  email     String
   firstName String?
   lastName  String?
-  posts     Post[]
   profile   Profile?
   projects  Project[]
   comments  Comment[]
@@ -50,7 +38,7 @@ model Skill {
   level            String?
   programmingSkill String
   Profile          Profile?         @relation(fields: [profileId], references: [id])
-  profileId Int    
+  profileId Int
 }
 
 // *Miriam: new models for the project collaboration board with comment-function 
