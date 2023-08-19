@@ -24,6 +24,7 @@ export default function NavBar({
       router.push('http://localhost:3001/logout')
     }
     if (useCase === 'Log in') {
+      //setLoggedIn(true);
       router.push('http://localhost:3001/login');
     }
     if (useCase === 'Register') {
