@@ -21,9 +21,11 @@ export default function NavBar({
   function handleClick(useCase: string) {
     if (useCase === 'Log out') {
       setLoggedIn(false);
+      router.push('http://localhost:3001/logout')
     }
     if (useCase === 'Log in') {
-      router.push('/login');
+      //setLoggedIn(true);
+      router.push('http://localhost:3001/login');
     }
     if (useCase === 'Register') {
       // router.push('/register');

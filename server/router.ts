@@ -5,6 +5,8 @@ import { postSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
 import { PrismaClient } from '@prisma/client';
+import checkJwt from './auth/authMiddleware';
+import { AuthRequest } from './auth/authTypes';
 
 import {
   getProjects,
