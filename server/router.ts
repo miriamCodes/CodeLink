@@ -4,10 +4,10 @@ import { postUser } from './controllers/user';
 import { postSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
-import { fetchRepositories } from './APIs/github';
 import { PrismaClient } from '@prisma/client';
 import checkJwt from './auth/authMiddleware';
 import { AuthRequest } from './auth/authTypes';
+import { repoFilter } from './controllers/portfolio';
 
 import {
   getProjects,
@@ -23,7 +23,7 @@ const prisma = new PrismaClient();
 
 router.get('/home', );
 router.get('/news', fetchNews);
-router.get('/repos', fetchRepositories);
+router.get('/repos/:username', repoFilter);
 router.post('/register', );
 router.post('/login', );
 router.post('/create-profile', postUser);

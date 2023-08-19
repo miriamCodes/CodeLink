@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '@/app/styles/user-profile.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import Portfolio from './portfolio';
 
 interface Properties {
   value: boolean;
@@ -101,6 +102,9 @@ export default function UserProfile({value, value1} : Properties) {
         ) : (
           <div>No skills to display yet - click on add skills below.</div>
         )}
+      </div>
+      <div>
+        <Portfolio profile={profile} setProfile={setProfile}/>
       </div>
     </div>
   );
