@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 const prisma = new PrismaClient();
 
-async function postUser(req: Request, res: Response){
+async function postUser(req: Request, res: Response) {
   const { firstName, lastName, email, bio } = req.body;
   await prisma.user.create({
     data: {
@@ -24,11 +24,21 @@ async function getUser(req: Request, res: Response) {
       id
     },
     include: {
-      posts: true,
       profile: true,
     },
   });
   res.status(200).send(user);
 }
 
-export { postUser, getUser };
+async function updateUser(firstName: string, lastName: string, id: number) {
+  id = 4;
+  await prisma.user.update({
+    where: { id },
+    data: {
+      firstName,
+      lastName
+    }
+  });
+}
+
+export { postUser, getUser, updateUser };

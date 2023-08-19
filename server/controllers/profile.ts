@@ -1,40 +1,34 @@
 import { PrismaClient } from '@prisma/client';
-import { AuthRequest } from '../auth/authTypes';
-import { Response } from 'express';
+import { Request, Response } from 'express';
+import { updateUser } from './user';
+
 const prisma = new PrismaClient();
 
-async function updateProfile(req: AuthRequest, res: Response) {
-  const userId = req.user?.sub;
-
-  const user = await prisma.user.findUnique({ where: { auth0Id: userId } });
-  if (!user) {
-    return res.status(404).send('User not found');
-  }
+async function updateProfile(req: Request, res: Response) {
+  const id = +req.params.id;
+  const { firstName, lastName, bio } = req.body;
   await prisma.profile.update({
-    where: { userId: user.id },
+    where: { id },
     data: {
-      bio: req.body.bio
+      bio,
     }
   });
+  updateUser(firstName, lastName, id);
   res.status(200).send({ key: 'PROFILE CORRECTLY UPDATED' });
 }
 
-async function getProfile(req: AuthRequest, res: Response) {
-  const userId = req.user?.sub;
+async function getProfile(req: Request, res: Response) {
+  const id = +req.params.id;
   const profile = await prisma.profile.findUnique({
     where: {
-      userId: userId
+      id
     },
     include: {
       user: true,
       skill: true,
     },
   });
-  if (profile) {
-    res.status(200).send(profile);
-  } else {
-    res.status(404).send('Profile not found');
-  }
+  res.status(200).send(profile);
 }
 
 export { updateProfile, getProfile };

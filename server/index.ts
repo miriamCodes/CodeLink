@@ -26,14 +26,16 @@ const config = {
   }
 };
 
+import { router } from './router';
+import 'dotenv/config';
+
 const app: Express = express();
 
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://dev-ufx4hgreuueebbg6.us.auth0.com'],
+  origin: 'http://localhost:3000',
   credentials: true
 }));
-
 app.use(express.json());
 
 app.use(session({
@@ -65,9 +67,9 @@ app.use(auth(config));
 app.use(authRouter);
 
 
+app.use(router);
 
 const PORT = 3001;
-
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
