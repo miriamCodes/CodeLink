@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.home_div {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(61,90,128,1) 0%, rgba(152,193,217,1) 100%);
+}
+
+.welcome_div {
+  color: #293241;
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  height: 30%;
+  justify-content: center;
+}
+
+.news_div {
+}
+
+.welcome {
+  font-weight: 500;
+  margin: 2vh 0 2vh 0;
+  padding: 0 3vw 0 3vw;
+  text-align: center;
+}
+
+.homepage_div {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
