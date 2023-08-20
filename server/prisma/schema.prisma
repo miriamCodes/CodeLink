@@ -41,7 +41,6 @@ model Skill {
   profileId Int
 }
 
-// *Miriam: new models for the project collaboration board with comment-function 
 model Project {
   id          String      @id @default(uuid())
   title       String

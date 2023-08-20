@@ -20,7 +20,7 @@ async function postProject(req: Request, res: Response) {
       title,
       description,
       stack,
-      timeline
+      timeline,
     },
   });
   res.status(200).send(newProject);
@@ -31,7 +31,7 @@ async function getProjectComments(req: Request, res: Response) {
   const id = req.params.id;
   const comments = await prisma.comment.findMany({
     where: {
-      projectId: id
+      projectId: id,
     },
   });
   res.status(200).send(comments);
@@ -50,30 +50,48 @@ async function postProjectComment(req: Request, res: Response) {
   res.status(200).send(newComment);
 }
 
-// Post a vote for a specific project
-async function postProjectVote(req: Request, res: Response) {
-  const id = req.params.id;
-  const project = await prisma.project.findUnique({
-    where: {
-      id,
-    },
-  });
+// Post a vote/like for a specific project
 
-  if (!project) {
-    res.status(404).send({ error: 'Project not found' });
-    return;
+export const postProjectVote = async (req: Request, res: Response) => {
+  const projectId = req.params.id;
+  const { action } = req.body;
+
+  try {
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+    });
+
+    if (!project) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    let updatedVotes = project.votes;
+    if (action === 'like') {
+      updatedVotes += 1;
+    } else if (action === 'unlike') {
+      updatedVotes -= 1;
+    } else {
+      return res.status(400).json({ error: 'Invalid action' });
+    }
+
+    await prisma.project.update({
+      where: { id: projectId },
+      data: { votes: updatedVotes },
+    });
+
+    res.json({ votes: updatedVotes });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: 'An error occurred while updating the project' });
   }
+};
 
-  const updatedProject = await prisma.project.update({
-    where: {
-      id,
-    },
-    data: {
-      votes: project.votes + 1,
-    },
-  });
-
-  res.status(200).send(updatedProject);
-}
-
-export { getProjects, postProject, getProjectComments, postProjectComment, postProjectVote };
+export {
+  getProjects,
+  postProject,
+  getProjectComments,
+  postProjectComment,
+  postProjectVote,
+};
