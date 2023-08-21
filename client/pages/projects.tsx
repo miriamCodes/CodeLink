@@ -81,23 +81,42 @@ export default function Projects() {
       .catch((error) => console.log(error));
   }, []);
 
-  const handleAddProject = async (event: React.FormEvent<HTMLFormElement>) => {
+  // TESTING WHETHER PROBLEM IS FRONT- OR BACKEND. INCLUDE CODE ABOVE WHEN CONNECTING BACK TO BACKEND
+  // const handleAddProject = async (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   const projectData = { title, description, stack, timeline, authorId: 1 };
+  //   // how does authorId look like? (based on your auth0?)
+  //   const response = await fetch('/api/projects', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(projectData),
+  //   });
+  //   const newProject = await response.json();
+  //   setProjects((prev) => [...prev, newProject]);
+  //   setPopupOpen(false);
+  // };
+
+  const handleAddProject = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const projectData = { title, description, stack, timeline, authorId: 1 };
-    // how does authorId look like? (based on your auth0?)
-    const response = await fetch('/api/projects', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(projectData),
-    });
-    const newProject = await response.json();
-    setProjects((prev) => [...prev, newProject]);
-    setPopupOpen(false);
+    const projectData = {
+      id: (projects.length + 1).toString(),
+      title,
+      description,
+      stack,
+      timeline,
+      likes: 0,
+      isLiked: false,
+      author: { id: 1 },
+      comments: [],
+    };
+    setProjects((prev) => [...prev, projectData]);
+    setShowAddProjectForm(false);
   };
 
   const handleLikeToggle = async (projectId: string) => {
+    console.log('like button clicked for project', projectId);
     const projectIndex = projects.findIndex(
       (project) => project.id === projectId
     );
@@ -111,13 +130,23 @@ export default function Projects() {
         'Content-Type': 'application/json',
       },
     });
+    if (!response.ok) {
+      console.log('Response object:', response);
+      console.log('Response text:', await response.text());
+
+      throw new Error('Failed to like the project');
+    }
     const updatedProject = await response.json();
 
-    setProjects((prevProjects) => [
-      ...prevProjects.slice(0, projectIndex),
-      { ...project, likes: updatedProject.likes, isLiked: !project.isLiked },
-      ...prevProjects.slice(projectIndex + 1),
-    ]);
+    setProjects((prevProjects) => {
+      const updatedProjects = [
+        ...prevProjects.slice(0, projectIndex),
+        { ...project, likes: updatedProject.likes, isLiked: !project.isLiked },
+        ...prevProjects.slice(projectIndex + 1),
+      ];
+      console.log('updated projects:', updatedProjects);
+      return updatedProjects;
+    });
   };
 
   const handleCommentToggle = (projectId: string) => {
@@ -268,6 +297,7 @@ export default function Projects() {
                           onChange={(e) => setCommentInput(e.target.value)}
                           placeholder="Add a comment..."
                         />
+                        <div className='comment-btn-container'>
                         <button
                           className="submit-comment-btn"
                           onClick={() => handleCommentSubmit(project.id)}
@@ -280,6 +310,7 @@ export default function Projects() {
                         >
                           Cancel
                         </button>
+                        </div>
                         <div className="existing-comments">
                           {project.comments.map((comment, index) => (
                             <div key={index} className="comment">

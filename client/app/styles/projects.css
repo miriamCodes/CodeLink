@@ -1,8 +1,3 @@
-/* * {
-  margin: 0;
-  padding: 0;
-} */
-
 .collaboration-body {
   display: flex;
   width: 75%;
@@ -75,27 +70,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-}
-
-.existing-comments {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.comment {
-  border: 1px solid #98c1d9;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-}
-
-.comment-author {
-  font-style: italic;
-}
-
-.comment-text {
-  margin-left: 10px;
+  width: 100%;
 }
 
 /* PROJECT LIKE COUNTER */
@@ -136,19 +111,17 @@
 }
 
 /* PROJECTS COMMENTS */
+
 .comments-container {
   display: flex;
-  align-items: center;
-}
-
-.comments-toggle-container,
-.comments-section {
-  display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .comments-section {
   flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
 }
 
 .comments-btn {
@@ -162,7 +135,8 @@
 }
 
 .comments-input {
-  width: 70%;
+  flex-grow: 1;
+  width: 100%;
   flex-grow: 1;
   padding: 10px;
   font-size: 16px;
@@ -170,12 +144,19 @@
   border: 1px solid #d9534f;
   border-radius: 5px;
   margin-right: 15px;
+  margin: 5px;
+  display: block;
+  text-align: right;
 }
 
 .comments-input::placeholder {
-  font-family: 'Your Desired Font', sans-serif;
   font-size: 16px;
   font-weight: 500;
+}
+
+.comment-btn-container {
+  display: flex;
+  align-self: flex-end;
 }
 
 .submit-comment-btn {
@@ -192,6 +173,7 @@
     rgba(238, 108, 77, 1) 100%
   );
   margin-right: 15px;
+  margin: 5px;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -206,8 +188,30 @@
   border-color: rgba(209, 95, 68, 1);
   color: rgba(209, 95, 68, 1);
   margin-right: 15px;
+  margin: 5px;
   border-radius: 3px;
   cursor: pointer;
+}
+
+.existing-comments {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.comment {
+  border: 1px solid #98c1d9;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.comment-author {
+  font-style: italic;
+}
+
+.comment-text {
+  margin-left: 10px;
 }
 
 /* FORM */
