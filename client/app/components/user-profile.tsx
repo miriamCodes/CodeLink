@@ -88,7 +88,7 @@ export default function UserProfile({value, value1} : Properties) {
         {profile.skill.length > 0 ? (
           <div>
             {profile.skill.map((s) => (
-              <div key="skill">
+              <div key={s.programmingSkill}>
                 <p key={s.programmingSkill}>{capitalize(s.programmingSkill)}</p>
                 <p key={s.experience}>
                   <i>{capitalize(s.experience)}</i>

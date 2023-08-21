@@ -47,13 +47,13 @@ model Repository {
   id            Int         @id @default(autoincrement())
   name          String?
   description   String?
-  updatedAt     DateTime
-  createdAt     DateTime
+  updatedAt     String?
+  createdAt     String?
   stars         Int?
   watchers      Int?
   language      String?
-  Profile          Profile?         @relation(fields: [profileId], references: [id])
-  profileId Int
+  Profile       Profile?         @relation(fields: [profileId], references: [id])
+  profileId     Int
 }
 
 // *Miriam: new models for the project collaboration board with comment-function

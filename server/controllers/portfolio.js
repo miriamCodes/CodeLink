@@ -15,11 +15,8 @@ const github_1 = require("../APIs/github");
 const prisma = new client_1.PrismaClient();
 function repoFilter(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('GOT HERE');
-        console.log(req.params.username);
         const username = req.params.username;
         let repos = yield (0, github_1.fetchRepositories)(username);
-        console.log(repos);
         repos = repos.filter((el) => el.stargazers_count > 0);
         res.send(repos);
     });
@@ -27,7 +24,7 @@ function repoFilter(req, res) {
 exports.repoFilter = repoFilter;
 function postRepo(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const repos = req.body.repos;
+        const repos = req.body.selectedRepos;
         repos.map((el) => __awaiter(this, void 0, void 0, function* () {
             yield prisma.repository.create({
                 data: {
@@ -55,7 +52,6 @@ function getPortfolio(req, res) {
                 profileId: id
             },
         });
-        console.log(portfolio);
         res.status(200).send(portfolio);
     });
 }
