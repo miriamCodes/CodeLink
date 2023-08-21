@@ -42,7 +42,9 @@ function postProject(req, res) {
         }
         catch (error) {
             console.error(error);
-            res.status(500).send({ error: 'An error occurred while creating the project' });
+            res
+                .status(500)
+                .send({ error: 'An error occurred while creating the project' });
         }
     });
 }
@@ -71,14 +73,16 @@ function postProjectComment(req, res) {
                 data: {
                     text,
                     projectId,
-                    authorId: userId
+                    authorId: userId,
                 },
             });
             res.status(201).send(newComment);
         }
         catch (error) {
             console.error(error);
-            res.status(500).send({ error: 'An error occurred while posting the comment' });
+            res
+                .status(500)
+                .send({ error: 'An error occurred while posting the comment' });
         }
     });
 }
@@ -92,7 +96,7 @@ const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function
             where: { id: projectId },
         });
         if (!project) {
-            return res.status(404).json({ error: 'Project not found' });
+            return res.status(404).send({ error: 'Project not found' });
         }
         let updatedLikes = project.likes;
         if (action === 'like') {
@@ -102,7 +106,7 @@ const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function
             updatedLikes -= 1;
         }
         else {
-            return res.status(400).json({ error: 'Invalid action' });
+            return res.status(400).send({ error: 'Invalid action' });
         }
         yield prisma.project.update({
             where: { id: projectId },
@@ -114,7 +118,7 @@ const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function
         console.error(error);
         res
             .status(500)
-            .json({ error: 'An error occurred while updating the project' });
+            .send({ error: 'An error occurred while updating the project' });
     }
 });
 exports.postProjectLike = postProjectLike;

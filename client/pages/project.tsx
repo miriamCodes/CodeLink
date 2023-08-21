@@ -70,7 +70,7 @@ export default function Projects() {
   const [commentInput, setCommentInput] = useState<string>('');
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/projects', {
+    fetch('http://localhost:3000/project', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export default function Projects() {
     event.preventDefault();
     const projectData = { title, description, stack, timeline, authorId: 1 };
     // how does authorId look like? (based on your auth0?)
-    const response = await fetch('/api/projects', {
+    const response = await fetch('http://localhost:3000/project', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ export default function Projects() {
     setProjects((prev) => [...prev, newProject]);
     setPopupOpen(false);
   };
-  
+
   // TESTING WHETHER PROBLEM IS FRONT- OR BACKEND. EXCLUDE CODE ABOVE WHEN CONNECTING BACK TO BACKEND
   // const handleAddProject = (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault();
@@ -124,12 +124,15 @@ export default function Projects() {
 
     const method = project.isLiked ? 'DELETE' : 'POST';
 
-    const response = await fetch(`/api/projects/${projectId}/like`, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `http://localhost:3000/project/${projectId}/like`,
+      {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     if (!response.ok) {
       console.log('Response object:', response);
       console.log('Response text:', await response.text());
@@ -167,32 +170,35 @@ export default function Projects() {
       (project) => project.id === projectId
     );
     const project = projects[projectIndex];
-  
+
     const commentData: Comment = {
       authorId: 1, // actual author ID
       text: commentInput,
     };
     try {
-      const response = await fetch(`/api/projects/${projectId}/comments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(commentData),
-      });
-  
+      const response = await fetch(
+        `http://localhost:3000/project/${projectId}/comments`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(commentData),
+        }
+      );
+
       if (!response.ok) {
         throw new Error('Failed to submit the comment');
       }
-  
+
       const newComment = await response.json();
-  
+
       setProjects((prevProjects) => [
         ...prevProjects.slice(0, projectIndex),
         { ...project, comments: [...project.comments, newComment] },
         ...prevProjects.slice(projectIndex + 1),
       ]);
-  
+
       setCommentInput('');
     } catch (error) {
       console.error('An error occurred while submitting the comment:', error);
@@ -335,19 +341,19 @@ export default function Projects() {
                           onChange={(e) => setCommentInput(e.target.value)}
                           placeholder="Add a comment..."
                         />
-                        <div className='comment-btn-container'>
-                        <button
-                          className="submit-comment-btn"
-                          onClick={() => handleCommentSubmit(project.id)}
-                        >
-                          Submit
-                        </button>
-                        <button
-                          className="cancel-comment-btn"
-                          onClick={() => handleCommentToggle(project.id)}
-                        >
-                          Cancel
-                        </button>
+                        <div className="comment-btn-container">
+                          <button
+                            className="submit-comment-btn"
+                            onClick={() => handleCommentSubmit(project.id)}
+                          >
+                            Submit
+                          </button>
+                          <button
+                            className="cancel-comment-btn"
+                            onClick={() => handleCommentToggle(project.id)}
+                          >
+                            Cancel
+                          </button>
                         </div>
                         <div className="existing-comments">
                           {project.comments.map((comment, index) => (

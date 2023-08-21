@@ -28,10 +28,11 @@ async function postProject(req: Request, res: Response) {
     res.status(201).send(newProject);
   } catch (error) {
     console.error(error);
-    res.status(500).send({ error: 'An error occurred while creating the project' });
+    res
+      .status(500)
+      .send({ error: 'An error occurred while creating the project' });
   }
 }
-
 
 // Get comments for a specific project
 async function getProjectComments(req: Request, res: Response) {
@@ -50,18 +51,20 @@ async function postProjectComment(req: Request, res: Response) {
   const projectId = req.params.id;
   const { text, userId } = req.body;
   try {
-  const newComment = await prisma.comment.create({
-    data: {
-      text,
-      projectId,
-      authorId: userId
-    },
-  });
-  res.status(201).send(newComment);
-} catch (error) {
-  console.error(error);
-  res.status(500).send({ error: 'An error occurred while posting the comment' });
-}
+    const newComment = await prisma.comment.create({
+      data: {
+        text,
+        projectId,
+        authorId: userId,
+      },
+    });
+    res.status(201).send(newComment);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .send({ error: 'An error occurred while posting the comment' });
+  }
 }
 
 // Post a like for a specific project
@@ -76,7 +79,7 @@ const postProjectLike = async (req: Request, res: Response) => {
     });
 
     if (!project) {
-      return res.status(404).json({ error: 'Project not found' });
+      return res.status(404).send({ error: 'Project not found' });
     }
 
     let updatedLikes = project.likes;
@@ -85,7 +88,7 @@ const postProjectLike = async (req: Request, res: Response) => {
     } else if (action === 'unlike') {
       updatedLikes -= 1;
     } else {
-      return res.status(400).json({ error: 'Invalid action' });
+      return res.status(400).send({ error: 'Invalid action' });
     }
 
     await prisma.project.update({
@@ -98,7 +101,7 @@ const postProjectLike = async (req: Request, res: Response) => {
     console.error(error);
     res
       .status(500)
-      .json({ error: 'An error occurred while updating the project' });
+      .send({ error: 'An error occurred while updating the project' });
   }
 };
 
