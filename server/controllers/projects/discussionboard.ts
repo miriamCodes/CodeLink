@@ -14,17 +14,24 @@ async function getProjects(req: Request, res: Response) {
 
 // Post a new project
 async function postProject(req: Request, res: Response) {
-  const { title, description, stack, timeline } = req.body;
-  const newProject = await prisma.project.create({
-    data: {
-      title,
-      description,
-      stack,
-      timeline,
-    },
-  });
-  res.status(200).send(newProject);
+  try {
+    const { title, description, stack, timeline, authorId } = req.body;
+    const newProject = await prisma.project.create({
+      data: {
+        title,
+        description,
+        stack,
+        timeline,
+        authorId,
+      },
+    });
+    res.status(201).send(newProject);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'An error occurred while creating the project' });
+  }
 }
+
 
 // Get comments for a specific project
 async function getProjectComments(req: Request, res: Response) {
@@ -40,22 +47,26 @@ async function getProjectComments(req: Request, res: Response) {
 // Post a comment for a specific project
 async function postProjectComment(req: Request, res: Response) {
   console.log('I got here with the request: ', req.body);
-  const id = req.params.id;
+  const projectId = req.params.id;
   const { text, userId } = req.body;
+  try {
   const newComment = await prisma.comment.create({
     data: {
       text,
-      project: id,
-      projectId: id,
-      author: userId
+      projectId,
+      authorId: userId
     },
   });
-  res.status(200).send(newComment);
+  res.status(201).send(newComment);
+} catch (error) {
+  console.error(error);
+  res.status(500).send({ error: 'An error occurred while posting the comment' });
+}
 }
 
-// Post a vote/like for a specific project
+// Post a like for a specific project
 
-const postProjectVote = async (req: Request, res: Response) => {
+const postProjectLike = async (req: Request, res: Response) => {
   const projectId = req.params.id;
   const { action } = req.body;
 
@@ -68,21 +79,21 @@ const postProjectVote = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Project not found' });
     }
 
-    let updatedVotes = project.votes;
+    let updatedLikes = project.likes;
     if (action === 'like') {
-      updatedVotes += 1;
+      updatedLikes += 1;
     } else if (action === 'unlike') {
-      updatedVotes -= 1;
+      updatedLikes -= 1;
     } else {
       return res.status(400).json({ error: 'Invalid action' });
     }
 
     await prisma.project.update({
       where: { id: projectId },
-      data: { votes: updatedVotes },
+      data: { likes: updatedLikes },
     });
 
-    res.json({ votes: updatedVotes });
+    res.json({ likes: updatedLikes });
   } catch (error) {
     console.error(error);
     res
@@ -96,5 +107,5 @@ export {
   postProject,
   getProjectComments,
   postProjectComment,
-  postProjectVote,
+  postProjectLike,
 };

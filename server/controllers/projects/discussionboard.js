@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postProjectVote = exports.postProjectComment = exports.getProjectComments = exports.postProject = exports.getProjects = void 0;
+exports.postProjectLike = exports.postProjectComment = exports.getProjectComments = exports.postProject = exports.getProjects = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 // Get all projects
@@ -27,16 +27,23 @@ exports.getProjects = getProjects;
 // Post a new project
 function postProject(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { title, description, stack, timeline } = req.body;
-        const newProject = yield prisma.project.create({
-            data: {
-                title,
-                description,
-                stack,
-                timeline,
-            },
-        });
-        res.status(200).send(newProject);
+        try {
+            const { title, description, stack, timeline, authorId } = req.body;
+            const newProject = yield prisma.project.create({
+                data: {
+                    title,
+                    description,
+                    stack,
+                    timeline,
+                    authorId,
+                },
+            });
+            res.status(201).send(newProject);
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).send({ error: 'An error occurred while creating the project' });
+        }
     });
 }
 exports.postProject = postProject;
@@ -57,22 +64,27 @@ exports.getProjectComments = getProjectComments;
 function postProjectComment(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('I got here with the request: ', req.body);
-        const id = req.params.id;
+        const projectId = req.params.id;
         const { text, userId } = req.body;
-        const newComment = yield prisma.comment.create({
-            data: {
-                text,
-                project: id,
-                projectId: id,
-                author: userId
-            },
-        });
-        res.status(200).send(newComment);
+        try {
+            const newComment = yield prisma.comment.create({
+                data: {
+                    text,
+                    projectId,
+                    authorId: userId
+                },
+            });
+            res.status(201).send(newComment);
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).send({ error: 'An error occurred while posting the comment' });
+        }
     });
 }
 exports.postProjectComment = postProjectComment;
-// Post a vote/like for a specific project
-const postProjectVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// Post a like for a specific project
+const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const projectId = req.params.id;
     const { action } = req.body;
     try {
@@ -82,21 +94,21 @@ const postProjectVote = (req, res) => __awaiter(void 0, void 0, void 0, function
         if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }
-        let updatedVotes = project.votes;
+        let updatedLikes = project.likes;
         if (action === 'like') {
-            updatedVotes += 1;
+            updatedLikes += 1;
         }
         else if (action === 'unlike') {
-            updatedVotes -= 1;
+            updatedLikes -= 1;
         }
         else {
             return res.status(400).json({ error: 'Invalid action' });
         }
         yield prisma.project.update({
             where: { id: projectId },
-            data: { votes: updatedVotes },
+            data: { likes: updatedLikes },
         });
-        res.json({ votes: updatedVotes });
+        res.json({ likes: updatedLikes });
     }
     catch (error) {
         console.error(error);
@@ -105,4 +117,4 @@ const postProjectVote = (req, res) => __awaiter(void 0, void 0, void 0, function
             .json({ error: 'An error occurred while updating the project' });
     }
 });
-exports.postProjectVote = postProjectVote;
+exports.postProjectLike = postProjectLike;

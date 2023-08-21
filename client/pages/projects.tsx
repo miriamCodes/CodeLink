@@ -81,39 +81,39 @@ export default function Projects() {
       .catch((error) => console.log(error));
   }, []);
 
-  // TESTING WHETHER PROBLEM IS FRONT- OR BACKEND. INCLUDE CODE ABOVE WHEN CONNECTING BACK TO BACKEND
-  // const handleAddProject = async (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   const projectData = { title, description, stack, timeline, authorId: 1 };
-  //   // how does authorId look like? (based on your auth0?)
-  //   const response = await fetch('/api/projects', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(projectData),
-  //   });
-  //   const newProject = await response.json();
-  //   setProjects((prev) => [...prev, newProject]);
-  //   setPopupOpen(false);
-  // };
-
-  const handleAddProject = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleAddProject = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const projectData = {
-      id: (projects.length + 1).toString(),
-      title,
-      description,
-      stack,
-      timeline,
-      likes: 0,
-      isLiked: false,
-      author: { id: 1 },
-      comments: [],
-    };
-    setProjects((prev) => [...prev, projectData]);
-    setShowAddProjectForm(false);
+    const projectData = { title, description, stack, timeline, authorId: 1 };
+    // how does authorId look like? (based on your auth0?)
+    const response = await fetch('/api/projects', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(projectData),
+    });
+    const newProject = await response.json();
+    setProjects((prev) => [...prev, newProject]);
+    setPopupOpen(false);
   };
+  
+  // TESTING WHETHER PROBLEM IS FRONT- OR BACKEND. EXCLUDE CODE ABOVE WHEN CONNECTING BACK TO BACKEND
+  // const handleAddProject = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   const projectData = {
+  //     id: (projects.length + 1).toString(),
+  //     title,
+  //     description,
+  //     stack,
+  //     timeline,
+  //     likes: 0,
+  //     isLiked: false,
+  //     author: { id: 1 },
+  //     comments: [],
+  //   };
+  //   setProjects((prev) => [...prev, projectData]);
+  //   setShowAddProjectForm(false);
+  // };
 
   const handleLikeToggle = async (projectId: string) => {
     console.log('like button clicked for project', projectId);
@@ -162,25 +162,63 @@ export default function Projects() {
     ]);
   };
 
-  const handleCommentSubmit = (projectId: string) => {
+  const handleCommentSubmit = async (projectId: string) => {
     const projectIndex = projects.findIndex(
       (project) => project.id === projectId
     );
     const project = projects[projectIndex];
-
-    const newComment: Comment = {
+  
+    const commentData: Comment = {
       authorId: 1, // actual author ID
       text: commentInput,
     };
-
-    setProjects((prevProjects) => [
-      ...prevProjects.slice(0, projectIndex),
-      { ...project, comments: [...project.comments, newComment] },
-      ...prevProjects.slice(projectIndex + 1),
-    ]);
-
-    setCommentInput('');
+    try {
+      const response = await fetch(`/api/projects/${projectId}/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(commentData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to submit the comment');
+      }
+  
+      const newComment = await response.json();
+  
+      setProjects((prevProjects) => [
+        ...prevProjects.slice(0, projectIndex),
+        { ...project, comments: [...project.comments, newComment] },
+        ...prevProjects.slice(projectIndex + 1),
+      ]);
+  
+      setCommentInput('');
+    } catch (error) {
+      console.error('An error occurred while submitting the comment:', error);
+    }
   };
+
+  // EXCLUDE WHEN BACKEND IS WORKING
+  // const handleCommentSubmit = (projectId: string) => {
+  //   const projectIndex = projects.findIndex(
+  //     (project) => project.id === projectId
+  //   );
+  //   const project = projects[projectIndex];
+
+  //   const newComment: Comment = {
+  //     authorId: 1, // actual author ID
+  //     text: commentInput,
+  //   };
+
+  //   setProjects((prevProjects) => [
+  //     ...prevProjects.slice(0, projectIndex),
+  //     { ...project, comments: [...project.comments, newComment] },
+  //     ...prevProjects.slice(projectIndex + 1),
+  //   ]);
+
+  //   setCommentInput('');
+  // };
 
   return (
     <div className="collaboration-body">
