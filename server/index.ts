@@ -26,9 +26,6 @@ const config = {
   }
 };
 
-import { router } from './router';
-import 'dotenv/config';
-
 const app: Express = express();
 
 
