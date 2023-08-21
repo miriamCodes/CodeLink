@@ -47,8 +47,8 @@ model Repository {
   id            Int         @id @default(autoincrement())
   name          String?
   description   String?
-  updatedAt     String?
-  createdAt     String?
+  updatedAt     DateTime
+  createdAt     DateTime
   stars         Int?
   watchers      Int?
   language      String?

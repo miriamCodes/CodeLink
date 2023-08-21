@@ -7,7 +7,8 @@ import { fetchNews } from './APIs/news';
 import { PrismaClient } from '@prisma/client';
 import checkJwt from './auth/authMiddleware';
 import { AuthRequest } from './auth/authTypes';
-import { repoFilter } from './controllers/portfolio';
+import { repoFilter, postRepo, getPortfolio } from './controllers/portfolio';
+
 
 import {
   getProjects,
@@ -24,6 +25,8 @@ const prisma = new PrismaClient();
 router.get('/home', );
 router.get('/news', fetchNews);
 router.get('/repos/:username', repoFilter);
+router.post('/create-repos', postRepo);
+router.get('/portfolio/:id', getPortfolio);
 router.post('/register', );
 router.post('/login', );
 router.post('/create-profile', postUser);
