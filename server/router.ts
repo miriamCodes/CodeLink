@@ -13,7 +13,7 @@ import {
   getProjectComments,
   postProjectComment,
   postProjectVote,
-} from './controllers/discussionboard';
+} from './controllers/projects/discussionboard';
 
 const router: Router = express.Router();
 

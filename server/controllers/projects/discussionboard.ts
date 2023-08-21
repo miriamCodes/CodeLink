@@ -39,12 +39,15 @@ async function getProjectComments(req: Request, res: Response) {
 
 // Post a comment for a specific project
 async function postProjectComment(req: Request, res: Response) {
+  console.log('I got here with the request: ', req.body);
   const id = req.params.id;
-  const { text } = req.body;
+  const { text, userId } = req.body;
   const newComment = await prisma.comment.create({
     data: {
       text,
+      project: id,
       projectId: id,
+      author: userId
     },
   });
   res.status(200).send(newComment);
@@ -52,7 +55,7 @@ async function postProjectComment(req: Request, res: Response) {
 
 // Post a vote/like for a specific project
 
-export const postProjectVote = async (req: Request, res: Response) => {
+const postProjectVote = async (req: Request, res: Response) => {
   const projectId = req.params.id;
   const { action } = req.body;
 

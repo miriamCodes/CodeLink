@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postProjectComment = exports.getProjectComments = exports.postProject = exports.getProjects = exports.postProjectVote = void 0;
+exports.postProjectVote = exports.postProjectComment = exports.getProjectComments = exports.postProject = exports.getProjects = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 // Get all projects
@@ -56,12 +56,15 @@ exports.getProjectComments = getProjectComments;
 // Post a comment for a specific project
 function postProjectComment(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log('I got here with the request: ', req.body);
         const id = req.params.id;
-        const { text } = req.body;
+        const { text, userId } = req.body;
         const newComment = yield prisma.comment.create({
             data: {
                 text,
+                project: id,
                 projectId: id,
+                author: userId
             },
         });
         res.status(200).send(newComment);
