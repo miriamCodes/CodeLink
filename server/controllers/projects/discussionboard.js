@@ -38,7 +38,7 @@ function postProject(req, res) {
                     authorId,
                 },
             });
-            res.status(201).send(newProject);
+            res.status(201).send(Object.assign(Object.assign({}, newProject), { comments: [] }));
         }
         catch (error) {
             console.error(error);

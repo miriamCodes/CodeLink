@@ -25,7 +25,7 @@ async function postProject(req: Request, res: Response) {
         authorId,
       },
     });
-    res.status(201).send(newProject);
+    res.status(201).send({...newProject, comments:[]});
   } catch (error) {
     console.error(error);
     res

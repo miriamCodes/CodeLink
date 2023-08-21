@@ -61,7 +61,6 @@ export default function Projects() {
     },
   ]);
 
-  const [isPopupOpen, setPopupOpen] = useState(false);
   const [showAddProjectForm, setShowAddProjectForm] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -83,7 +82,7 @@ export default function Projects() {
 
   const handleAddProject = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const projectData = { title, description, stack, timeline, authorId: 1 };
+    const projectData = { title, description, stack, timeline, authorId: 1, comments: [] };
     // how does authorId look like? (based on your auth0?)
     const response = await fetch('http://localhost:3001/project', {
       method: 'POST',
@@ -93,8 +92,8 @@ export default function Projects() {
       body: JSON.stringify(projectData),
     });
     const newProject = await response.json();
+    setShowAddProjectForm(false);
     setProjects((prev) => [...prev, newProject]);
-    setPopupOpen(false);
   };
 
   // TESTING WHETHER PROBLEM IS FRONT- OR BACKEND. EXCLUDE CODE ABOVE WHEN CONNECTING BACK TO BACKEND
