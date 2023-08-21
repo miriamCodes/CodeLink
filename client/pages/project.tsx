@@ -70,7 +70,7 @@ export default function Projects() {
   const [commentInput, setCommentInput] = useState<string>('');
 
   useEffect(() => {
-    fetch('http://localhost:3000/project', {
+    fetch('http://localhost:3001/project', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export default function Projects() {
     event.preventDefault();
     const projectData = { title, description, stack, timeline, authorId: 1 };
     // how does authorId look like? (based on your auth0?)
-    const response = await fetch('http://localhost:3000/project', {
+    const response = await fetch('http://localhost:3001/project', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ export default function Projects() {
     const method = project.isLiked ? 'DELETE' : 'POST';
 
     const response = await fetch(
-      `http://localhost:3000/project/${projectId}/like`,
+      `http://localhost:3001/project/${projectId}/like`,
       {
         method,
         headers: {
@@ -175,9 +175,11 @@ export default function Projects() {
       authorId: 1, // actual author ID
       text: commentInput,
     };
+    console.log(projectId);
+    console.log(project);
     try {
       const response = await fetch(
-        `http://localhost:3000/project/${projectId}/comments`,
+        `http://localhost:3001/project/${projectId}/comment`,
         {
           method: 'POST',
           headers: {
@@ -286,7 +288,6 @@ export default function Projects() {
           .slice()
           .sort((a, b) => b.likes - a.likes)
           .map((project, index) => {
-            console.log(project.isLiked);
             return (
               <div
                 key={project.id}
@@ -359,7 +360,7 @@ export default function Projects() {
                           {project.comments.map((comment, index) => (
                             <div key={index} className="comment">
                               <div className="comment-author">
-                                {comment.authorId}
+                                User{comment.authorId}
                               </div>
                               <div className="comment-text">{comment.text}</div>
                             </div>

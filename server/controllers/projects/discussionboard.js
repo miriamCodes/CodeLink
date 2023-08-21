@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postProjectLike = exports.postProjectComment = exports.getProjectComments = exports.postProject = exports.getProjects = void 0;
+exports.postProjectUnlike = exports.postProjectLike = exports.postProjectComment = exports.getProjectComments = exports.postProject = exports.getProjects = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 // Get all projects
@@ -67,13 +67,14 @@ function postProjectComment(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('I got here with the request: ', req.body);
         const projectId = req.params.id;
-        const { text, userId } = req.body;
+        console.log(projectId);
+        const { text, authorId } = req.body;
         try {
             const newComment = yield prisma.comment.create({
                 data: {
                     text,
                     projectId,
-                    authorId: userId,
+                    authorId: authorId,
                 },
             });
             res.status(201).send(newComment);
@@ -90,7 +91,7 @@ exports.postProjectComment = postProjectComment;
 // Post a like for a specific project
 const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const projectId = req.params.id;
-    const { action } = req.body;
+    console.log('liking projectId is', projectId);
     try {
         const project = yield prisma.project.findUnique({
             where: { id: projectId },
@@ -99,20 +100,13 @@ const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function
             return res.status(404).send({ error: 'Project not found' });
         }
         let updatedLikes = project.likes;
-        if (action === 'like') {
-            updatedLikes += 1;
-        }
-        else if (action === 'unlike') {
-            updatedLikes -= 1;
-        }
-        else {
-            return res.status(400).send({ error: 'Invalid action' });
-        }
+        updatedLikes += 1;
+        console.log('like count is now: ', updatedLikes);
         yield prisma.project.update({
             where: { id: projectId },
             data: { likes: updatedLikes },
         });
-        res.json({ likes: updatedLikes });
+        res.send({ likes: updatedLikes });
     }
     catch (error) {
         console.error(error);
@@ -122,3 +116,30 @@ const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.postProjectLike = postProjectLike;
+const postProjectUnlike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const projectId = req.params.id;
+    console.log('Unliking projectId', projectId);
+    try {
+        const project = yield prisma.project.findUnique({
+            where: { id: projectId },
+        });
+        if (!project) {
+            return res.status(404).send({ error: 'Project not found' });
+        }
+        let updatedLikes = project.likes;
+        updatedLikes -= 1;
+        console.log('like count are now: ', updatedLikes);
+        yield prisma.project.update({
+            where: { id: projectId },
+            data: { likes: updatedLikes },
+        });
+        res.send({ likes: updatedLikes });
+    }
+    catch (error) {
+        console.error(error);
+        res
+            .status(500)
+            .send({ error: 'An error occurred while updating the project' });
+    }
+});
+exports.postProjectUnlike = postProjectUnlike;

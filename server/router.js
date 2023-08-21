@@ -66,3 +66,4 @@ router.post('/project', discussionboard_1.postProject);
 router.get('/project/:id/comment', discussionboard_1.getProjectComments);
 router.post('/project/:id/comment', discussionboard_1.postProjectComment);
 router.post('/project/:id/like', discussionboard_1.postProjectLike);
+router.delete('/project/:id/like', discussionboard_1.postProjectUnlike);

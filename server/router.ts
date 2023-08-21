@@ -13,6 +13,7 @@ import {
   getProjectComments,
   postProjectComment,
   postProjectLike,
+  postProjectUnlike,
 } from './controllers/projects/discussionboard';
 
 const router: Router = express.Router();
@@ -67,5 +68,6 @@ router.post('/project', postProject);
 router.get('/project/:id/comment', getProjectComments);
 router.post('/project/:id/comment', postProjectComment);
 router.post('/project/:id/like', postProjectLike);
+router.delete('/project/:id/like', postProjectUnlike);
 
 export { router };

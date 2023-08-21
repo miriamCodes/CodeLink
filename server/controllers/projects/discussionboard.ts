@@ -49,13 +49,14 @@ async function getProjectComments(req: Request, res: Response) {
 async function postProjectComment(req: Request, res: Response) {
   console.log('I got here with the request: ', req.body);
   const projectId = req.params.id;
-  const { text, userId } = req.body;
+  console.log(projectId);
+  const { text, authorId } = req.body;
   try {
     const newComment = await prisma.comment.create({
       data: {
         text,
         projectId,
-        authorId: userId,
+        authorId: authorId,
       },
     });
     res.status(201).send(newComment);
@@ -71,8 +72,8 @@ async function postProjectComment(req: Request, res: Response) {
 
 const postProjectLike = async (req: Request, res: Response) => {
   const projectId = req.params.id;
-  const { action } = req.body;
 
+  console.log('liking projectId is', projectId);
   try {
     const project = await prisma.project.findUnique({
       where: { id: projectId },
@@ -83,20 +84,46 @@ const postProjectLike = async (req: Request, res: Response) => {
     }
 
     let updatedLikes = project.likes;
-    if (action === 'like') {
-      updatedLikes += 1;
-    } else if (action === 'unlike') {
-      updatedLikes -= 1;
-    } else {
-      return res.status(400).send({ error: 'Invalid action' });
-    }
 
+    updatedLikes += 1;
+    console.log('like count is now: ', updatedLikes);
     await prisma.project.update({
       where: { id: projectId },
       data: { likes: updatedLikes },
     });
 
-    res.json({ likes: updatedLikes });
+    res.send({ likes: updatedLikes });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .send({ error: 'An error occurred while updating the project' });
+  }
+};
+
+const postProjectUnlike = async (req: Request, res: Response) => {
+  const projectId = req.params.id;
+
+  console.log('Unliking projectId', projectId);
+  try {
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+    });
+
+    if (!project) {
+      return res.status(404).send({ error: 'Project not found' });
+    }
+
+    let updatedLikes = project.likes;
+
+    updatedLikes -= 1;
+    console.log('like count are now: ', updatedLikes);
+    await prisma.project.update({
+      where: { id: projectId },
+      data: { likes: updatedLikes },
+    });
+
+    res.send({ likes: updatedLikes });
   } catch (error) {
     console.error(error);
     res
@@ -111,4 +138,5 @@ export {
   getProjectComments,
   postProjectComment,
   postProjectLike,
+  postProjectUnlike,
 };
