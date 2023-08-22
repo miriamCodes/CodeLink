@@ -31,7 +31,7 @@ export default function Profile() {
         <div className="profile_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <div className="profile_buttons">
-            <UserProfile value1={value1} value={value} />
+            <UserProfile value1={value1} value={value} setValue={setValue} />
             <div className="button_div">
               <button
                 className="button"

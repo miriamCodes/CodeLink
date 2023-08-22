@@ -1,7 +1,7 @@
 
 import express, { Router } from 'express';
 import { postUser } from './controllers/user';
-import { postSkill } from './controllers/skill';
+import { postSkill, deleteSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
 import { PrismaClient } from '@prisma/client';
@@ -31,6 +31,7 @@ router.post('/register', );
 router.post('/login', );
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
+router.delete('/delete-skill', deleteSkill);
 router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
 router.put('/update-profile/:id', updateProfile); // MAYBE ALSO ADD ID

@@ -7,14 +7,16 @@ import Portfolio from './portfolio';
 interface Properties {
   value: boolean;
   value1: boolean;
+  setValue: (value: boolean) => void;
 }
 
-export default function UserProfile({value, value1} : Properties) {
+export default function UserProfile({value, value1, setValue} : Properties) {
   const [profile, setProfile] = useState({
     bio: '',
     user: { firstName: '', lastName: '', email: '', gitHub: '' },
     skill: [
       {
+        id: '',
         experience: '',
         level: '',
         programmingSkill: '',
@@ -33,7 +35,7 @@ export default function UserProfile({value, value1} : Properties) {
       .then((data) => setProfile(data))
       .catch((error) => console.log(error));
   }, [value, value1]);
-
+  
   function capitalize (word: string) {
     return word
       .toLowerCase()
@@ -41,6 +43,20 @@ export default function UserProfile({value, value1} : Properties) {
       .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ');
   };
+
+  async function handleSkillDelete(skill){
+    await fetch('http://localhost:3001/delete-skill', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: skill.id }),
+    })
+      .then((res) => res.json())
+      .catch((error) => console.log(error));
+    setValue(!value);
+  }
+
   return (
     <div className={styles.profile_div}>
       <div className={styles.profile_image}>
@@ -96,6 +112,7 @@ export default function UserProfile({value, value1} : Properties) {
                 <p key={s.level}>
                   <i>{capitalize(s.level)}</i>
                 </p>
+                <button onClick={() => handleSkillDelete(s)}>DELETE</button>
               </div>
             ))}
           </div>
