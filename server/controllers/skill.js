@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateSkill = exports.postSkill = void 0;
+exports.deleteSkill = exports.updateSkill = exports.postSkill = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function postSkill(req, res) {
@@ -35,7 +35,19 @@ function updateSkill(req, res) {
                 level,
             },
         });
-        res.status(201).send({ key: 'SKILL CORRECTLY UPDATED' });
+        res.status(200).send({ key: 'SKILL CORRECTLY UPDATED' });
     });
 }
 exports.updateSkill = updateSkill;
+function deleteSkill(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { id } = req.body;
+        yield prisma.skill.delete({
+            where: {
+                id,
+            },
+        });
+        res.status(200).send({ key: 'SKILL DELETED' });
+    });
+}
+exports.deleteSkill = deleteSkill;

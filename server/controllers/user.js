@@ -14,12 +14,13 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function postUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { firstName, lastName, email, bio } = req.body;
+        const { firstName, lastName, email, bio, gitHub } = req.body;
         yield prisma.user.create({
             data: {
                 firstName,
                 lastName,
                 email,
+                gitHub,
                 profile: {
                     create: { bio },
                 },
@@ -44,14 +45,15 @@ function getUser(req, res) {
     });
 }
 exports.getUser = getUser;
-function updateUser(firstName, lastName, id) {
+function updateUser(firstName, lastName, gitHub, id) {
     return __awaiter(this, void 0, void 0, function* () {
-        id = 4;
+        id = 1;
         yield prisma.user.update({
             where: { id },
             data: {
                 firstName,
-                lastName
+                lastName,
+                gitHub
             }
         });
     });

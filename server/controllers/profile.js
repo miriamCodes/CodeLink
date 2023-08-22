@@ -16,14 +16,14 @@ const prisma = new client_1.PrismaClient();
 function updateProfile(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const id = +req.params.id;
-        const { firstName, lastName, bio } = req.body;
+        const { firstName, lastName, bio, gitHub } = req.body;
         yield prisma.profile.update({
             where: { id },
             data: {
                 bio,
             }
         });
-        (0, user_1.updateUser)(firstName, lastName, id);
+        (0, user_1.updateUser)(firstName, lastName, gitHub, id);
         res.status(200).send({ key: 'PROFILE CORRECTLY UPDATED' });
     });
 }
