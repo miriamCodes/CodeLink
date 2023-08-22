@@ -7,10 +7,13 @@ import Portfolio from './portfolio';
 interface Properties {
   value: boolean;
   value1: boolean;
-  setValue: (value: boolean) => void;
+  addSkill: boolean;
+  setAddSkill: (addSkill: boolean) => void;
+  editProfile: boolean;
+  setEditProfile: (setEditSkill: boolean) => void;
 }
 
-export default function UserProfile({value, value1, setValue} : Properties) {
+export default function UserProfile({value, value1, addSkill, setAddSkill, editProfile, setEditProfile} : Properties) {
   const [profile, setProfile] = useState({
     bio: '',
     user: { firstName: '', lastName: '', email: '', gitHub: '' },
@@ -35,7 +38,7 @@ export default function UserProfile({value, value1, setValue} : Properties) {
       .then((data) => setProfile(data))
       .catch((error) => console.log(error));
   }, [value, value1]);
-  
+
   function capitalize (word: string) {
     return word
       .toLowerCase()
@@ -79,14 +82,19 @@ export default function UserProfile({value, value1, setValue} : Properties) {
         <p>
           <b>Email</b>
         </p>
-        <p>{profile.user.email}</p>
+        <Link className={styles.link}  href={`mailto:${profile.user.email}`}>
+          <p>{profile.user.email}</p>
+        </Link>
       </div>
       <div className={styles.profile_field}>
         <p>
           <b>GitHub Username</b>
         </p>
         <p>
-          <Link className={styles.link} href={`http://github.com/${profile.user.gitHub}`}>
+          <Link
+            className={styles.link}
+            href={`http://github.com/${profile.user.gitHub}`}
+          >
             {profile.user.gitHub}
           </Link>
         </p>
@@ -102,14 +110,16 @@ export default function UserProfile({value, value1, setValue} : Properties) {
           <b>Skills</b>
         </p>
         {profile.skill.length > 0 ? (
-          <div>
+          <div className={styles.skills_div}>
             {profile.skill.map((s) => (
-              <div key={s.programmingSkill}>
-                <p key={s.programmingSkill}>{capitalize(s.programmingSkill)}</p>
-                <p key={s.experience}>
+              <div className={styles.skill_div} key={s.programmingSkill}>
+                <p className={styles.language} key={s.programmingSkill}>
+                  {capitalize(s.programmingSkill)}
+                </p>
+                <p className={styles.experience} key={s.experience}>
                   <i>{capitalize(s.experience)}</i>
                 </p>
-                <p key={s.level}>
+                <p className={styles.level} key={s.level}>
                   <i>{capitalize(s.level)}</i>
                 </p>
                 <button onClick={() => handleSkillDelete(s)}>DELETE</button>
@@ -120,9 +130,14 @@ export default function UserProfile({value, value1, setValue} : Properties) {
           <div>No skills to display yet - click on add skills below.</div>
         )}
       </div>
-      <div>
-        <Portfolio profile={profile} setProfile={setProfile}/>
-      </div>
+      <Portfolio
+        setAddSkill={setAddSkill}
+        addSkill={addSkill}
+        editProfile={editProfile}
+        setEditProfile={setEditProfile}
+        profile={profile}
+        setProfile={setProfile}
+      />
     </div>
   );
 }
