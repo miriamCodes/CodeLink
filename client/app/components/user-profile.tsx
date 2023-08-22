@@ -19,6 +19,7 @@ export default function UserProfile({value, value1, addSkill, setAddSkill, editP
     user: { firstName: '', lastName: '', email: '', gitHub: '' },
     skill: [
       {
+        id: '',
         experience: '',
         level: '',
         programmingSkill: '',
@@ -45,6 +46,20 @@ export default function UserProfile({value, value1, addSkill, setAddSkill, editP
       .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ');
   };
+
+  async function handleSkillDelete(skill){
+    await fetch('http://localhost:3001/delete-skill', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: skill.id }),
+    })
+      .then((res) => res.json())
+      .catch((error) => console.log(error));
+    setValue(!value);
+  }
+
   return (
     <div className={styles.profile_div}>
       <div className={styles.profile_image}>
@@ -107,6 +122,7 @@ export default function UserProfile({value, value1, addSkill, setAddSkill, editP
                 <p className={styles.level} key={s.level}>
                   <i>{capitalize(s.level)}</i>
                 </p>
+                <button onClick={() => handleSkillDelete(s)}>DELETE</button>
               </div>
             ))}
           </div>
