@@ -122,7 +122,7 @@ export default function UserProfile({value, value1, addSkill, setAddSkill, editP
                 <p className={styles.level} key={s.level}>
                   <i>{capitalize(s.level)}</i>
                 </p>
-                <button onClick={() => handleSkillDelete(s)}>DELETE</button>
+                <button className={styles.small_button} onClick={() => handleSkillDelete(s)}>X</button>
               </div>
             ))}
           </div>
