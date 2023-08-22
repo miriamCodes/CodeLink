@@ -23,7 +23,7 @@ model User {
   id        Int      @id @default(autoincrement())
   username String?   @unique
   auth0Id  String?   @unique
-  email     String
+  email     String   @unique
   gitHub  String?
   firstName String?
   lastName  String?
@@ -63,7 +63,7 @@ model Project {
   description String
   stack       String[]
   timeline    String
-  votes       Int         @default(0)
+  likes       Int         @default(0)
   comments    Comment[]
   author      User     @relation(fields: [authorId], references: [id])
   authorId    Int

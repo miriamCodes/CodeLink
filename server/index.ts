@@ -18,7 +18,7 @@ const config = {
   afterCallback: (req: Request, res: Response) => {
     console.log('After Callback Triggered');
     res.redirect('http://localhost:3000/profile');
-  
+
   },
   authorizationParams: {
     response_type: 'code',
@@ -58,13 +58,9 @@ app.get('/logout', (req, res) => {
 
 app.use(auth(config));
 
-
 app.use(router);
 
 app.use(authRouter);
-
-
-app.use(router);
 
 const PORT = 3001;
 app.listen(PORT, () => {

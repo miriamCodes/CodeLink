@@ -139,6 +139,9 @@ components:
           type: string
           readOnly: true
           example: an id!
+        userId:
+          type: number
+          example: 1
         text:
           type: string
           example: great idea. I am in!

@@ -93,8 +93,8 @@ export default function NavBar({
             </Link>
           </li>
           <li>
-            <Link href="/discussion" className={styles.nav_item}>
-              Discussion
+            <Link href="/project" className={styles.nav_item}>
+              Discussion-Board
             </Link>
           </li>
           <li>

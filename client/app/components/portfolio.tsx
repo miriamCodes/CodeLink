@@ -80,21 +80,21 @@ export default function Portfolio({ profile, setProfile }: Properties) {
     },
   ]);
 
-  // useEffect(() => {
-  //   const username = profile.user.gitHub;
-  //   const fetchRepos = async () => {
-  //     await fetch(`http://localhost:3001/repos/${username}`, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => setRepos(data))
-  //       .catch((error) => console.log(error));
-  //   };
-  //   fetchRepos();
-  // }, [profile.user.gitHub]);
+  useEffect(() => {
+    const username = profile.user.gitHub;
+    const fetchRepos = async () => {
+      await fetch(`http://localhost:3001/repos/${username}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => setRepos(data))
+        .catch((error) => console.log(error));
+    };
+    fetchRepos();
+  }, [profile.user.gitHub]);
 
   function handleState() {
     setPortfolioForm(!portfolioForm);
