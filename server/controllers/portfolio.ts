@@ -41,6 +41,16 @@ async function getPortfolio(req: Request, res: Response) {
   res.status(200).send(portfolio);
 }
 
+async function deleteRepo(req: Request, res: Response) {
+  const {id} = req.body;
+  await prisma.repository.delete({
+    where: {
+      id,
+    },
+  });
+  res.status(200).send({ key: 'REPO DELETED' });
+}
+
 // when we edit: fetch to backend
 // fetch from github api
 // fetch fom db
@@ -51,4 +61,4 @@ async function getPortfolio(req: Request, res: Response) {
 
 // delete repos
 
-export { repoFilter, postRepo, getPortfolio };
+export { repoFilter, postRepo, getPortfolio, deleteRepo };

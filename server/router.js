@@ -29,6 +29,7 @@ router.get('/home');
 router.get('/news', news_1.fetchNews);
 router.get('/repos/:username', portfolio_1.repoFilter);
 router.post('/create-repos', portfolio_1.postRepo);
+router.delete('/delete-repo', portfolio_1.deleteRepo);
 router.get('/portfolio/:id', portfolio_1.getPortfolio);
 router.post('/register');
 router.post('/login');

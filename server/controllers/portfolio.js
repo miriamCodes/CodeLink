@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPortfolio = exports.postRepo = exports.repoFilter = void 0;
+exports.deleteRepo = exports.getPortfolio = exports.postRepo = exports.repoFilter = void 0;
 const client_1 = require("@prisma/client");
 const github_1 = require("../APIs/github");
 const prisma = new client_1.PrismaClient();
@@ -56,3 +56,15 @@ function getPortfolio(req, res) {
     });
 }
 exports.getPortfolio = getPortfolio;
+function deleteRepo(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { id } = req.body;
+        yield prisma.repository.delete({
+            where: {
+                id,
+            },
+        });
+        res.status(200).send({ key: 'REPO DELETED' });
+    });
+}
+exports.deleteRepo = deleteRepo;

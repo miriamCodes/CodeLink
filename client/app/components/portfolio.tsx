@@ -40,6 +40,7 @@ interface Properties {
 // WE HAVE TO THINK OF A WAY TO SEND ID OF SPECIFIC PROFILE
 export default function Portfolio({ profile, setProfile }: Properties) {
   const [showPortfolio, setShowPortfolio] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const [repos, setRepos] = useState([
     {
       id: '',
@@ -96,6 +97,12 @@ export default function Portfolio({ profile, setProfile }: Properties) {
   //   fetchRepos();
   // }, [profile.user.gitHub]);
 
+  useEffect(() => {
+    const portfolioRerender = async () => { await handlePortfolio() };
+    portfolioRerender();
+  }, [toggle]);
+
+
   function handleState() {
     setPortfolioForm(!portfolioForm);
   }
@@ -145,6 +152,20 @@ export default function Portfolio({ profile, setProfile }: Properties) {
 
   function handleProject() {
     setShowPortfolio(true);
+  }
+
+  async function handleRepoDelete(repo) {
+    await fetch('http://localhost:3001/delete-repo', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: repo.id }),
+    })
+      .then((res) => res.json())
+      .catch((error) => console.log(error));
+    
+    setToggle(!toggle);
   }
 
   function convertDate(date: string) {
@@ -239,6 +260,7 @@ export default function Portfolio({ profile, setProfile }: Properties) {
                   {convertDate(p.updatedAt)}
                 </p>
               </div>
+              <button onClick={() => handleRepoDelete(p)}>DELETE</button>
             </div>
           ))}
         </div>

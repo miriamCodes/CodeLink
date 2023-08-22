@@ -34,8 +34,6 @@ model User {
 
 model Skill {
   id               Int              @id @default(autoincrement())
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
   experience       String?
   level            String?
   programmingSkill String

@@ -2,13 +2,13 @@
   "name": "codelink",
   "version": "1.0.0",
   "description": "super cool group thesis project",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "test",
     "prepare": "husky install",
     "build": "npx tsc",
-    "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "start": "node dist/server.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
     "migrate": "prisma migrate dev"
   },
   "author": "",
