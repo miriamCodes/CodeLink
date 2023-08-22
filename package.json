@@ -2,7 +2,7 @@
   "name": "codelink",
   "version": "1.0.0",
   "description": "super cool group thesis project",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "test",
     "prepare": "husky install"

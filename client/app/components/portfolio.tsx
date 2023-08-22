@@ -44,6 +44,7 @@ interface Properties {
 // WE HAVE TO THINK OF A WAY TO SEND ID OF SPECIFIC PROFILE
 export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, editProfile, setEditProfile }: Properties) {
   const [showPortfolio, setShowPortfolio] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const [repos, setRepos] = useState([
     {
       id: '',
@@ -100,6 +101,12 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
   //   fetchRepos();
   // }, [profile.user.gitHub]);
 
+  useEffect(() => {
+    const portfolioRerender = async () => { await handlePortfolio() };
+    portfolioRerender();
+  }, [toggle]);
+
+
   function handleState() {
     setPortfolioForm(!portfolioForm);
   }
@@ -150,6 +157,20 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
   function handleButtonClick(event: React.MouseEvent<HTMLElement>) {
     if (event.target.id === 'skill') setAddSkill(true);
     if (event.target.id === 'edit') setEditProfile(true);
+  }
+
+  async function handleRepoDelete(repo) {
+    await fetch('http://localhost:3001/delete-repo', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: repo.id }),
+    })
+      .then((res) => res.json())
+      .catch((error) => console.log(error));
+    
+    setToggle(!toggle);
   }
 
   function convertDate(date: string) {
@@ -258,6 +279,7 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
                   {convertDate(p.updatedAt)}
                 </p>
               </div>
+              <button onClick={() => handleRepoDelete(p)}>DELETE</button>
             </div>
           ))}
         </div>
