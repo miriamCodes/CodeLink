@@ -1,11 +1,13 @@
 import express, { Router } from 'express';
 import { postUser } from './controllers/user';
-import { postSkill } from './controllers/skill';
+import { postSkill, deleteSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
 import { PrismaClient } from '@prisma/client';
 import checkJwt from './auth/authMiddleware';
 import { AuthRequest } from './auth/authTypes';
+import { repoFilter, postRepo, getPortfolio, deleteRepo } from './controllers/portfolio';
+
 
 import {
   getProjects,
@@ -22,12 +24,16 @@ const prisma = new PrismaClient();
 
 router.get('/home');
 router.get('/news', fetchNews);
-
-router.post('/register');
-router.post('/login');
+router.get('/repos/:username', repoFilter);
+router.post('/create-repos', postRepo);
+router.delete('/delete-repo', deleteRepo);
+router.get('/portfolio/:id', getPortfolio);
+router.post('/register', );
+router.post('/login', );
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
-router.get('/profile/:id'); // WHEN AUTH STUFF IS CLEAR
+router.delete('/delete-skill', deleteSkill);
+router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
 router.put('/update-profile/:id', updateProfile); // MAYBE ALSO ADD ID
 router.get('/home/username');

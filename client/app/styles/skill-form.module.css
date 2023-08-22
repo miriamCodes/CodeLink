@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   display: flex;
-  margin: 10vh 0 0 0;
+  justify-content: center;
   flex-direction: column;
   background: linear-gradient(
     135deg,
@@ -10,8 +10,10 @@
     rgba(152, 193, 217, 1) 100%
   );
   box-shadow: 1px 1px 10px #293241;
-  width: 100%;
+  width: 75%;
   padding: 4vh 0 4vh 0;
+  height: 50%;
+  margin: 25vh 0vw;
 }
 
 .skill_title {
