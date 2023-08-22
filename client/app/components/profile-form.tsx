@@ -18,7 +18,7 @@ export default function ProfileForm({
 }: Properties) {
   const [profile, setProfile] = useState({
     bio: '',
-    user: { firstName: '', lastName: '', email: '' },
+    user: { firstName: '', lastName: '', email: '', gitHub: '' },
   });
   const id = 1; // Change this when auth is up and running
 
@@ -38,6 +38,7 @@ export default function ProfileForm({
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
+  const [gitHub, setGitHub] = useState('');
 
   useEffect(() => {
     if (editProfile) {
@@ -56,8 +57,9 @@ export default function ProfileForm({
       setFirstName(profile.user.firstName);
       setLastName(profile.user.lastName);
       setBio(profile.bio);
+      setGitHub(profile.user.gitHub);
     }
-  }, [editProfile, profile.bio, profile.user.firstName, profile.user.lastName]);
+  }, [editProfile, profile.bio, profile.user.firstName, profile.user.lastName, profile.user.gitHub]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     if (editProfile) {
@@ -80,7 +82,7 @@ export default function ProfileForm({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ firstName, lastName, email, bio }),
+        body: JSON.stringify({ firstName, lastName, email, bio, gitHub }),
       })
         .then((res) => res.json())
         .catch((error) => console.log(error));
@@ -88,6 +90,7 @@ export default function ProfileForm({
       setLastName('');
       setEmail('');
       setBio('');
+      setGitHub('');
     }
   }
 
@@ -104,6 +107,9 @@ export default function ProfileForm({
         break;
       case 'bio':
         setBio(event.target.value);
+        break;
+      case 'github':
+        setGitHub(event.target.value);
         break;
     }
   }
@@ -163,6 +169,21 @@ export default function ProfileForm({
                   placeholder="you@email.com"
                   id="email"
                   type="email"
+                />
+              </div>
+            )}
+            {!editProfile && (
+              <div className={styles.label_input}>
+                <label className={styles.form_label} htmlFor="github">
+                  GitHub username
+                </label>
+                <input
+                  className={styles.form_input}
+                  onChange={(event) => handleChange(event)}
+                  value={gitHub}
+                  placeholder="username"
+                  id="github"
+                  type="text"
                 />
               </div>
             )}

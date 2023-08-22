@@ -1,0 +1,97 @@
+.portfolio_div {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 30vh 0 0 0;
+  height: 70vh;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(41, 50, 65, 0.9);
+  overflow-y: scroll;
+}
+
+.label_details {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 2vh 4vw;
+}
+
+.project_div {
+  background: linear-gradient(
+    135deg,
+    rgba(61, 90, 128, 1) 0%,
+    rgba(152, 193, 217, 1) 100%
+  );
+  border-radius: 3px;
+  font-size: 20px;
+  color: white;
+  margin: 2vh 2vw;
+  width: 90%;
+  padding: 0 0 2vh 0;
+  box-shadow: 1px 1px 10px #293241;
+}
+
+.label {
+  width: 50%;
+  font-weight: 500;
+}
+
+.link:visited {
+  color: #3d5a80;
+}
+
+.link {
+  color: #293241;
+}
+
+.details {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.portfolio_overlay {
+  position: relative;
+}
+
+.title_div {
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  padding: 2vh 1vw;
+  margin: 0 0 2vh 0;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(224, 251, 252, 1) 100%
+  );
+  color: rgba(61, 90, 128, 1);
+  border-radius: 3px 3px 0px 0px;
+  font-weight: 500;
+}
+
+.button {
+  width: 20%;
+  padding: 1vh 0 1vh 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  border-style: none;
+  background: linear-gradient(0deg, rgba(209,95,68,1) 0%, rgba(238,108,77,1) 100%);
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 1vh 0;
+}
+
+.button_div {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}

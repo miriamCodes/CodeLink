@@ -9,7 +9,7 @@ async function postSkill(req: Request, res: Response) {
       programmingSkill: skill, experience, level, profileId: id
     },
   });
-  res.status(201).send({key: 'SKILL CREATED'});
+  res.status(201).send({ key: 'SKILL CREATED' });
 }
 
 async function updateSkill(req: Request, res: Response) {
@@ -19,11 +19,21 @@ async function updateSkill(req: Request, res: Response) {
     data: {
       programmingSkill: skill,
       experience,
-      level, 
+      level,
     },
   });
-  res.status(201).send({key: 'SKILL CORRECTLY UPDATED'});
+  res.status(200).send({ key: 'SKILL CORRECTLY UPDATED' });
+}
+
+async function deleteSkill(req: Request, res: Response) {
+  const {id} = req.body;
+  await prisma.skill.delete({
+    where: {
+      id,
+    },
+  });
+  res.status(200).send({ key: 'SKILL DELETED' });
 }
 
 
-export { postSkill, updateSkill};
+export { postSkill, updateSkill, deleteSkill };
