@@ -70,7 +70,7 @@ export default function UserProfile({value, value1} : Properties) {
           <b>GitHub Username</b>
         </p>
         <p>
-          <Link href={`http://github.com/${profile.user.gitHub}`}>
+          <Link className={styles.link} href={`http://github.com/${profile.user.gitHub}`}>
             {profile.user.gitHub}
           </Link>
         </p>

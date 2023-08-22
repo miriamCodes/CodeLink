@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from '@/app/styles/portfolio.module.css';
+import Link from 'next/link';
 
 interface Properties {
   profile: {
@@ -135,7 +136,11 @@ export default function Portfolio({ profile, setProfile }: Properties) {
   }
 
   function handleDiv(event) {
-    if (event.target.id !== 'project-div' && event.target.id ==='portfolio-div') setShowPortfolio(false);
+    if (
+      event.target.id !== 'project-div' &&
+      event.target.id === 'portfolio-div'
+    )
+      setShowPortfolio(false);
   }
 
   function handleProject() {
@@ -158,7 +163,14 @@ export default function Portfolio({ profile, setProfile }: Properties) {
   return (
     <div>
       <div>
-        <button onClick={handleState}>Add to portfolio</button>
+        <div className={styles.button_div}>
+          <button className={styles.button} onClick={handleState}>
+            Add to portfolio
+          </button>
+          <button className={styles.button} onClick={handlePortfolio}>
+            My portfolio
+          </button>
+        </div>
         {portfolioForm && (
           <div>
             {repos.map((repo) => (
@@ -174,17 +186,32 @@ export default function Portfolio({ profile, setProfile }: Properties) {
           </div>
         )}
       </div>
-        <div>
-          <button onClick={handlePortfolio}>My portfolio</button>
-        </div>
       {showPortfolio && (
-        <div className={styles.portfolio_div} id="portfolio-div" onClick={(event)=> handleDiv(event)}>
+        <div
+          className={styles.portfolio_div}
+          id="portfolio-div"
+          onClick={(event) => handleDiv(event)}
+        >
           {portfolio.map((p) => (
             <div id="project-div" className={styles.project_div} key={p.id}>
               <div className={styles.title_div}>
                 <p className={styles.title} key={p.name}>
                   {p.name}
                 </p>
+              </div>
+              <div className={styles.label_details}>
+                <p className={styles.label}>On GitHub: </p>
+                <Link
+                  className={styles.details}
+                  href={`https://github.com/${profile.user.gitHub}/${p.name}`}
+                >
+                  <p
+                    className={styles.link}
+                    key={`https://github.com/${profile.user.gitHub}/${p.name}`}
+                  >
+                    {`https://github.com/${profile.user.gitHub}/${p.name}`}
+                  </p>
+                </Link>
               </div>
               {p.description && (
                 <div className={styles.label_details}>
