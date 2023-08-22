@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import styles from '@/app/styles/skill-form.module.css';
 import Button from '@/app/components/button';
 interface Properties {
+  divId: string,
   addSkill: boolean;
   setAddSkill: (loggedIn: boolean) => void;
   value: boolean;
   setValue: (value: boolean) => void;
 }
 
-export default function SkillForm({ addSkill, setAddSkill, value, setValue }: Properties) {
+export default function SkillForm({ divId, addSkill, setAddSkill, value, setValue }: Properties) {
   const [skill, setSkill] = useState('');
   const [experience, setExperience] = useState('');
   const [level, setLevel] = useState('');

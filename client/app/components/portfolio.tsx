@@ -13,6 +13,7 @@ interface Properties {
     };
     skill: [
       {
+        id: number;
         experience: string;
         level: string;
         programmingSkill: string;
@@ -29,6 +30,7 @@ interface Properties {
     };
     skill: [
       {
+        id: number;
         experience: string;
         level: string;
         programmingSkill: string;
@@ -42,9 +44,16 @@ interface Properties {
 }
 
 // WE HAVE TO THINK OF A WAY TO SEND ID OF SPECIFIC PROFILE
-export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, editProfile, setEditProfile }: Properties) {
+export default function Portfolio({
+  profile,
+  setProfile,
+  addSkill,
+  setAddSkill,
+  editProfile,
+  setEditProfile,
+}: Properties) {
   const [showPortfolio, setShowPortfolio] = useState(false);
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(0);
   const [repos, setRepos] = useState([
     {
       id: '',
@@ -85,27 +94,30 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
     },
   ]);
 
-  // useEffect(() => {
-  //   const username = profile.user.gitHub;
-  //   const fetchRepos = async () => {
-  //     await fetch(`http://localhost:3001/repos/${username}`, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => setRepos(data))
-  //       .catch((error) => console.log(error));
-  //   };
-  //   fetchRepos();
-  // }, [profile.user.gitHub]);
+  useEffect(() => {
+    const username = profile.user.gitHub;
+    const fetchRepos = async () => {
+      await fetch(`http://localhost:3001/repos/${username}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => setRepos(data))
+        .catch((error) => console.log(error));
+    };
+    fetchRepos();
+  }, [profile.user.gitHub]);
 
   useEffect(() => {
-    const portfolioRerender = async () => { await handlePortfolio() };
-    portfolioRerender();
+    if (toggle > 0) {
+      const portfolioRerender = async () => {
+        await handlePortfolio();
+      };
+      portfolioRerender();
+    }
   }, [toggle]);
-
 
   function handleState() {
     setPortfolioForm(!portfolioForm);
@@ -152,6 +164,9 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
       event.target.id === 'portfolio-div'
     )
       setShowPortfolio(false);
+    else if (event.target.id !== 'portfolio-form' &&
+      event.target.id === 'portfolio-overlay')
+      setPortfolioForm(false);
   }
 
   function handleButtonClick(event: React.MouseEvent<HTMLElement>) {
@@ -169,8 +184,8 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
     })
       .then((res) => res.json())
       .catch((error) => console.log(error));
-    
-    setToggle(!toggle);
+
+    setToggle(toggle + 1);
   }
 
   function convertDate(date: string) {
@@ -188,6 +203,44 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
 
   return (
     <div>
+      {portfolioForm && (
+        <div
+          id="portfolio-overlay"
+          onClick={(event) => handleDiv(event)}
+          className={styles.portfolio_form}
+        >
+          <div id="portfolio-form" className={styles.unsaved_repos}>
+            <div className={styles.repos}>
+              {repos.map((repo) => (
+                <div className={styles.select_repo} key={repo.id}>
+                  <Link
+                    className={styles.link}
+                    href={`https://github.com/${profile.user.gitHub}/${repo.name}`}
+                  >
+                    <p className={styles.repo_details}>{repo.name}</p>
+                  </Link>
+                  <p className={styles.repo_details} key={repo.language}>
+                    {repo.language}
+                  </p>
+                  <p className={styles.repo_details} key={repo.created_at}>
+                    {convertDate(repo.created_at)}
+                  </p>
+                  <button
+                    className={styles.add_button}
+                    type="submit"
+                    onClick={() => handleSavedRepos(repo)}
+                  >
+                    {repo.select ? '-' : '+'}
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button className={styles.button} onClick={handleClick}>
+              Save
+            </button>
+          </div>
+        </div>
+      )}
       <div>
         <div className={styles.button_div}>
           <button className={styles.button} onClick={handleState}>
@@ -211,20 +264,6 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
             Edit profile
           </button>
         </div>
-        {portfolioForm && (
-          <div>
-            {repos.map((repo) => (
-              <div key={repo.id}>
-                <p key={repo.name}>{repo.name}</p>
-                <p key={repo.created_at}>{convertDate(repo.created_at)}</p>
-                <button type="submit" onClick={() => handleSavedRepos(repo)}>
-                  {repo.select ? '-' : '+'}
-                </button>
-              </div>
-            ))}
-            <button onClick={handleClick}>Save</button>
-          </div>
-        )}
       </div>
       {showPortfolio && (
         <div
@@ -239,18 +278,12 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
                   {p.name}
                 </p>
               </div>
-              <div className={styles.label_details}>
-                <p className={styles.label}>On GitHub: </p>
+              <div className={styles.github_link}>
                 <Link
-                  className={styles.details}
+                  className={styles.link}
                   href={`https://github.com/${profile.user.gitHub}/${p.name}`}
                 >
-                  <p
-                    className={styles.link}
-                    key={`https://github.com/${profile.user.gitHub}/${p.name}`}
-                  >
-                    {`https://github.com/${profile.user.gitHub}/${p.name}`}
-                  </p>
+                  <p key={p.name}>Check out the project on GitHub</p>
                 </Link>
               </div>
               {p.description && (
@@ -279,7 +312,12 @@ export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, 
                   {convertDate(p.updatedAt)}
                 </p>
               </div>
-              <button onClick={() => handleRepoDelete(p)}>DELETE</button>
+              <button
+                className={styles.small_button}
+                onClick={() => handleRepoDelete(p)}
+              >
+                X
+              </button>
             </div>
           ))}
         </div>

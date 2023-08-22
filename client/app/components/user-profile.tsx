@@ -6,14 +6,17 @@ import Portfolio from './portfolio';
 
 interface Properties {
   value: boolean;
+  setValue: (value: boolean) => void;
   value1: boolean;
+  setValue1: (value1: boolean) => void;
+
   addSkill: boolean;
   setAddSkill: (addSkill: boolean) => void;
   editProfile: boolean;
   setEditProfile: (setEditSkill: boolean) => void;
 }
 
-export default function UserProfile({value, value1, addSkill, setAddSkill, editProfile, setEditProfile} : Properties) {
+export default function UserProfile({value, setValue, value1, setValue1, addSkill, setAddSkill, editProfile, setEditProfile} : Properties) {
   const [profile, setProfile] = useState({
     bio: '',
     user: { firstName: '', lastName: '', email: '', gitHub: '' },
@@ -117,10 +120,10 @@ export default function UserProfile({value, value1, addSkill, setAddSkill, editP
                   {capitalize(s.programmingSkill)}
                 </p>
                 <p className={styles.experience} key={s.experience}>
-                  <i>{capitalize(s.experience)}</i>
+                  {capitalize(s.experience)}
                 </p>
                 <p className={styles.level} key={s.level}>
-                  <i>{capitalize(s.level)}</i>
+                  {capitalize(s.level)}
                 </p>
                 <button className={styles.small_button} onClick={() => handleSkillDelete(s)}>X</button>
               </div>

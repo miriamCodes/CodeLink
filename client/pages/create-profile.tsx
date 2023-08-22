@@ -19,10 +19,12 @@ export default function CreateProfile() {
       <div className={roboto.className}>
         <div className="profile_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          <ProfileForm
-            editProfile={editProfile}
-            setEditProfile={setEditProfile}
-          />
+          <div className='profile_form'>
+            <ProfileForm
+              editProfile={editProfile}
+              setEditProfile={setEditProfile}
+            />
+          </div>
         </div>
       </div>
     </main>
