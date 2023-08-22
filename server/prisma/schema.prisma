@@ -41,14 +41,13 @@ model Skill {
   profileId Int
 }
 
-// *Miriam: new models for the project collaboration board with comment-function 
 model Project {
   id          String      @id @default(uuid())
   title       String
   description String
   stack       String[]
   timeline    String
-  votes       Int         @default(0)
+  likes       Int         @default(0)
   comments    Comment[]
   author      User     @relation(fields: [authorId], references: [id])
   authorId    Int

@@ -1,4 +1,3 @@
-
 import express, { Router } from 'express';
 import { postUser } from './controllers/user';
 import { postSkill } from './controllers/skill';
@@ -13,37 +12,45 @@ import {
   postProject,
   getProjectComments,
   postProjectComment,
-  postProjectVote,
-} from './controllers/discussionboard';
+  postProjectLike,
+  postProjectUnlike,
+} from './controllers/projects/discussionboard';
 
 const router: Router = express.Router();
 
 const prisma = new PrismaClient();
 
-router.get('/home', );
+router.get('/home');
 router.get('/news', fetchNews);
 
-router.post('/register', );
-router.post('/login', );
+router.post('/register');
+router.post('/login');
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
-router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
+router.get('/profile/:id'); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
 router.put('/update-profile/:id', updateProfile); // MAYBE ALSO ADD ID
-router.get('/home/username',);
+router.get('/home/username');
 
-router.get('http://localhost:3000/profile', checkJwt, async (req: AuthRequest, res) => {
+router.get(
+  'http://localhost:3000/profile',
+  checkJwt,
+  async (req: AuthRequest, res) => {
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
-    console.log('User ID from JWT:', userId); 
-    const userProfile = await prisma.user.findUnique({ where: { auth0Id: userId }, include: { profile: true } });
+    console.log('User ID from JWT:', userId);
+    const userProfile = await prisma.user.findUnique({
+      where: { auth0Id: userId },
+      include: { profile: true },
+    });
 
     if (userProfile) {
-        res.json(userProfile);
+      res.json(userProfile);
     } else {
-        res.status(404).send('Profile not found');
+      res.status(404).send('Profile not found');
     }
-}); // Maybe userId
+  }
+); // Maybe userId
 router.get('/home/:username', checkJwt, async (req, res) => {
   const username = req.params.username;
   const user = await prisma.user.findUnique({ where: { username } });
@@ -60,6 +67,7 @@ router.get('/project', getProjects);
 router.post('/project', postProject);
 router.get('/project/:id/comment', getProjectComments);
 router.post('/project/:id/comment', postProjectComment);
-router.post('/project/:id/vote', postProjectVote);
+router.post('/project/:id/like', postProjectLike);
+router.delete('/project/:id/like', postProjectUnlike);
 
 export { router };
