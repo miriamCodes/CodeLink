@@ -41,19 +41,37 @@
   font-weight: 500;
   color: white;
   border-style: none;
-  background: linear-gradient(0deg, rgba(209,95,68,1) 0%, rgba(238,108,77,1) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(209, 95, 68, 1) 0%,
+    rgba(238, 108, 77, 1) 100%
+  );
   border-radius: 3px;
   cursor: pointer;
 }
 
 .button_div {
   display: flex;
-  width: 100%;
   justify-content: space-evenly;
-  margin: 0 0 6vh 0;
+  margin: 0vh 10vw 2vh 10vw;
 }
 
-.edit_div {
+.overlay_div {
+  z-index: 2;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
   position: absolute;
-  width: 100vw;
+  background-color: rgba(41, 50, 65, 0.9);
+}
+
+.container_div {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }

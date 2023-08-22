@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import UserProfile from '../app/components/user-profile';
 import SkillForm from '@/app/components/skill-form';
 import ProfileForm from '@/app/components/profile-form';
 import NavBar from '@/app/components/nav-bar';
 import { Roboto } from 'next/font/google';
 import '@/app/styles/profile.css';
-import Button from '@/app/components/button';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -21,36 +20,31 @@ export default function Profile() {
   const [value, setValue] = useState(false);
   const [value1, setValue1] = useState(false);
 
-  function handleClick(event: React.MouseEvent<HTMLElement>) {
-    if (event.target.id === 'skill') setAddSkill(true);
-    if (event.target.id === 'edit') setEditProfile(true);
+  function handleDiv(event) {
+    if (
+      event.target.divId !== 'skill-form' &&
+      event.target.id === 'skill-overlay'
+    ) setAddSkill(false);
+    else if (
+      event.target.divId !== 'profile-form' &&
+      event.target.id === 'profile-overlay'
+    ) setEditProfile(false);
   }
+
   return (
     <main>
       <div className={roboto.className}>
         <div className="profile_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <div className="profile_buttons">
-            <UserProfile value1={value1} value={value} />
-            <div className="button_div">
-              <button
-                className="button"
-                id="skill"
-                onClick={(event) => handleClick(event)}
-              >
-                Add skill
-              </button>
-              <button
-                className="button"
-                id="edit"
-                onClick={(event) => handleClick(event)}
-              >
-                Edit profile
-              </button>
-            </div>
             {addSkill && (
-              <div className="skill_div">
+              <div
+                onClick={(event) => handleDiv(event)}
+                id="skill-overlay"
+                className="overlay_div"
+              >
                 <SkillForm
+                  divId="skill-form"
                   setValue={setValue}
                   value={value}
                   addSkill={addSkill}
@@ -59,8 +53,13 @@ export default function Profile() {
               </div>
             )}
             {editProfile && (
-              <div className="edit_div">
+              <div
+                onClick={(event) => handleDiv(event)}
+                id="profile-overlay"
+                className="overlay_div"
+              >
                 <ProfileForm
+                  divId="profile-form"
                   setValue1={setValue1}
                   value1={value1}
                   editProfile={editProfile}
@@ -68,6 +67,18 @@ export default function Profile() {
                 />
               </div>
             )}
+            <div className="container_div">
+              <UserProfile
+                addSkill={addSkill}
+                setAddSkill={setAddSkill}
+                editProfile={editProfile}
+                setEditProfile={setEditProfile}
+                setValue1={setValue1}
+                value1={value1}
+                setValue={setValue}
+                value={value}
+              />
+            </div>
           </div>
         </div>
       </div>

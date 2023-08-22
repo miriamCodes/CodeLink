@@ -4,6 +4,7 @@ import styles from '@/app/styles/profile-form.module.css';
 import Button from './button';
 import { useRouter } from 'next/navigation';
 interface Properties {
+  divId: string,
   editProfile: boolean;
   setEditProfile: (editProfile: boolean) => void;
   value1: boolean;
@@ -11,6 +12,7 @@ interface Properties {
 }
 
 export default function ProfileForm({
+  divId,
   editProfile,
   setEditProfile,
   value1,
@@ -18,7 +20,7 @@ export default function ProfileForm({
 }: Properties) {
   const [profile, setProfile] = useState({
     bio: '',
-    user: { firstName: '', lastName: '', email: '' },
+    user: { firstName: '', lastName: '', email: '', gitHub: '' },
   });
   const id = 1; // Change this when auth is up and running
 
@@ -38,6 +40,7 @@ export default function ProfileForm({
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
+  const [gitHub, setGitHub] = useState('');
 
   useEffect(() => {
     if (editProfile) {
@@ -56,8 +59,9 @@ export default function ProfileForm({
       setFirstName(profile.user.firstName);
       setLastName(profile.user.lastName);
       setBio(profile.bio);
+      setGitHub(profile.user.gitHub);
     }
-  }, [editProfile, profile.bio, profile.user.firstName, profile.user.lastName]);
+  }, [editProfile, profile.bio, profile.user.firstName, profile.user.lastName, profile.user.gitHub]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     if (editProfile) {
@@ -80,7 +84,7 @@ export default function ProfileForm({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ firstName, lastName, email, bio }),
+        body: JSON.stringify({ firstName, lastName, email, bio, gitHub }),
       })
         .then((res) => res.json())
         .catch((error) => console.log(error));
@@ -88,6 +92,7 @@ export default function ProfileForm({
       setLastName('');
       setEmail('');
       setBio('');
+      setGitHub('');
     }
   }
 
@@ -105,6 +110,9 @@ export default function ProfileForm({
       case 'bio':
         setBio(event.target.value);
         break;
+      case 'github':
+        setGitHub(event.target.value);
+        break;
     }
   }
   const router = useRouter();
@@ -113,7 +121,6 @@ export default function ProfileForm({
   }
   return (
     <div className={styles.profile_div}>
-      <div className={styles.profile_form}>
         <div className={styles.profile_submit}>
           {!editProfile ? (
             <h2 className={styles.form_title}>Create a profile:</h2>
@@ -166,6 +173,21 @@ export default function ProfileForm({
                 />
               </div>
             )}
+            {!editProfile && (
+              <div className={styles.label_input}>
+                <label className={styles.form_label} htmlFor="github">
+                  GitHub username
+                </label>
+                <input
+                  className={styles.form_input}
+                  onChange={(event) => handleChange(event)}
+                  value={gitHub}
+                  placeholder="username"
+                  id="github"
+                  type="text"
+                />
+              </div>
+            )}
             <div className={styles.label_input}>
               <label className={styles.form_label} htmlFor="bio">
                 Bio
@@ -190,7 +212,6 @@ export default function ProfileForm({
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }
