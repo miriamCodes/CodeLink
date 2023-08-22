@@ -21,18 +21,18 @@ export default function Profile() {
   const [value, setValue] = useState(false);
   const [value1, setValue1] = useState(false);
 
-  function handleClick(event: React.MouseEvent<HTMLElement>) {
-    if (event.target.id === 'skill') setAddSkill(true);
-    if (event.target.id === 'edit') setEditProfile(true);
-  }
+  // function handleClick(event: React.MouseEvent<HTMLElement>) {
+  //   if (event.target.id === 'skill') setAddSkill(true);
+  //   if (event.target.id === 'edit') setEditProfile(true);
+  // }
   return (
     <main>
       <div className={roboto.className}>
         <div className="profile_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <div className="profile_buttons">
-            <UserProfile value1={value1} value={value} />
-            <div className="button_div">
+            <UserProfile addSkill={addSkill} setAddSkill={setAddSkill} editProfile={editProfile} setEditProfile={setEditProfile} value1={value1} value={value} />
+            {/* <div className="button_div">
               <button
                 className="button"
                 id="skill"
@@ -47,7 +47,7 @@ export default function Profile() {
               >
                 Edit profile
               </button>
-            </div>
+            </div> */}
             {addSkill && (
               <div className="skill_div">
                 <SkillForm

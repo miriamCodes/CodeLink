@@ -7,9 +7,13 @@ import Portfolio from './portfolio';
 interface Properties {
   value: boolean;
   value1: boolean;
+  addSkill: boolean;
+  setAddSkill: (addSkill: boolean) => void;
+  editProfile: boolean;
+  setEditProfile: (setEditSkill: boolean) => void;
 }
 
-export default function UserProfile({value, value1} : Properties) {
+export default function UserProfile({value, value1, addSkill, setAddSkill, editProfile, setEditProfile} : Properties) {
   const [profile, setProfile] = useState({
     bio: '',
     user: { firstName: '', lastName: '', email: '', gitHub: '' },
@@ -63,14 +67,19 @@ export default function UserProfile({value, value1} : Properties) {
         <p>
           <b>Email</b>
         </p>
-        <p>{profile.user.email}</p>
+        <Link className={styles.link}  href={`mailto:${profile.user.email}`}>
+          <p>{profile.user.email}</p>
+        </Link>
       </div>
       <div className={styles.profile_field}>
         <p>
           <b>GitHub Username</b>
         </p>
         <p>
-          <Link className={styles.link} href={`http://github.com/${profile.user.gitHub}`}>
+          <Link
+            className={styles.link}
+            href={`http://github.com/${profile.user.gitHub}`}
+          >
             {profile.user.gitHub}
           </Link>
         </p>
@@ -86,14 +95,16 @@ export default function UserProfile({value, value1} : Properties) {
           <b>Skills</b>
         </p>
         {profile.skill.length > 0 ? (
-          <div>
+          <div className={styles.skills_div}>
             {profile.skill.map((s) => (
-              <div key={s.programmingSkill}>
-                <p key={s.programmingSkill}>{capitalize(s.programmingSkill)}</p>
-                <p key={s.experience}>
+              <div className={styles.skill_div} key={s.programmingSkill}>
+                <p className={styles.language} key={s.programmingSkill}>
+                  {capitalize(s.programmingSkill)}
+                </p>
+                <p className={styles.experience} key={s.experience}>
                   <i>{capitalize(s.experience)}</i>
                 </p>
-                <p key={s.level}>
+                <p className={styles.level} key={s.level}>
                   <i>{capitalize(s.level)}</i>
                 </p>
               </div>
@@ -103,9 +114,14 @@ export default function UserProfile({value, value1} : Properties) {
           <div>No skills to display yet - click on add skills below.</div>
         )}
       </div>
-      <div>
-        <Portfolio profile={profile} setProfile={setProfile}/>
-      </div>
+      <Portfolio
+        setAddSkill={setAddSkill}
+        addSkill={addSkill}
+        editProfile={editProfile}
+        setEditProfile={setEditProfile}
+        profile={profile}
+        setProfile={setProfile}
+      />
     </div>
   );
 }

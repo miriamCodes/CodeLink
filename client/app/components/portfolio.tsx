@@ -35,10 +35,14 @@ interface Properties {
       }
     ];
   }) => void;
+  addSkill: boolean;
+  setAddSkill: (addSkill: boolean) => void;
+  editProfile: boolean;
+  setEditProfile: (editProfile: boolean) => void;
 }
 
 // WE HAVE TO THINK OF A WAY TO SEND ID OF SPECIFIC PROFILE
-export default function Portfolio({ profile, setProfile }: Properties) {
+export default function Portfolio({ profile, setProfile, addSkill, setAddSkill, editProfile, setEditProfile }: Properties) {
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [repos, setRepos] = useState([
     {
@@ -143,8 +147,9 @@ export default function Portfolio({ profile, setProfile }: Properties) {
       setShowPortfolio(false);
   }
 
-  function handleProject() {
-    setShowPortfolio(true);
+  function handleButtonClick(event: React.MouseEvent<HTMLElement>) {
+    if (event.target.id === 'skill') setAddSkill(true);
+    if (event.target.id === 'edit') setEditProfile(true);
   }
 
   function convertDate(date: string) {
@@ -169,6 +174,20 @@ export default function Portfolio({ profile, setProfile }: Properties) {
           </button>
           <button className={styles.button} onClick={handlePortfolio}>
             My portfolio
+          </button>
+          <button
+            className={styles.button}
+            id="skill"
+            onClick={(event) => handleButtonClick(event)}
+          >
+            Add skill
+          </button>
+          <button
+            className={styles.button}
+            id="edit"
+            onClick={(event) => handleButtonClick(event)}
+          >
+            Edit profile
           </button>
         </div>
         {portfolioForm && (
