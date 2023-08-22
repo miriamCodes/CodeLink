@@ -32,9 +32,9 @@ router.post('/create-repos', portfolio_1.postRepo);
 router.get('/portfolio/:id', portfolio_1.getPortfolio);
 router.post('/register');
 router.post('/login');
-router.post('/create-profile', user_1.postUser);
+router.post('/create-profile', authMiddleware_1.default, user_1.postUser);
 router.post('/create-skill', skill_1.postSkill);
-router.get('/profile/:id'); // WHEN AUTH STUFF IS CLEAR
+router.get('/profile', authMiddleware_1.default, user_1.getUserProfile); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', profile_1.getProfile);
 router.put('/update-profile/:id', profile_1.updateProfile); // MAYBE ALSO ADD ID
 router.get('/home/username');

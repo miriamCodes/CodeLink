@@ -1,6 +1,6 @@
 
 import express, { Router } from 'express';
-import { postUser } from './controllers/user';
+import { getUserProfile, postUser } from './controllers/user';
 import { postSkill } from './controllers/skill';
 import { updateProfile, getProfile } from './controllers/profile';
 import { fetchNews } from './APIs/news';
@@ -29,9 +29,9 @@ router.post('/create-repos', postRepo);
 router.get('/portfolio/:id', getPortfolio);
 router.post('/register', );
 router.post('/login', );
-router.post('/create-profile', postUser);
+router.post('/create-profile', checkJwt, postUser);
 router.post('/create-skill', postSkill);
-router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
+router.get('/profile', checkJwt, getUserProfile ); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
 router.put('/update-profile/:id', updateProfile); // MAYBE ALSO ADD ID
 router.get('/home/username',);

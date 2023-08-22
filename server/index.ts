@@ -64,6 +64,7 @@ app.use(router);
 app.use(authRouter);
 
 
+app.use(router);
 
 const PORT = 3001;
 app.listen(PORT, () => {

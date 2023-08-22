@@ -54,6 +54,7 @@ app.get('/logout', (req, res) => {
 app.use((0, express_openid_connect_1.auth)(config));
 app.use(router_1.router);
 app.use(authRoutes_1.default);
+app.use(router_1.router);
 const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);

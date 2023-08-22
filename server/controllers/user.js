@@ -14,48 +14,67 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function postUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { firstName, lastName, email, bio, gitHub } = req.body;
-        yield prisma.user.create({
-            data: {
-                firstName,
-                lastName,
-                email,
-                gitHub,
-                profile: {
-                    create: { bio },
+        try {
+            const { firstName, lastName, email, bio, gitHub } = req.body;
+            yield prisma.user.create({
+                data: {
+                    firstName,
+                    lastName,
+                    email,
+                    gitHub,
+                    profile: {
+                        create: { bio },
+                    },
                 },
-            },
-        });
-        res.status(201).send({ key: 'USER CREATED' });
+            });
+            res.status(201).send({ key: 'USER CREATED' });
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500);
+            res.send({ key: 'USER CREATION NOT SUCCESSFUL' });
+        }
     });
 }
 exports.postUser = postUser;
 function getUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { id } = req.body;
-        const user = yield prisma.user.findUnique({
-            where: {
-                id
-            },
-            include: {
-                profile: true,
-            },
-        });
-        res.status(200).send(user);
+        try {
+            const { id } = req.body;
+            const user = yield prisma.user.findUnique({
+                where: {
+                    id
+                },
+                include: {
+                    profile: true,
+                },
+            });
+            res.status(200).send(user);
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500);
+            res.send({ key: 'USER NOT FOUND' });
+        }
     });
 }
 exports.getUser = getUser;
 function updateUser(firstName, lastName, gitHub, id) {
     return __awaiter(this, void 0, void 0, function* () {
-        id = 1;
-        yield prisma.user.update({
-            where: { id },
-            data: {
-                firstName,
-                lastName,
-                gitHub
-            }
-        });
+        try {
+            id = 1;
+            yield prisma.user.update({
+                where: { id },
+                data: {
+                    firstName,
+                    lastName,
+                    gitHub
+                }
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
     });
 }
 exports.updateUser = updateUser;
