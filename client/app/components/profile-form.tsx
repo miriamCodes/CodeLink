@@ -4,6 +4,7 @@ import styles from '@/app/styles/profile-form.module.css';
 import Button from './button';
 import { useRouter } from 'next/navigation';
 interface Properties {
+  divId: string,
   editProfile: boolean;
   setEditProfile: (editProfile: boolean) => void;
   value1: boolean;
@@ -11,6 +12,7 @@ interface Properties {
 }
 
 export default function ProfileForm({
+  divId,
   editProfile,
   setEditProfile,
   value1,
@@ -119,7 +121,6 @@ export default function ProfileForm({
   }
   return (
     <div className={styles.profile_div}>
-      <div className={styles.profile_form}>
         <div className={styles.profile_submit}>
           {!editProfile ? (
             <h2 className={styles.form_title}>Create a profile:</h2>
@@ -211,7 +212,6 @@ export default function ProfileForm({
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }

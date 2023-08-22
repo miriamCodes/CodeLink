@@ -20,16 +20,31 @@ export default function Profile() {
   const [value, setValue] = useState(false);
   const [value1, setValue1] = useState(false);
 
+  function handleDiv(event) {
+    if (
+      event.target.divId !== 'skill-form' &&
+      event.target.id === 'skill-overlay'
+    ) setAddSkill(false);
+    else if (
+      event.target.divId !== 'profile-form' &&
+      event.target.id === 'profile-overlay'
+    ) setEditProfile(false);
+  }
+
   return (
     <main>
       <div className={roboto.className}>
         <div className="profile_div">
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <div className="profile_buttons">
-            <UserProfile addSkill={addSkill} setAddSkill={setAddSkill} editProfile={editProfile} setEditProfile={setEditProfile} value1={value1} value={value} />
             {addSkill && (
-              <div className="skill_div">
+              <div
+                onClick={(event) => handleDiv(event)}
+                id="skill-overlay"
+                className="overlay_div"
+              >
                 <SkillForm
+                  divId="skill-form"
                   setValue={setValue}
                   value={value}
                   addSkill={addSkill}
@@ -38,8 +53,13 @@ export default function Profile() {
               </div>
             )}
             {editProfile && (
-              <div className="edit_div">
+              <div
+                onClick={(event) => handleDiv(event)}
+                id="profile-overlay"
+                className="overlay_div"
+              >
                 <ProfileForm
+                  divId="profile-form"
                   setValue1={setValue1}
                   value1={value1}
                   editProfile={editProfile}
@@ -47,6 +67,18 @@ export default function Profile() {
                 />
               </div>
             )}
+            <div className="container_div">
+              <UserProfile
+                addSkill={addSkill}
+                setAddSkill={setAddSkill}
+                editProfile={editProfile}
+                setEditProfile={setEditProfile}
+                setValue1={setValue1}
+                value1={value1}
+                setValue={setValue}
+                value={value}
+              />
+            </div>
           </div>
         </div>
       </div>

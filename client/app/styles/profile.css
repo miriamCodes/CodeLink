@@ -56,14 +56,22 @@
   margin: 0vh 10vw 2vh 10vw;
 }
 
-.edit_div {
-  position: absolute;
-  width: 100vw;
-}
-
-
-.skill_div {
+.overlay_div {
+  z-index: 2;
   display: flex;
   align-self: center;
   justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(41, 50, 65, 0.9);
+}
+
+.container_div {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }

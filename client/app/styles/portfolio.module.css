@@ -22,6 +22,7 @@
 }
 
 .project_div {
+  position: relative;
   background: linear-gradient(
     135deg,
     rgba(61, 90, 128, 1) 0%,
@@ -47,6 +48,8 @@
 
 .link {
   color: #293241;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .details {
@@ -94,4 +97,105 @@
   display: flex;
   width: 100%;
   justify-content: space-evenly;
+}
+
+.small_button {
+  position: absolute;
+  top: 1.8vh;
+  right: 1vw;
+  padding: 1vh 0.8vw;
+  border-radius: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(209, 95, 68, 1) 0%,
+    rgba(238, 108, 77, 1) 100%
+  );
+  color: white;
+  cursor: pointer;
+  border-style: none;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-self: center;
+}
+
+.add_button {
+  /* position: absolute;
+  top: 1.8vh;
+  right: 1vw; */
+  padding: 1vh 0.75vw;
+  width: 35px;
+  border-radius: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(209, 95, 68, 1) 0%,
+    rgba(238, 108, 77, 1) 100%
+  );
+  color: white;
+  cursor: pointer;
+  border-style: none;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-self: center;
+}
+
+.portfolio_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(41, 50, 65, 0.9);
+  top: 0;
+  left: 0;
+}
+
+.unsaved_repos {
+  padding: 5vh 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(224,251,252,1) 100%);
+  width: 50%;
+}
+
+.repos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 0 4vh 0;
+}
+
+.select_repo {
+  border-radius: 3px;
+  font-size: 20px;
+  width: 10vw;
+  padding: 2vh 2vw;
+  margin: 2vh 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(224,251,252,1) 0%, rgba(152,193,217,1) 100%);
+  color: #293241;
+  box-shadow: 1px 1px 10px #293241;
+}
+
+.repo_details {
+  margin: 1vh 0vw;
+}
+
+.github_link {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
 }
