@@ -15,12 +15,20 @@ const prisma = new client_1.PrismaClient();
 // Get all projects
 function getProjects(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const projects = yield prisma.project.findMany({
-            include: {
-                comments: true,
-            },
-        });
-        res.status(200).send(projects);
+        try {
+            const projects = yield prisma.project.findMany({
+                include: {
+                    comments: true,
+                },
+            });
+            res.status(200).send(projects);
+        }
+        catch (error) {
+            console.error(error);
+            res
+                .status(500)
+                .send({ error: 'An error occurred while creating the project' });
+        }
     });
 }
 exports.getProjects = getProjects;
@@ -52,22 +60,28 @@ exports.postProject = postProject;
 // Get comments for a specific project
 function getProjectComments(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const id = req.params.id;
-        const comments = yield prisma.comment.findMany({
-            where: {
-                projectId: id,
-            },
-        });
-        res.status(200).send(comments);
+        try {
+            const id = req.params.id;
+            const comments = yield prisma.comment.findMany({
+                where: {
+                    projectId: id,
+                },
+            });
+            res.status(200).send(comments);
+        }
+        catch (error) {
+            console.error(error);
+            res
+                .status(500)
+                .send({ error: 'An error occurred while creating the project' });
+        }
     });
 }
 exports.getProjectComments = getProjectComments;
 // Post a comment for a specific project
 function postProjectComment(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('I got here with the request: ', req.body);
         const projectId = req.params.id;
-        console.log(projectId);
         const { text, authorId } = req.body;
         try {
             const newComment = yield prisma.comment.create({
@@ -91,7 +105,6 @@ exports.postProjectComment = postProjectComment;
 // Post a like for a specific project
 const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const projectId = req.params.id;
-    console.log('liking projectId is', projectId);
     try {
         const project = yield prisma.project.findUnique({
             where: { id: projectId },
@@ -101,7 +114,6 @@ const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function
         }
         let updatedLikes = project.likes;
         updatedLikes += 1;
-        console.log('like count is now: ', updatedLikes);
         yield prisma.project.update({
             where: { id: projectId },
             data: { likes: updatedLikes },
@@ -118,7 +130,6 @@ const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.postProjectLike = postProjectLike;
 const postProjectUnlike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const projectId = req.params.id;
-    console.log('Unliking projectId', projectId);
     try {
         const project = yield prisma.project.findUnique({
             where: { id: projectId },
@@ -128,7 +139,6 @@ const postProjectUnlike = (req, res) => __awaiter(void 0, void 0, void 0, functi
         }
         let updatedLikes = project.likes;
         updatedLikes -= 1;
-        console.log('like count are now: ', updatedLikes);
         yield prisma.project.update({
             where: { id: projectId },
             data: { likes: updatedLikes },

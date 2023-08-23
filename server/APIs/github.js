@@ -9,22 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchNews = void 0;
-require("dotenv/config");
-const KEY = process.env.NEWS_API_KEY || '80de228c33c04e90adbad3f3cbd609a0';
-const options = {
-    method: 'GET',
-    headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${KEY}`
-    }
-};
-function fetchNews(req, res) {
+exports.fetchRepositories = void 0;
+function fetchRepositories(username) {
     return __awaiter(this, void 0, void 0, function* () {
-        const news = yield fetch(`https://newsapi.org/v2/top-headlines?category=technology&language=en&apiKey=${KEY}`, options)
-            .then((article) => article.json())
+        const repos = yield fetch(`https://api.github.com/users/${username}/repos`, {
+            method: 'GET'
+        })
+            .then((results) => results.json())
             .catch(err => console.log(err));
-        res.status(200).send(news.articles);
+        return repos;
     });
 }
-exports.fetchNews = fetchNews;
+exports.fetchRepositories = fetchRepositories;
