@@ -174,8 +174,6 @@ export default function Projects() {
       authorId: 1, // actual author ID
       text: commentInput,
     };
-    console.log(projectId);
-    console.log(project);
     try {
       const response = await fetch(
         `http://localhost:3001/project/${projectId}/comment`,
