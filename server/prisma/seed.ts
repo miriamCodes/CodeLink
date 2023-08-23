@@ -13,19 +13,21 @@ async function main() {
   const projects = await Promise.all([
     createProject(
       'f5e1fd39-0bef-46a5-bb2a-b38b3d238969',
-      'todo-list1',
-      users[0].id
+      'striving to create the best todo-list ever',
+      users[0].id,
+      'i will create so much functionality!'
     ),
     createProject(
       'f3105dbb-5e16-48b4-b3b6-bdaf8435bec6',
-      'todo-list2',
-      users[1].id
+      'website featuring hacker movies',
+      users[1].id,
+      'what other movies would there be to watch?'
     ),
   ]);
 
   const comments = await Promise.all([
     createComment('Great project!', projects[0].id, users[1].id),
-    createComment('Awesome work!', projects[1].id, users[0].id),
+    createComment('Awesome idea!', projects[1].id, users[0].id),
   ]);
 
   console.log({ users, projects, comments });
@@ -47,14 +49,19 @@ async function createUser(id: number, username: string, email: string) {
   });
 }
 
-async function createProject(id: string, title: string, authorId: number) {
+async function createProject(
+  id: string,
+  title: string,
+  authorId: number,
+  description: string
+) {
   return prisma.project.upsert({
     where: { id },
     update: {},
     create: {
       id,
       title,
-      description: 'coolest project ever',
+      description,
       stack: ['Express', 'MongoDB', 'React'],
       timeline: '1 month',
       likes: 1,
