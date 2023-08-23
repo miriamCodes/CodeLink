@@ -1,0 +1,12 @@
+.button {
+  width: 100%;
+  padding: 1vh 0 1vh 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  border-style: none;
+  background: linear-gradient(0deg, rgba(209,95,68,1) 0%, rgba(238,108,77,1) 100%);
+  margin-top: 4vh;
+  border-radius: 3px;
+  cursor: pointer;
+}

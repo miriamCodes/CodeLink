@@ -1,0 +1,51 @@
+.brand_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.brand_name {
+  color: #293241;
+  font-size: 3vw;
+  margin-right: 10px;
+  font-weight: 400;
+}
+
+.nav_item {
+  text-decoration: none;
+  color: black;
+  margin: 4vh 1vw 1vh 1vw;
+  display: flex;
+  justify-content: center;
+  color: #293241;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.nav_list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  margin: 2vh;
+  padding: 0;
+  width: 66%;
+}
+
+.nav_bar {
+  height: 92%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, rgba(224,251,252,1) 0%, rgba(152,193,217,1) 100%);
+  padding: 5vh 2vw 3vh 2vw;
+  box-shadow: 1px 1px 10px #293241;
+}
+
+.nav_div {
+  width: 25%;
+}
+
+.nav_link {
+  text-decoration: none;
+}

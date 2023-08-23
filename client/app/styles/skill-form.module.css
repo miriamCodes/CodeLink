@@ -1,0 +1,74 @@
+.skill_div {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(
+    135deg,
+    rgba(224, 251, 252, 1) 0%,
+    rgba(152, 193, 217, 1) 100%
+  );
+  box-shadow: 1px 1px 10px #293241;
+  width: 75%;
+  padding: 4vh 0 4vh 0;
+  height: 50%;
+  margin: 25vh 0vw;
+}
+
+.skill_title {
+  text-align: center;
+  font-weight: 400;
+  font-size: 30px;
+  margin: 0 0 2vh 0;
+}
+
+.skill_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.save_button {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+}
+
+.button_div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.label_input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2vh 5vw 2vh 5vw;
+}
+
+.label {
+  border-style: solid;
+  width: 50%;
+  font-size: 20px;
+  font-weight: 500;
+  color: #293241;
+  border-style: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.input {
+  width: 50%;
+  height: 5vh;
+  font-size: 20px;
+  font-weight: 400;
+  color: #293241;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: rgba(152, 193, 217, 1);
+  border-width: 1px;
+  cursor: pointer;
+  font-style: italic;
+  padding: 0vh 1vw 0vh 1vw;
+}

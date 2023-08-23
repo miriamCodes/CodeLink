@@ -1,0 +1,122 @@
+.profile_div {
+  display: flex;
+  flex-direction: column;
+  margin: 5vh 10vw 2vh 10vw;
+}
+
+.profile_field {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 3vh 0;
+  color: #293241;
+  margin: 1vh 0 1vh 0;
+  font-size: 20px;
+}
+
+.profile_title {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  color: #293241;
+}
+
+.profile_image {
+  display: flex;
+  justify-content: center;
+  padding: 2vh 0 2vh 0;
+}
+
+.default_image {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #293241;
+  border-radius: 100%;
+}
+
+.link:visited {
+  color: #3d5a80;
+}
+
+.link {
+  color: rgba(238, 108, 77, 1);
+  text-decoration: none;
+}
+
+.skill_div {
+  display: flex;
+  border-radius: 3px;
+  margin: 1vh 1vw 1vh 1vw;
+  align-items: center;
+  width: 45%;
+  height: 30%;
+  justify-content: center;
+}
+
+.language {
+  border-radius: 3px 0 0 3px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(
+    0deg,
+    rgba(41, 50, 65, 1) 0%,
+    rgba(61, 90, 128, 1) 100%
+  );
+  color: white;
+  height: 100%;
+  width: 33%;
+  font-weight: 500;
+  justify-content: center;
+}
+
+.experience {
+  color: white;
+  background: linear-gradient(
+    0deg,
+    rgba(61, 90, 128, 1) 0%,
+    rgba(152, 193, 217, 1) 100%
+  );
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 30%;
+  justify-content: center;
+}
+
+.level {
+  width: 36%;
+  background: linear-gradient(
+    0deg,
+    rgba(152, 193, 217, 1) 0%,
+    rgba(224, 251, 252, 1) 100%
+  );
+  border-radius: 0px 3px 3px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.skills_div {
+  overflow-y: scroll;
+  height: 12vh;
+  display: flex;
+  align-self: flex-end;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+.small_button {
+  border-radius: 100%;
+  padding: 0.5vh 0.5vw;
+  background: linear-gradient(
+    0deg,
+    rgba(209, 95, 68, 1) 0%,
+    rgba(238, 108, 77, 1) 100%
+  );
+  color: white;
+  cursor: pointer;
+  border-style: none;
+  margin: 0 0 0 0.5vw;
+  display: flex;
+}
