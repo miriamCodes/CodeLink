@@ -94,7 +94,7 @@ export default function NavBar({
           </li>
           <li>
             <Link href="/project" className={styles.nav_item}>
-              Discussion-Board
+              Discussion board
             </Link>
           </li>
           <li>

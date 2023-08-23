@@ -85,7 +85,7 @@ export default function UserProfile({value, setValue, value1, setValue1, addSkil
         <p>
           <b>Email</b>
         </p>
-        <Link className={styles.link}  href={`mailto:${profile.user.email}`}>
+        <Link className={styles.link} href={`mailto:${profile.user.email}`}>
           <p>{profile.user.email}</p>
         </Link>
       </div>
@@ -125,12 +125,19 @@ export default function UserProfile({value, setValue, value1, setValue1, addSkil
                 <p className={styles.level} key={s.level}>
                   {capitalize(s.level)}
                 </p>
-                <button className={styles.small_button} onClick={() => handleSkillDelete(s)}>X</button>
+                <button
+                  className={styles.small_button}
+                  onClick={() => handleSkillDelete(s)}
+                >
+                  X
+                </button>
               </div>
             ))}
           </div>
         ) : (
-          <div>No skills to display yet - click on add skills below.</div>
+          <div className={styles.skills_div}>
+            <p className={styles.no_skills}>No skills to display yet - click on add skills below.</p>
+          </div>
         )}
       </div>
       <Portfolio

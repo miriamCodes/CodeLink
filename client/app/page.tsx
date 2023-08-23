@@ -1,24 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import NavBar from './components/nav-bar';
 import '@/app/styles/home.css';
-import { Roboto } from 'next/font/google';
 import Feed from '@/app/components/feed';
-
-const roboto = Roboto({
-  subsets: ['latin'],
-  weight: ['100', '300', '400', '500', '700', '900'],
-});
+import RootLayout from './layout';
+import DashboardLayout from './dashboard-layout';
 
 export default function Home() {
-  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
-    <main>
-      <div className={roboto.className}>
+    <RootLayout>
+      <DashboardLayout>
         <div className="home_div">
-          <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           <div className="homepage_div">
             <div className="welcome_div">
               <h2 className="welcome">Welcome to CodeLink!</h2>
@@ -27,11 +19,11 @@ export default function Home() {
               </h3>
             </div>
             <div className="news_div">
-              <Feed/>
+              <Feed />
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </DashboardLayout>
+    </RootLayout>
   );
 }
