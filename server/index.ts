@@ -26,6 +26,7 @@ const config = {
 };
 
 const app: Express = express();
+app.get('/test', (req, res) => res.send('Test route'));
 
 app.use(
   cors({
