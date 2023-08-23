@@ -45,11 +45,7 @@ router.get(
     console.log(req.headers.authorization);
     const userId = req.user?.sub;
     console.log('User ID from JWT:', userId);
-    const userProfile = await prisma.user.findUnique({
-      where: { auth0Id: userId },
-      include: { profile: true },
-    });
-
+    const userProfile = await prisma.user.findUnique({ where: { auth0Id: userId }, include: { profile: true } });
     if (userProfile) {
       res.json(userProfile);
     } else {
