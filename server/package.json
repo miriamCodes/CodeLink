@@ -2,7 +2,7 @@
   "name": "codelink",
   "version": "1.0.0",
   "description": "super cool group thesis project",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest",
     "prepare": "husky install",
@@ -11,6 +11,9 @@
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
     "migrate": "prisma migrate dev"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -18,8 +21,8 @@
     "@types/express": "^4.17.17",
     "@types/express-jwt": "^7.4.2",
     "@types/express-session": "^1.17.7",
-    "@types/jest": "^29.5.3",
-    "@types/node": "^20.5.1",
+    "@types/jest": "^29.5.4",
+    "@types/node": "^20.5.3",
     "@types/sequelize": "^4.28.15",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.3.0",

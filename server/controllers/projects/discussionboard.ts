@@ -102,7 +102,7 @@ const postProjectLike = async (req: Request, res: Response) => {
       data: { likes: updatedLikes },
     });
 
-    res.send({ likes: updatedLikes });
+    res.status(200).send({ likes: updatedLikes });
   } catch (error) {
     console.error(error);
     res.status(500).send({
@@ -134,7 +134,7 @@ const postProjectUnlike = async (req: Request, res: Response) => {
       data: { likes: updatedLikes },
     });
 
-    res.send({ likes: updatedLikes });
+    res.status(200).send({ likes: updatedLikes });
   } catch (error) {
     console.error(error);
     res.status(500).send({

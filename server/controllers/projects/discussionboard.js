@@ -120,7 +120,7 @@ const postProjectLike = (req, res) => __awaiter(void 0, void 0, void 0, function
             where: { id: projectId },
             data: { likes: updatedLikes },
         });
-        res.send({ likes: updatedLikes });
+        res.status(200).send({ likes: updatedLikes });
     }
     catch (error) {
         console.error(error);
@@ -148,7 +148,7 @@ const postProjectUnlike = (req, res) => __awaiter(void 0, void 0, void 0, functi
             where: { id: projectId },
             data: { likes: updatedLikes },
         });
-        res.send({ likes: updatedLikes });
+        res.status(200).send({ likes: updatedLikes });
     }
     catch (error) {
         console.error(error);
