@@ -18,34 +18,35 @@ const config = {
   afterCallback: (req: Request, res: Response) => {
     console.log('After Callback Triggered');
     res.redirect('http://localhost:3000/profile');
-  
   },
   authorizationParams: {
     response_type: 'code',
-    response_mode: 'query'
-  }
+    response_mode: 'query',
+  },
 };
 
 const app: Express = express();
 
-
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
 app.use(express.json());
 
-app.use(session({
-  secret: process.env.SESSION_SECRET!,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: false,
-    maxAge: 24 * 60 * 60 * 1000
-  }
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
 //
-
 
 app.get('/logout', (req, res) => {
   console.log('Logout endpoint hit');
@@ -55,9 +56,7 @@ app.get('/logout', (req, res) => {
   res.redirect(logoutURL);
 });
 
-
 app.use(auth(config));
-
 
 app.use(router);
 

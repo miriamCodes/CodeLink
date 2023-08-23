@@ -20,16 +20,22 @@ const profile_1 = require("./controllers/profile");
 const news_1 = require("./APIs/news");
 const client_1 = require("@prisma/client");
 const authMiddleware_1 = __importDefault(require("./auth/authMiddleware"));
+const portfolio_1 = require("./controllers/portfolio");
 const discussionboard_1 = require("./controllers/projects/discussionboard");
 const router = express_1.default.Router();
 exports.router = router;
 const prisma = new client_1.PrismaClient();
 router.get('/home');
 router.get('/news', news_1.fetchNews);
+router.get('/repos/:username', portfolio_1.repoFilter);
+router.post('/create-repos', portfolio_1.postRepo);
+router.delete('/delete-repo', portfolio_1.deleteRepo);
+router.get('/portfolio/:id', portfolio_1.getPortfolio);
 router.post('/register');
 router.post('/login');
 router.post('/create-profile', user_1.postUser);
 router.post('/create-skill', skill_1.postSkill);
+router.delete('/delete-skill', skill_1.deleteSkill);
 router.get('/profile/:id'); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', profile_1.getProfile);
 router.put('/update-profile/:id', profile_1.updateProfile); // MAYBE ALSO ADD ID
