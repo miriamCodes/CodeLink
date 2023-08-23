@@ -61,9 +61,7 @@ async function getProjectComments(req: Request, res: Response) {
 
 // Post a comment for a specific project
 async function postProjectComment(req: Request, res: Response) {
-  console.log('I got here with the request: ', req.body);
   const projectId = req.params.id;
-  console.log(projectId);
   const { text, authorId } = req.body;
   try {
     const newComment = await prisma.comment.create({
@@ -89,13 +87,11 @@ const postProjectLike = async (req: Request, res: Response) => {
     const project = await prisma.project.findUnique({
       where: { id: projectId },
     });
-
     if (!project) {
       return res.status(404).send({ error: 'Project not found' });
     }
 
     let updatedLikes = project.likes;
-
     updatedLikes += 1;
     await prisma.project.update({
       where: { id: projectId },
@@ -114,8 +110,6 @@ const postProjectLike = async (req: Request, res: Response) => {
 // delete a like for a specific project
 const postProjectUnlike = async (req: Request, res: Response) => {
   const projectId = req.params.id;
-
-  console.log('Unliking projectId', projectId);
   try {
     const project = await prisma.project.findUnique({
       where: { id: projectId },
@@ -128,7 +122,6 @@ const postProjectUnlike = async (req: Request, res: Response) => {
     let updatedLikes = project.likes;
 
     updatedLikes -= 1;
-    console.log('like count are now: ', updatedLikes);
     await prisma.project.update({
       where: { id: projectId },
       data: { likes: updatedLikes },

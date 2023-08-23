@@ -14,40 +14,64 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function postSkill(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { id, skill, experience, level } = req.body;
-        yield prisma.skill.create({
-            data: {
-                programmingSkill: skill, experience, level, profileId: id
-            },
-        });
-        res.status(201).send({ key: 'SKILL CREATED' });
+        try {
+            const { id, skill, experience, level } = req.body;
+            yield prisma.skill.create({
+                data: {
+                    programmingSkill: skill, experience, level, profileId: id
+                },
+            });
+            res.status(201).send({ key: 'SKILL CREATED' });
+        }
+        catch (error) {
+            console.error(error);
+            res
+                .status(500)
+                .send({ error: 'An error occurred while creating the skill' });
+        }
     });
 }
 exports.postSkill = postSkill;
 function updateSkill(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { id, skill, experience, level } = req.body;
-        yield prisma.skill.update({
-            where: { id },
-            data: {
-                programmingSkill: skill,
-                experience,
-                level,
-            },
-        });
-        res.status(200).send({ key: 'SKILL CORRECTLY UPDATED' });
+        try {
+            const { id, skill, experience, level } = req.body;
+            yield prisma.skill.update({
+                where: { id },
+                data: {
+                    programmingSkill: skill,
+                    experience,
+                    level,
+                },
+            });
+            res.status(200).send({ key: 'SKILL CORRECTLY UPDATED' });
+        }
+        catch (error) {
+            console.error(error);
+            res
+                .status(500)
+                .send({ error: 'An error occurred while updating the skill' });
+        }
     });
 }
 exports.updateSkill = updateSkill;
 function deleteSkill(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { id } = req.body;
-        yield prisma.skill.delete({
-            where: {
-                id,
-            },
-        });
-        res.status(200).send({ key: 'SKILL DELETED' });
+        try {
+            const { id } = req.body;
+            yield prisma.skill.delete({
+                where: {
+                    id,
+                },
+            });
+            res.status(200).send({ key: 'SKILL DELETED' });
+        }
+        catch (error) {
+            console.error(error);
+            res
+                .status(500)
+                .send({ error: 'An error occurred while deleting the skill' });
+        }
     });
 }
 exports.deleteSkill = deleteSkill;

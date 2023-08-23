@@ -81,9 +81,7 @@ exports.getProjectComments = getProjectComments;
 // Post a comment for a specific project
 function postProjectComment(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('I got here with the request: ', req.body);
         const projectId = req.params.id;
-        console.log(projectId);
         const { text, authorId } = req.body;
         try {
             const newComment = yield prisma.comment.create({
@@ -133,7 +131,6 @@ exports.postProjectLike = postProjectLike;
 // delete a like for a specific project
 const postProjectUnlike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const projectId = req.params.id;
-    console.log('Unliking projectId', projectId);
     try {
         const project = yield prisma.project.findUnique({
             where: { id: projectId },
@@ -143,7 +140,6 @@ const postProjectUnlike = (req, res) => __awaiter(void 0, void 0, void 0, functi
         }
         let updatedLikes = project.likes;
         updatedLikes -= 1;
-        console.log('like count are now: ', updatedLikes);
         yield prisma.project.update({
             where: { id: projectId },
             data: { likes: updatedLikes },

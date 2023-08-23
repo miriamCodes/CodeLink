@@ -45,10 +45,7 @@ router.get('http://localhost:3000/profile', authMiddleware_1.default, (req, res)
     console.log(req.headers.authorization);
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.sub;
     console.log('User ID from JWT:', userId);
-    const userProfile = yield prisma.user.findUnique({
-        where: { auth0Id: userId },
-        include: { profile: true },
-    });
+    const userProfile = yield prisma.user.findUnique({ where: { auth0Id: userId }, include: { profile: true } });
     if (userProfile) {
         res.json(userProfile);
     }

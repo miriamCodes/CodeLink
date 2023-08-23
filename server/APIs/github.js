@@ -14,7 +14,9 @@ function fetchRepositories(username) {
     return __awaiter(this, void 0, void 0, function* () {
         const repos = yield fetch(`https://api.github.com/users/${username}/repos`, {
             method: 'GET'
-        }).then((results) => results.json());
+        })
+            .then((results) => results.json())
+            .catch(err => console.log(err));
         return repos;
     });
 }

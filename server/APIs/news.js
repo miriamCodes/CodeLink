@@ -11,8 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchNews = void 0;
 require("dotenv/config");
-//const KEY = process.env.NEWS_API_KEY;
-const KEY = '80de228c33c04e90adbad3f3cbd609a0';
+const KEY = process.env.NEWS_API_KEY || '80de228c33c04e90adbad3f3cbd609a0';
 const options = {
     method: 'GET',
     headers: {
@@ -25,7 +24,7 @@ function fetchNews(req, res) {
         const news = yield fetch(`https://newsapi.org/v2/top-headlines?category=technology&language=en&apiKey=${KEY}`, options)
             .then((article) => article.json())
             .catch(err => console.log(err));
-        res.send(news.articles);
+        res.status(200).send(news.articles);
     });
 }
 exports.fetchNews = fetchNews;
