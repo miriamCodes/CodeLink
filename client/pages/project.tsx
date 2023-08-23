@@ -20,47 +20,7 @@ interface Comment {
 }
 
 export default function Projects() {
-  // const [projects, setProjects] = useState<Project[]>([]);
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: '1',
-      title: 'Fake Project 1',
-      description: 'This is a fake project for testing',
-      stack: ['React', 'Next.js', 'TypeScript'],
-      timeline: '1 month',
-      likes: 3,
-      isLiked: false,
-      author: { id: 1 },
-      comments: [
-        { authorId: 1, text: 'Default comment 1' },
-        { authorId: 2, text: 'Default comment 2' },
-        { authorId: 3, text: 'Default comment 3' },
-      ],
-    },
-    {
-      id: '2',
-      title: 'Fake Project 2',
-      description: 'This is another fake project for testing',
-      stack: ['Angular', 'Firebase'],
-      timeline: '2 weeks',
-      likes: 7,
-      isLiked: false,
-      author: { id: 1 },
-      comments: [],
-    },
-    {
-      id: '3',
-      title: 'Fake Project 3',
-      description: 'This is a third fake project for testing',
-      stack: ['html', 'css'],
-      timeline: '3 weeks',
-      likes: 1,
-      isLiked: false,
-      author: { id: 1 },
-      comments: [],
-    },
-  ]);
-
+  const [projects, setProjects] = useState<Project[]>([]);
   const [showAddProjectForm, setShowAddProjectForm] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -82,8 +42,14 @@ export default function Projects() {
 
   const handleAddProject = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const projectData = { title, description, stack, timeline, authorId: 1, comments: [] };
-    // how does authorId look like? (based on your auth0?)
+    const projectData = {
+      title,
+      description,
+      stack,
+      timeline,
+      authorId: 2,
+      comments: [],
+    }; // actual author ID
     const response = await fetch('http://localhost:3001/project', {
       method: 'POST',
       headers: {
@@ -95,24 +61,6 @@ export default function Projects() {
     setShowAddProjectForm(false);
     setProjects((prev) => [...prev, newProject]);
   };
-
-  // TESTING WHETHER PROBLEM IS FRONT- OR BACKEND. EXCLUDE CODE ABOVE WHEN CONNECTING BACK TO BACKEND
-  // const handleAddProject = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   const projectData = {
-  //     id: (projects.length + 1).toString(),
-  //     title,
-  //     description,
-  //     stack,
-  //     timeline,
-  //     likes: 0,
-  //     isLiked: false,
-  //     author: { id: 1 },
-  //     comments: [],
-  //   };
-  //   setProjects((prev) => [...prev, projectData]);
-  //   setShowAddProjectForm(false);
-  // };
 
   const handleLikeToggle = async (projectId: string) => {
     console.log('like button clicked for project', projectId);
@@ -171,7 +119,7 @@ export default function Projects() {
     const project = projects[projectIndex];
 
     const commentData: Comment = {
-      authorId: 1, // actual author ID
+      authorId: 2, // actual author ID
       text: commentInput,
     };
     try {
@@ -203,27 +151,6 @@ export default function Projects() {
       console.error('An error occurred while submitting the comment:', error);
     }
   };
-
-  // EXCLUDE WHEN BACKEND IS WORKING
-  // const handleCommentSubmit = (projectId: string) => {
-  //   const projectIndex = projects.findIndex(
-  //     (project) => project.id === projectId
-  //   );
-  //   const project = projects[projectIndex];
-
-  //   const newComment: Comment = {
-  //     authorId: 1, // actual author ID
-  //     text: commentInput,
-  //   };
-
-  //   setProjects((prevProjects) => [
-  //     ...prevProjects.slice(0, projectIndex),
-  //     { ...project, comments: [...project.comments, newComment] },
-  //     ...prevProjects.slice(projectIndex + 1),
-  //   ]);
-
-  //   setCommentInput('');
-  // };
 
   return (
     <div className="collaboration-body">

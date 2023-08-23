@@ -14,15 +14,14 @@ const config = {
   baseURL: process.env.BASE_URL,
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
-  /* postLogoutRedirectUri: 'http://localhost:3000', */
   afterCallback: (req: Request, res: Response) => {
     console.log('After Callback Triggered');
     res.redirect('http://localhost:3000/profile');
   },
   authorizationParams: {
     response_type: 'code',
-    response_mode: 'query',
-  },
+    response_mode: 'query'
+  }
 };
 
 const app: Express = express();
@@ -31,7 +30,7 @@ app.get('/test', (req, res) => res.send('Test route'));
 app.use(
   cors({
     origin: 'http://localhost:3000',
-    credentials: true,
+    credentials: true
   })
 );
 app.use(express.json());
@@ -43,11 +42,10 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: false,
-      maxAge: 24 * 60 * 60 * 1000,
-    },
+      maxAge: 24 * 60 * 60 * 1000
+    }
   })
 );
-//
 
 app.get('/logout', (req, res) => {
   console.log('Logout endpoint hit');

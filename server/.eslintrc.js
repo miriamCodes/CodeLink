@@ -1,9 +1,11 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'es2021': true
-},
+	'env': {
+		'browser': true,
+		'es2021': true,
+		commonjs: true
+	},
 	'extends': [
+		'standard',
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:react/recommended'
@@ -31,7 +33,7 @@ module.exports = {
 		'react'
 	],
 	'rules': {
-		
+
 		'quotes': [
 			'error',
 			'single'
@@ -41,4 +43,4 @@ module.exports = {
 			'always'
 		]
 	}
-};
+}

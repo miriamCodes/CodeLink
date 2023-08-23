@@ -7,19 +7,16 @@ import { PrismaClient } from '@prisma/client';
 import checkJwt from './auth/authMiddleware';
 import { AuthRequest } from './auth/authTypes';
 import { repoFilter, postRepo, getPortfolio, deleteRepo } from './controllers/portfolio';
-
-
 import {
   getProjects,
   postProject,
   getProjectComments,
   postProjectComment,
   postProjectLike,
-  postProjectUnlike,
+  postProjectUnlike
 } from './controllers/projects/discussionboard';
 
 const router: Router = express.Router();
-
 const prisma = new PrismaClient();
 
 router.get('/home');
@@ -28,16 +25,12 @@ router.get('/repos/:username', repoFilter);
 router.post('/create-repos', postRepo);
 router.delete('/delete-repo', deleteRepo);
 router.get('/portfolio/:id', getPortfolio);
-router.post('/register', );
-router.post('/login', );
 router.post('/create-profile', postUser);
 router.post('/create-skill', postSkill);
 router.delete('/delete-skill', deleteSkill);
-router.get('/profile/:id', ); // WHEN AUTH STUFF IS CLEAR
 router.get('/profile/:id', getProfile);
-router.put('/update-profile/:id', updateProfile); // MAYBE ALSO ADD ID
+router.put('/update-profile/:id', updateProfile);
 router.get('/home/username');
-
 router.get(
   'http://localhost:3000/profile',
   checkJwt,
@@ -52,17 +45,15 @@ router.get(
       res.status(404).send('Profile not found');
     }
   }
-); // Maybe userId
+);
 router.get('/home/:username', checkJwt, async (req, res) => {
   const username = req.params.username;
   const user = await prisma.user.findUnique({ where: { username } });
-
   if (user) {
     res.json(user);
   } else {
     res.status(404).send('User not found');
   }
-  //prima logic
 });
 
 router.get('/project', getProjects);
@@ -71,6 +62,5 @@ router.get('/project/:id/comment', getProjectComments);
 router.post('/project/:id/comment', postProjectComment);
 router.post('/project/:id/like', postProjectLike);
 router.delete('/project/:id/like', postProjectUnlike);
-
 
 export { router };

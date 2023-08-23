@@ -32,7 +32,7 @@ describe('Test the POST /project path', () => {
       description: 'This is a test project',
       stack: ['React', 'Node.js'],
       timeline: '1 month',
-      authorId: 2,
+      authorId: 2
     };
 
     const res = await request(app).post(projectPath).send(newProjectData);
@@ -49,14 +49,14 @@ describe('Test the POST /project path', () => {
     const invalidProjectData = {
       description: 'This is a test project',
       stack: ['React', 'Node.js'],
-      timeline: '1 month',
+      timeline: '1 month'
     };
 
     const res = await request(app).post(projectPath).send(invalidProjectData);
 
     expect(res.status).toBe(500);
     expect(res.body).toEqual({
-      error: 'An error occurred while creating the project',
+      error: 'An error occurred while creating the project'
     });
   });
 });
@@ -79,7 +79,7 @@ describe('Test the POST /project/:id/comments path', () => {
   test('should create a project and return 201', async () => {
     const newComment = {
       text: 'want to colab on that?',
-      authorId: 3,
+      authorId: 3
     };
     const res = await request(app).post(projectPathComment).send(newComment);
 
