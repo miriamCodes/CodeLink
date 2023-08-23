@@ -4,14 +4,14 @@ import { updateUser } from './user';
 
 const prisma = new PrismaClient();
 
-async function updateProfile(req: Request, res: Response) {
+async function updateProfile (req: Request, res: Response) {
   try {
     const id = +req.params.id;
     const { firstName, lastName, bio, gitHub } = req.body;
     await prisma.profile.update({
       where: { id },
       data: {
-        bio,
+        bio
       }
     });
     updateUser(firstName, lastName, gitHub, id);
@@ -24,7 +24,7 @@ async function updateProfile(req: Request, res: Response) {
   }
 }
 
-async function getProfile(req: Request, res: Response) {
+async function getProfile (req: Request, res: Response) {
   try {
     const id = +req.params.id;
     const profile = await prisma.profile.findUnique({
@@ -33,8 +33,8 @@ async function getProfile(req: Request, res: Response) {
       },
       include: {
         user: true,
-        skill: true,
-      },
+        skill: true
+      }
     });
     res.status(200).send(profile);
   } catch (error) {

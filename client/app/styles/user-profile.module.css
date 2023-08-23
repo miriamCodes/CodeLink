@@ -1,6 +1,8 @@
 .profile_div {
   display: flex;
   flex-direction: column;
+  width: 50vw;
+  margin: 5vw 5vw 0 5vw;
 }
 
 .profile_field {
@@ -47,7 +49,7 @@
   border-radius: 3px;
   margin: 1vh 1vw 1vh 1vw;
   align-items: center;
-  width: 60%;
+  width: 45%;
   height: 30%;
   justify-content: center;
 }
@@ -102,7 +104,7 @@
   display: flex;
   align-self: flex-end;
   flex-wrap: wrap;
-  width: 80%;
+  width: 90%;
 }
 
 .small_button {
@@ -118,4 +120,9 @@
   border-style: none;
   margin: 0 0 0 0.5vw;
   display: flex;
+}
+
+.no_skills {
+  width: 100%;
+  text-align: end;
 }
