@@ -2,3 +2,7 @@
   padding-top: 5vh;
   overflow-x: scroll;
 }
+
+.home_div {
+  width: 75vw;
+}

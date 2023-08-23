@@ -1,6 +1,10 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import '@/app/styles/projects.css';
-import { Roboto } from 'next/font/google';
+import RootLayout from '../layout';
+import DashboardLayout from '../dashboard-layout';
+
 interface Project {
   id: string;
   title: string;
@@ -82,7 +86,14 @@ export default function Projects() {
 
   const handleAddProject = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const projectData = { title, description, stack, timeline, authorId: 1, comments: [] };
+    const projectData = {
+      title,
+      description,
+      stack,
+      timeline,
+      authorId: 1,
+      comments: [],
+    };
     // how does authorId look like? (based on your auth0?)
     const response = await fetch('http://localhost:3001/project', {
       method: 'POST',
@@ -226,151 +237,159 @@ export default function Projects() {
   // };
 
   return (
-    <div className="collaboration-body">
-      <div className="add-project-button-container">
-        <button
-          className="top-right-button"
-          onClick={() => setShowAddProjectForm(!showAddProjectForm)}
-        >
-          {showAddProjectForm ? 'Close' : 'Add Project'}
-        </button>
-      </div>
-      {showAddProjectForm && (
-        <div className="popup-background">
-          <div className="add-project-container">
-            <form onSubmit={handleAddProject}>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="add-project-input"
-                placeholder="Title"
-              />
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="add-project-input"
-                placeholder="Description"
-              />
-              <input
-                type="text"
-                value={stack.join(',')}
-                onChange={(e) => setStack(e.target.value.split(','))}
-                className="add-project-input"
-                placeholder="Stack (comma separated)"
-              />
-              <input
-                type="text"
-                value={timeline}
-                onChange={(e) => setTimeline(e.target.value)}
-                className="add-project-input"
-                placeholder="Timeline"
-              />
-              <button type="submit" className="add-project-btn">
-                Add Project
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowAddProjectForm(false)}
-                className="cancel-btn"
-              >
-                Cancel
-              </button>
-            </form>
+    <RootLayout>
+      <DashboardLayout>
+        <div className="collaboration-body">
+          <div className="add-project-button-container">
+            <button
+              className="top-right-button"
+              onClick={() => setShowAddProjectForm(!showAddProjectForm)}
+            >
+              {showAddProjectForm ? 'Close' : 'Add Project'}
+            </button>
+          </div>
+          {showAddProjectForm && (
+            <div className="popup-background">
+              <div className="add-project-container">
+                <form onSubmit={handleAddProject}>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="add-project-input"
+                    placeholder="Title"
+                  />
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="add-project-input"
+                    placeholder="Description"
+                  />
+                  <input
+                    type="text"
+                    value={stack.join(',')}
+                    onChange={(e) => setStack(e.target.value.split(','))}
+                    className="add-project-input"
+                    placeholder="Stack (comma separated)"
+                  />
+                  <input
+                    type="text"
+                    value={timeline}
+                    onChange={(e) => setTimeline(e.target.value)}
+                    className="add-project-input"
+                    placeholder="Timeline"
+                  />
+                  <button type="submit" className="add-project-btn">
+                    Add Project
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowAddProjectForm(false)}
+                    className="cancel-btn"
+                  >
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+          <div className="project-wrapper">
+            {projects
+              .slice()
+              .sort((a, b) => b.likes - a.likes)
+              .map((project, index) => {
+                return (
+                  <div
+                    key={project.id}
+                    className={`project-item ${
+                      index === 0
+                        ? 'project-item:first-child'
+                        : 'project-item:not(:first-child)'
+                    }`}
+                  >
+                    <div className="project-content">
+                      <h2>Project: {project.title}</h2>
+                      <p className="project-description">
+                        {project.description}
+                      </p>
+                      <p>Preferred Techstack:</p>
+                      <ul>
+                        {project.stack.map((tech) => (
+                          <li key={tech}>{tech}</li>
+                        ))}
+                      </ul>
+                      <p>Estimated Length: {project.timeline}</p>
+                    </div>
+                    <div className="actions-container">
+                      <div className="actions-and-comments">
+                        <div className="likes-section">
+                          <span className="likes-count">{project.likes}</span>
+                          <button
+                            onClick={() => handleLikeToggle(project.id)}
+                            className={`like-button ${
+                              project.isLiked ? 'liked' : ''
+                            }`}
+                          >
+                            {project.isLiked ? 'Unlike' : 'Like'}
+                          </button>
+                        </div>
+                        {project.showComments ? null : (
+                          <div className="comments-toggle-container">
+                            <button
+                              className="comments-btn"
+                              onClick={() => handleCommentToggle(project.id)}
+                            >
+                              Comments ({project.comments.length})
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      <div className="comments-container">
+                        {project.showComments && (
+                          <div className="comments-section">
+                            <input
+                              type="text"
+                              className="comments-input"
+                              value={commentInput}
+                              onChange={(e) => setCommentInput(e.target.value)}
+                              placeholder="Add a comment..."
+                            />
+                            <div className="comment-btn-container">
+                              <button
+                                className="submit-comment-btn"
+                                onClick={() => handleCommentSubmit(project.id)}
+                              >
+                                Submit
+                              </button>
+                              <button
+                                className="cancel-comment-btn"
+                                onClick={() => handleCommentToggle(project.id)}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                            <div className="existing-comments">
+                              {project.comments.map((comment, index) => (
+                                <div key={index} className="comment">
+                                  <div className="comment-author">
+                                    User{comment.authorId}
+                                  </div>
+                                  <div className="comment-text">
+                                    {comment.text}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
-      )}
-      <div className="project-wrapper">
-        {projects
-          .slice()
-          .sort((a, b) => b.likes - a.likes)
-          .map((project, index) => {
-            return (
-              <div
-                key={project.id}
-                className={`project-item ${
-                  index === 0
-                    ? 'project-item:first-child'
-                    : 'project-item:not(:first-child)'
-                }`}
-              >
-                <div className="project-content">
-                  <h2>Project: {project.title}</h2>
-                  <p className="project-description">{project.description}</p>
-                  <p>Preferred Techstack:</p>
-                  <ul>
-                    {project.stack.map((tech) => (
-                      <li key={tech}>{tech}</li>
-                    ))}
-                  </ul>
-                  <p>Estimated Length: {project.timeline}</p>
-                </div>
-                <div className="actions-container">
-                  <div className="actions-and-comments">
-                    <div className="likes-section">
-                      <span className="likes-count">{project.likes}</span>
-                      <button
-                        onClick={() => handleLikeToggle(project.id)}
-                        className={`like-button ${
-                          project.isLiked ? 'liked' : ''
-                        }`}
-                      >
-                        {project.isLiked ? 'Unlike' : 'Like'}
-                      </button>
-                    </div>
-                    {project.showComments ? null : (
-                      <div className="comments-toggle-container">
-                        <button
-                          className="comments-btn"
-                          onClick={() => handleCommentToggle(project.id)}
-                        >
-                          Comments ({project.comments.length})
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  <div className="comments-container">
-                    {project.showComments && (
-                      <div className="comments-section">
-                        <input
-                          type="text"
-                          className="comments-input"
-                          value={commentInput}
-                          onChange={(e) => setCommentInput(e.target.value)}
-                          placeholder="Add a comment..."
-                        />
-                        <div className="comment-btn-container">
-                          <button
-                            className="submit-comment-btn"
-                            onClick={() => handleCommentSubmit(project.id)}
-                          >
-                            Submit
-                          </button>
-                          <button
-                            className="cancel-comment-btn"
-                            onClick={() => handleCommentToggle(project.id)}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                        <div className="existing-comments">
-                          {project.comments.map((comment, index) => (
-                            <div key={index} className="comment">
-                              <div className="comment-author">
-                                User{comment.authorId}
-                              </div>
-                              <div className="comment-text">{comment.text}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-      </div>
-    </div>
+      </DashboardLayout>
+    </RootLayout>
   );
 }
