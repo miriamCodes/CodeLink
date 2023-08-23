@@ -26,14 +26,14 @@ const config = {
     },
     authorizationParams: {
         response_type: 'code',
-        response_mode: 'query'
-    }
+        response_mode: 'query',
+    },
 };
 const app = (0, express_1.default)();
 exports.app = app;
 app.use((0, cors_1.default)({
     origin: 'http://localhost:3000',
-    credentials: true
+    credentials: true,
 }));
 app.use(express_1.default.json());
 app.use((0, express_session_1.default)({
@@ -42,8 +42,8 @@ app.use((0, express_session_1.default)({
     saveUninitialized: false,
     cookie: {
         secure: false,
-        maxAge: 24 * 60 * 60 * 1000
-    }
+        maxAge: 24 * 60 * 60 * 1000,
+    },
 }));
 //
 app.get('/logout', (req, res) => {

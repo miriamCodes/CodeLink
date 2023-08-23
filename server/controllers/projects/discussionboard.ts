@@ -15,7 +15,7 @@ async function getProjects(req: Request, res: Response) {
     console.error(error);
     res
       .status(500)
-      .send({ error: 'An error occurred while creating the project' });
+      .send({ error: 'An error occurred while fetching the projects' });
   }
 }
 
@@ -55,7 +55,7 @@ async function getProjectComments(req: Request, res: Response) {
     console.error(error);
     res
       .status(500)
-      .send({ error: 'An error occurred while creating the project' });
+      .send({ error: 'An error occurred while fetching the comments' });
   }
 }
 
@@ -81,7 +81,6 @@ async function postProjectComment(req: Request, res: Response) {
 }
 
 // Post a like for a specific project
-
 const postProjectLike = async (req: Request, res: Response) => {
   const projectId = req.params.id;
   try {
@@ -99,15 +98,16 @@ const postProjectLike = async (req: Request, res: Response) => {
       data: { likes: updatedLikes },
     });
 
-    res.send({ likes: updatedLikes });
+    res.status(200).send({ likes: updatedLikes });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .send({ error: 'An error occurred while updating the project' });
+    res.status(500).send({
+      error: 'An error occurred while incrementing the likes of the project',
+    });
   }
 };
 
+// delete a like for a specific project
 const postProjectUnlike = async (req: Request, res: Response) => {
   const projectId = req.params.id;
   try {
@@ -127,12 +127,12 @@ const postProjectUnlike = async (req: Request, res: Response) => {
       data: { likes: updatedLikes },
     });
 
-    res.send({ likes: updatedLikes });
+    res.status(200).send({ likes: updatedLikes });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .send({ error: 'An error occurred while updating the project' });
+    res.status(500).send({
+      error: 'An error occurred while decrementing the likes of the project',
+    });
   }
 };
 
