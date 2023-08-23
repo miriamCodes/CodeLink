@@ -20,12 +20,12 @@ function main() {
             createUser(3, 'me3', 'me3@me.com'),
         ]);
         const projects = yield Promise.all([
-            createProject('f5e1fd39-0bef-46a5-bb2a-b38b3d238969', 'todo-list1', users[0].id),
-            createProject('f3105dbb-5e16-48b4-b3b6-bdaf8435bec6', 'todo-list2', users[1].id),
+            createProject('f5e1fd39-0bef-46a5-bb2a-b38b3d238969', 'striving to create the best todo-list ever', users[0].id, 'i will create so much functionality!'),
+            createProject('f3105dbb-5e16-48b4-b3b6-bdaf8435bec6', 'website featuring hacker movies', users[1].id, 'what other movies would there be to watch?'),
         ]);
         const comments = yield Promise.all([
             createComment('Great project!', projects[0].id, users[1].id),
-            createComment('Awesome work!', projects[1].id, users[0].id),
+            createComment('Awesome idea!', projects[1].id, users[0].id),
         ]);
         console.log({ users, projects, comments });
     });
@@ -47,7 +47,7 @@ function createUser(id, username, email) {
         });
     });
 }
-function createProject(id, title, authorId) {
+function createProject(id, title, authorId, description) {
     return __awaiter(this, void 0, void 0, function* () {
         return prisma.project.upsert({
             where: { id },
@@ -55,7 +55,7 @@ function createProject(id, title, authorId) {
             create: {
                 id,
                 title,
-                description: 'coolest project ever',
+                description,
                 stack: ['Express', 'MongoDB', 'React'],
                 timeline: '1 month',
                 likes: 1,
