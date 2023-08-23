@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import styles from '@/app/styles/portfolio.module.css';
-import Link from 'next/link';
+import PortfolioForm from './portfolio-form';
+import ButtonDiv from './button-div';
+import PortfolioDiv from './portfolio-div';
 
 interface Properties {
   profile: {
@@ -43,7 +44,6 @@ interface Properties {
   setEditProfile: (editProfile: boolean) => void;
 }
 
-// WE HAVE TO THINK OF A WAY TO SEND ID OF SPECIFIC PROFILE
 export default function Portfolio({
   profile,
   setProfile,
@@ -55,19 +55,6 @@ export default function Portfolio({
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [toggle, setToggle] = useState(0);
   const [repos, setRepos] = useState([
-    {
-      id: '',
-      name: '',
-      description: '',
-      updated_at: '',
-      created_at: '',
-      stargazers_count: '',
-      watchers: '',
-      language: '',
-      select: false,
-    },
-  ]);
-  const [selectedRepos, setSelectedRepos] = useState([
     {
       id: '',
       name: '',
@@ -96,6 +83,7 @@ export default function Portfolio({
 
   useEffect(() => {
     const username = profile.user.gitHub;
+    // consider putting fetches in external file
     const fetchRepos = async () => {
       await fetch(`http://localhost:3001/repos/${username}`, {
         method: 'GET',
@@ -123,27 +111,6 @@ export default function Portfolio({
     setPortfolioForm(!portfolioForm);
   }
 
-  function handleSavedRepos(repo) {
-    repo.select = !repo.select;
-    if (repo.select) {
-      setSelectedRepos((repos) => [...repos, repo]);
-    } else {
-      const index = selectedRepos.indexOf(repo);
-      selectedRepos.splice(index, 1);
-      setSelectedRepos((repos) => [...repos]);
-    }
-  }
-  async function handleClick() {
-    await fetch(`http://localhost:3001/create-repos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ selectedRepos }),
-    }).catch((error) => console.log(error));
-    handleState();
-  }
-
   async function handlePortfolio() {
     setShowPortfolio(true);
     const id = 1;
@@ -158,36 +125,7 @@ export default function Portfolio({
       .catch((error) => console.log(error));
   }
 
-  function handleDiv(event) {
-    if (
-      event.target.id !== 'project-div' &&
-      event.target.id === 'portfolio-div'
-    )
-      setShowPortfolio(false);
-    else if (event.target.id !== 'portfolio-form' &&
-      event.target.id === 'portfolio-overlay')
-      setPortfolioForm(false);
-  }
-
-  function handleButtonClick(event: React.MouseEvent<HTMLElement>) {
-    if (event.target.id === 'skill') setAddSkill(true);
-    if (event.target.id === 'edit') setEditProfile(true);
-  }
-
-  async function handleRepoDelete(repo) {
-    await fetch('http://localhost:3001/delete-repo', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: repo.id }),
-    })
-      .then((res) => res.json())
-      .catch((error) => console.log(error));
-
-    setToggle(toggle + 1);
-  }
-
+  // separate file
   function convertDate(date: string) {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
     const formatted = new Date(date).toLocaleDateString('en-UK', options);
@@ -204,123 +142,13 @@ export default function Portfolio({
   return (
     <div>
       {portfolioForm && (
-        <div
-          id="portfolio-overlay"
-          onClick={(event) => handleDiv(event)}
-          className={styles.portfolio_form}
-        >
-          <div id="portfolio-form" className={styles.unsaved_repos}>
-            <div className={styles.repos}>
-              {repos.map((repo) => (
-                <div className={styles.select_repo} key={repo.id}>
-                  <Link
-                    className={styles.link}
-                    href={`https://github.com/${profile.user.gitHub}/${repo.name}`}
-                  >
-                    <p className={styles.repo_details}>{repo.name}</p>
-                  </Link>
-                  <p className={styles.repo_details} key={repo.language}>
-                    {repo.language}
-                  </p>
-                  <p className={styles.repo_details} key={repo.created_at}>
-                    {convertDate(repo.created_at)}
-                  </p>
-                  <button
-                    className={styles.add_button}
-                    type="submit"
-                    onClick={() => handleSavedRepos(repo)}
-                  >
-                    {repo.select ? '-' : '+'}
-                  </button>
-                </div>
-              ))}
-            </div>
-            <button className={styles.button} onClick={handleClick}>
-              Save
-            </button>
-          </div>
-        </div>
+        <PortfolioForm handleState={handleState} repos={repos} setRepos={setRepos} convertDate={convertDate} showPortfolio={showPortfolio} setShowPortfolio={setShowPortfolio} setPortfolioForm={setPortfolioForm} portfolioForm={portfolioForm} />
       )}
       <div>
-        <div className={styles.button_div}>
-          <button className={styles.button} onClick={handleState}>
-            Add to portfolio
-          </button>
-          <button className={styles.button} onClick={handlePortfolio}>
-            My portfolio
-          </button>
-          <button
-            className={styles.button}
-            id="skill"
-            onClick={(event) => handleButtonClick(event)}
-          >
-            Add skill
-          </button>
-          <button
-            className={styles.button}
-            id="edit"
-            onClick={(event) => handleButtonClick(event)}
-          >
-            Edit profile
-          </button>
-        </div>
+        <ButtonDiv addSkill={addSkill} setAddSkill={setAddSkill} editProfile={editProfile} setEditProfile={setEditProfile} handleState={handleState} handlePortfolio={handlePortfolio} />
       </div>
       {showPortfolio && (
-        <div
-          className={styles.portfolio_div}
-          id="portfolio-div"
-          onClick={(event) => handleDiv(event)}
-        >
-          {portfolio.map((p) => (
-            <div id="project-div" className={styles.project_div} key={p.id}>
-              <div className={styles.title_div}>
-                <p className={styles.title} key={p.name}>
-                  {p.name}
-                </p>
-              </div>
-              <div className={styles.github_link}>
-                <Link
-                  className={styles.link}
-                  href={`https://github.com/${profile.user.gitHub}/${p.name}`}
-                >
-                  <p key={p.name}>Check out the project on GitHub</p>
-                </Link>
-              </div>
-              {p.description && (
-                <div className={styles.label_details}>
-                  <p className={styles.label}>Project description: </p>
-                  <p className={styles.details} key={p.description}>
-                    {p.description}
-                  </p>
-                </div>
-              )}
-              <div className={styles.label_details}>
-                <p className={styles.label}>Project language: </p>
-                <p className={styles.details} key={p.language}>
-                  {p.language}
-                </p>
-              </div>
-              <div className={styles.label_details}>
-                <p className={styles.label}>First published: </p>
-                <p className={styles.details} key={p.createdAt}>
-                  {convertDate(p.createdAt)}
-                </p>
-              </div>
-              <div className={styles.label_details}>
-                <p className={styles.label}>Last updated: </p>
-                <p className={styles.details} key={p.updatedAt}>
-                  {convertDate(p.updatedAt)}
-                </p>
-              </div>
-              <button
-                className={styles.small_button}
-                onClick={() => handleRepoDelete(p)}
-              >
-                X
-              </button>
-            </div>
-          ))}
-        </div>
+        <PortfolioDiv toggle={toggle} setToggle={setToggle} showPortfolio={showPortfolio} setShowPortfolio={setShowPortfolio} portfolioForm={portfolioForm} setPortfolioForm={ setPortfolioForm } convertDate={convertDate} portfolio={portfolio} setPortfolio={setPortfolio} />
       )}
     </div>
   );

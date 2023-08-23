@@ -12,27 +12,6 @@
   font-weight: 400;
 }
 
-.nav_item {
-  text-decoration: none;
-  color: black;
-  margin: 4vh 1vw 1vh 1vw;
-  display: flex;
-  justify-content: center;
-  color: #293241;
-  font-weight: 500;
-  font-size: 20px;
-}
-
-.nav_list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  margin: 2vh;
-  padding: 0;
-  width: 66%;
-}
-
 .nav_bar {
   height: 92%;
   display: flex;
