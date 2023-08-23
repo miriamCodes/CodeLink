@@ -1,14 +1,10 @@
 .profile_div {
   width: 75%;
-  height: 99vh;
-}
-
-.profile_form {
+  height: 50%;
   display: flex;
   flex-direction: column;
+  align-self: center;
   justify-content: center;
-  height: 100%;
-  padding: 0 15vw 0 15vw;
 }
 
 .form_inputs {
@@ -42,7 +38,7 @@
   color: #293241;
   border-style: solid;
   border-radius: 3px;
-  border-color: rgba(152,193,217,1);
+  border-color: rgba(152, 193, 217, 1);
   border-width: 1px;
   cursor: pointer;
   font-style: italic;
@@ -53,7 +49,11 @@
 .profile_submit {
   padding: 5vh 4vw 5vh 4vw;
   border-radius: 3px;
-  background: linear-gradient(135deg, rgba(224,251,252,1) 0%, rgba(152,193,217,1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(224, 251, 252, 1) 0%,
+    rgba(152, 193, 217, 1) 100%
+  );
   box-shadow: 1px 1px 10px #293241;
 }
 
