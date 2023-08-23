@@ -7,7 +7,6 @@ import { PrismaClient } from '@prisma/client';
 import checkJwt from './auth/authMiddleware';
 import { AuthRequest } from './auth/authTypes';
 import { repoFilter, postRepo, getPortfolio, deleteRepo } from './controllers/portfolio';
-
 import {
   getProjects,
   postProject,
@@ -18,7 +17,6 @@ import {
 } from './controllers/projects/discussionboard';
 
 const router: Router = express.Router();
-
 const prisma = new PrismaClient();
 
 router.get('/home');

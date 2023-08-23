@@ -14,7 +14,6 @@ const config = {
   baseURL: process.env.BASE_URL,
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
-  /* postLogoutRedirectUri: 'http://localhost:3000', */
   afterCallback: (req: Request, res: Response) => {
     console.log('After Callback Triggered');
     res.redirect('http://localhost:3000/profile');
@@ -47,7 +46,6 @@ app.use(
     }
   })
 );
-//
 
 app.get('/logout', (req, res) => {
   console.log('Logout endpoint hit');

@@ -1,5 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// This is our Prisma schema file.
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -75,29 +75,3 @@ model Comment {
   author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
 }
-
-enum programmingSkill {
-  JAVA
-  JAVASCRIPT
-  CSHARP     @map("C#")
-  CPP        @map("C++")
-  PYTHON
-  C
-  RUBY
-  SQL
-  POSTGRESQL
-  HTML
-  CSS
-  SWIFT
-  KOTLIN
-  REACT
-  ANGULAR
-  VUE
-  NEXT
-  NODE
-  DJANGO
-  MONGODB
-  HASKELL
-  REDUX
-}
-
