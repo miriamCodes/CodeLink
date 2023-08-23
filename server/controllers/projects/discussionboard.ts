@@ -3,12 +3,12 @@ import { Request, Response } from 'express';
 const prisma = new PrismaClient();
 
 // Get all projects
-async function getProjects(req: Request, res: Response) {
+async function getProjects (req: Request, res: Response) {
   try {
     const projects = await prisma.project.findMany({
       include: {
-        comments: true,
-      },
+        comments: true
+      }
     });
     res.status(200).send(projects);
   } catch (error) {
@@ -20,7 +20,7 @@ async function getProjects(req: Request, res: Response) {
 }
 
 // Post a new project
-async function postProject(req: Request, res: Response) {
+async function postProject (req: Request, res: Response) {
   try {
     const { title, description, stack, timeline, authorId } = req.body;
     const newProject = await prisma.project.create({
@@ -29,8 +29,8 @@ async function postProject(req: Request, res: Response) {
         description,
         stack,
         timeline,
-        authorId,
-      },
+        authorId
+      }
     });
     res.status(201).send({ ...newProject, comments: [] });
   } catch (error) {
@@ -42,13 +42,13 @@ async function postProject(req: Request, res: Response) {
 }
 
 // Get comments for a specific project
-async function getProjectComments(req: Request, res: Response) {
+async function getProjectComments (req: Request, res: Response) {
   try {
     const id = req.params.id;
     const comments = await prisma.comment.findMany({
       where: {
-        projectId: id,
-      },
+        projectId: id
+      }
     });
     res.status(200).send(comments);
   } catch (error) {
@@ -60,7 +60,7 @@ async function getProjectComments(req: Request, res: Response) {
 }
 
 // Post a comment for a specific project
-async function postProjectComment(req: Request, res: Response) {
+async function postProjectComment (req: Request, res: Response) {
   const projectId = req.params.id;
   const { text, authorId } = req.body;
   try {
@@ -68,8 +68,8 @@ async function postProjectComment(req: Request, res: Response) {
       data: {
         text,
         projectId,
-        authorId: authorId,
-      },
+        authorId
+      }
     });
     res.status(201).send(newComment);
   } catch (error) {
@@ -85,7 +85,7 @@ const postProjectLike = async (req: Request, res: Response) => {
   const projectId = req.params.id;
   try {
     const project = await prisma.project.findUnique({
-      where: { id: projectId },
+      where: { id: projectId }
     });
     if (!project) {
       return res.status(404).send({ error: 'Project not found' });
@@ -95,14 +95,14 @@ const postProjectLike = async (req: Request, res: Response) => {
     updatedLikes += 1;
     await prisma.project.update({
       where: { id: projectId },
-      data: { likes: updatedLikes },
+      data: { likes: updatedLikes }
     });
 
     res.status(200).send({ likes: updatedLikes });
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      error: 'An error occurred while incrementing the likes of the project',
+      error: 'An error occurred while incrementing the likes of the project'
     });
   }
 };
@@ -112,7 +112,7 @@ const postProjectUnlike = async (req: Request, res: Response) => {
   const projectId = req.params.id;
   try {
     const project = await prisma.project.findUnique({
-      where: { id: projectId },
+      where: { id: projectId }
     });
 
     if (!project) {
@@ -124,14 +124,14 @@ const postProjectUnlike = async (req: Request, res: Response) => {
     updatedLikes -= 1;
     await prisma.project.update({
       where: { id: projectId },
-      data: { likes: updatedLikes },
+      data: { likes: updatedLikes }
     });
 
     res.status(200).send({ likes: updatedLikes });
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      error: 'An error occurred while decrementing the likes of the project',
+      error: 'An error occurred while decrementing the likes of the project'
     });
   }
 };
@@ -142,5 +142,5 @@ export {
   getProjectComments,
   postProjectComment,
   postProjectLike,
-  postProjectUnlike,
+  postProjectUnlike
 };

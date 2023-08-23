@@ -4,7 +4,7 @@ import { fetchRepositories } from '../APIs/github';
 
 const prisma = new PrismaClient();
 
-async function repoFilter(req: Request, res: Response) {
+async function repoFilter (req: Request, res: Response) {
   try {
     const username = req.params.username;
     let repos = await fetchRepositories(username);
@@ -18,7 +18,7 @@ async function repoFilter(req: Request, res: Response) {
   }
 }
 
-async function postRepo(req: Request, res: Response) {
+async function postRepo (req: Request, res: Response) {
   try {
     const repos = req.body.selectedRepos;
     repos.map(async (el) => {
@@ -32,7 +32,7 @@ async function postRepo(req: Request, res: Response) {
           watchers: el.watchers,
           language: el.language,
           profileId: 1
-        },
+        }
       });
     });
     res.status(201).send({ key: 'REPO CREATED' });
@@ -44,14 +44,13 @@ async function postRepo(req: Request, res: Response) {
   }
 }
 
-async function getPortfolio(req: Request, res: Response) {
+async function getPortfolio (req: Request, res: Response) {
   try {
-    //const { id } = req.body;
     const id = +req.params.id;
     const portfolio = await prisma.repository.findMany({
       where: {
         profileId: id
-      },
+      }
     });
     res.status(200).send(portfolio);
   } catch (error) {
@@ -62,13 +61,13 @@ async function getPortfolio(req: Request, res: Response) {
   }
 }
 
-async function deleteRepo(req: Request, res: Response) {
+async function deleteRepo (req: Request, res: Response) {
   try {
     const { id } = req.body;
     await prisma.repository.delete({
       where: {
-        id,
-      },
+        id
+      }
     });
     res.status(200).send({ key: 'REPO DELETED' });
   } catch (error) {
@@ -78,7 +77,5 @@ async function deleteRepo(req: Request, res: Response) {
       .send({ error: 'An error occurred while deleting the repositories' });
   }
 }
-
-
 
 export { repoFilter, postRepo, getPortfolio, deleteRepo };

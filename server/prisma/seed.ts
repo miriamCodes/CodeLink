@@ -4,10 +4,10 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-async function main() {
+async function main () {
   const users = await Promise.all([
     createUser(2, 'me2', 'me2@me.com'),
-    createUser(3, 'me3', 'me3@me.com'),
+    createUser(3, 'me3', 'me3@me.com')
   ]);
 
   const projects = await Promise.all([
@@ -20,18 +20,18 @@ async function main() {
       'f3105dbb-5e16-48b4-b3b6-bdaf8435bec6',
       'todo-list2',
       users[1].id
-    ),
+    )
   ]);
 
   const comments = await Promise.all([
     createComment('Great project!', projects[0].id, users[1].id),
-    createComment('Awesome work!', projects[1].id, users[0].id),
+    createComment('Awesome work!', projects[1].id, users[0].id)
   ]);
 
   console.log({ users, projects, comments });
 }
 
-async function createUser(id: number, username: string, email: string) {
+async function createUser (id: number, username: string, email: string) {
   return prisma.user.upsert({
     where: { id },
     update: {},
@@ -42,12 +42,12 @@ async function createUser(id: number, username: string, email: string) {
       email,
       firstName: username,
       lastName: 'last' + username,
-      gitHub: 'github.com/' + username,
-    },
+      gitHub: 'github.com/' + username
+    }
   });
 }
 
-async function createProject(id: string, title: string, authorId: number) {
+async function createProject (id: string, title: string, authorId: number) {
   return prisma.project.upsert({
     where: { id },
     update: {},
@@ -58,12 +58,12 @@ async function createProject(id: string, title: string, authorId: number) {
       stack: ['Express', 'MongoDB', 'React'],
       timeline: '1 month',
       likes: 1,
-      authorId,
-    },
+      authorId
+    }
   });
 }
 
-async function createComment(
+async function createComment (
   text: string,
   projectId: string,
   authorId: number
@@ -72,8 +72,8 @@ async function createComment(
     data: {
       text,
       projectId,
-      authorId,
-    },
+      authorId
+    }
   });
 }
 

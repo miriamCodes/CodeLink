@@ -2,13 +2,13 @@ import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 
 const prisma = new PrismaClient();
-async function postSkill(req: Request, res: Response) {
+async function postSkill (req: Request, res: Response) {
   try {
     const { id, skill, experience, level } = req.body;
     await prisma.skill.create({
       data: {
         programmingSkill: skill, experience, level, profileId: id
-      },
+      }
     });
     res.status(201).send({ key: 'SKILL CREATED' });
   } catch (error) {
@@ -19,7 +19,7 @@ async function postSkill(req: Request, res: Response) {
   }
 }
 
-async function updateSkill(req: Request, res: Response) {
+async function updateSkill (req: Request, res: Response) {
   try {
     const { id, skill, experience, level } = req.body;
     await prisma.skill.update({
@@ -27,8 +27,8 @@ async function updateSkill(req: Request, res: Response) {
       data: {
         programmingSkill: skill,
         experience,
-        level,
-      },
+        level
+      }
     });
     res.status(200).send({ key: 'SKILL CORRECTLY UPDATED' });
   } catch (error) {
@@ -39,13 +39,13 @@ async function updateSkill(req: Request, res: Response) {
   }
 }
 
-async function deleteSkill(req: Request, res: Response) {
+async function deleteSkill (req: Request, res: Response) {
   try {
     const { id } = req.body;
     await prisma.skill.delete({
       where: {
-        id,
-      },
+        id
+      }
     });
     res.status(200).send({ key: 'SKILL DELETED' });
   } catch (error) {
@@ -55,6 +55,5 @@ async function deleteSkill(req: Request, res: Response) {
       .send({ error: 'An error occurred while deleting the skill' });
   }
 }
-
 
 export { postSkill, updateSkill, deleteSkill };
