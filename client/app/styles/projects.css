@@ -1,13 +1,12 @@
 .collaboration-body {
   display: flex;
-  width: 75%;
+  width: 75vw;
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 1) 0%,
     rgba(224, 251, 252, 1) 100%
   );
   height: 100vh;
-  margin-left: 25%;
   overflow-x: hidden;
   color: #293241;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,

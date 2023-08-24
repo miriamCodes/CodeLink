@@ -1,5 +1,7 @@
+'use client';
+
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
+import { Roboto } from 'next/font/google'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -18,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className} style={{ margin: '0'}}>
+      <body className={roboto.className} style={{ margin: '0' }}>
         {children}
       </body>
     </html>
