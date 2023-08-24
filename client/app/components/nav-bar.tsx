@@ -97,11 +97,6 @@ export default function NavBar({
               Discussion board
             </Link>
           </li>
-          <li>
-            <Link href="/jobs" className={styles.nav_item}>
-              Job board
-            </Link>
-          </li>
           {/* If logged in */}
           {loggedIn && (
             <li>

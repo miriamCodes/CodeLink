@@ -1,3 +1,13 @@
+const mocks = {
+  user: {
+    firstName: "Jane",
+    lastName: "Doe",
+    email: "you@email.com",
+    gitHubUsername: "username",
+    bio: "Describe yourself..."
+  }
+}
+
 describe('Visit local host', () => {
   it('visits local host', () => {
     cy.visit('localhost:3000/');
@@ -5,88 +15,91 @@ describe('Visit local host', () => {
 });
 
 
-describe('Log in and sign up component', () => {
+describe('Homepage', () => {
   beforeEach(() => {
     cy.visit('localhost:3000/');
   });
-  it('correctly inputs into form fields to log in', function () {
-    cy.get('#name').type('Test').should('have.value', 'Test');
-    cy.get('#email')
-      .type('test@email.com')
-      .should('have.value', 'test@email.com');
-    cy.get('#password')
-      .type('testPassword1!')
-      .should('have.value', 'testPassword1!');
+  it('should have a navbar with login and register buttons, discussion board and news links', function () {
+    cy.get("nav").contains("Log in");
+    cy.get("nav").contains("Register");
+    cy.get("nav").contains("Discussion board");
+    cy.get("nav").contains("News");
   });
-  it('should have a login button which can be clicked', function () {
-    cy.contains('Log in').click();
+  it('should have a news feed where it is possible to click on news article link', function () {
+    cy.wait(2000)
+    cy.get("#url-link").contains("Check out the full story here.").click().url().should('not.include', 'localhost');
   });
-  it('should have a signup button which can be clicked', function () {
-    cy.contains('Sign up').click();
+  it('should open news feed when news is clicked on navbar', function () {
+    cy.get("nav").contains("News").click();
+    cy.get("h2").should('not.exist');
   });
-  it('should login if the input fields are filled out correctly', function () {
-    cy.contains('my items').should('not.exist');
-    cy.get('#name').type('Test');
-    cy.get('#email').type('test@email.com');
-    cy.get('#password').type('testPassword1!');
-    // First need to 'Sign up' new test cases, then 'Log in'
-    cy.get('button').contains('Log in').click();
-    cy.get('form').submit();
-    cy.contains('my items');
-  });
-});
-
-describe('Dashboard component', () => {
-  beforeEach(() => {
-    cy.visit('localhost:3000/');
-    cy.get('#name').type('Test');
-    cy.get('#email').type('test@email.com');
-    cy.get('#password').type('testPassword1!');
-    cy.get('form').submit();
-  });
-  it('should change to view details when you click the arrow button on each item card', function () {
-    cy.get('#view-arrow').click();
-    cy.url().should('include', '/details/details');
-  });
-  it('should change to the create item page when you click create item', function () {
-    cy.get('li').contains('create item').click();
-    cy.contains('Submit');
-  });
-  it('should change to my items when you click on my items', function () {
-    cy.get('li').contains('my items').click();
-    cy.get('li').contains('all items');
-  })
-  //
-  it('should change to all items when you click on the logo', function () {
-    cy.get('li').contains('my items').click();
-    cy.get('#brand-logo').click();
-    cy.get('li').contains('my items');
+  it('should go to home when logo is clicked', function () {
+    cy.get("nav").contains("CodeLink").click();
+    cy.get("h2").contains("Welcome to CodeLink!");
   })
 });
 
-describe('Create item component', () => {
+describe('Register', () => {
   beforeEach(() => {
     cy.visit('localhost:3000/');
-    cy.get('#name').type('Test');
-    cy.get('#email').type('test@email.com');
-    cy.get('#password').type('testPassword1!');
-    cy.get('form').submit();
-    cy.get('li').contains('create item').click();
-    cy.contains('Submit');
+    cy.get('nav').contains("Register").click();
   });
-  it.only('correctly inputs into form fields to create item on dashboard', function () {
-    // Typed values need to be changed upon every test.
-    cy.get('#name').type('New test item').should('have.value', 'New test item');
-    cy.get('#description').type('A new item.').should('have.value', 'A new item.');
-    cy.get('#weight').type('123').should('have.value', '123');
-    cy.get('#weightMeasurement').select('lb').should('have.value', 'lb');
-    cy.get('#maps').click(100, 100);
-    // Check this stuff
-    cy.get('#yes').click();
-    cy.get('#maps').click(101, 101);
-    // cy.get('#yes').click();
-    // cy.get('form').submit();
-    // cy.contains('New test item');
+  it('should be able to take text input into all fields and submit form, redirecting to profile', function () {
+    cy.url().should('include', '/create-profile');
+    cy.get("#first-name").type(mocks.user.firstName);
+    cy.get("#last-name").type(mocks.user.lastName);
+    cy.get("#email").type(mocks.user.email);
+    cy.get("#github").type(mocks.user.gitHubUsername);
+    cy.get("#bio").type(mocks.user.bio);
+    cy.get("form").submit();
+    cy.contains("Add to portfolio");
+    cy.url().should('include', '/profile');
   });
+});
 
+describe('Profile', () => {
+  beforeEach(() => {
+    cy.visit('localhost:3000/profile');
+  });
+  it('profile should display user information', function () {
+    cy.contains("Email");
+    cy.contains("GitHub Username");
+    cy.contains("Bio");
+    cy.contains("Skills");
+  });
+  it('should go to github when username is clicked', function () {
+    cy.get("#github-link").click();
+    cy.wait(2000);
+    cy.url().should("not.include", "localhost");
+  });
+  it('should give option to add a portfolio and the portfolio should be added to my portfolio', function () {
+    cy.contains("Add to portfolio").click();
+    cy.get('#portfolio-form').should('exist');
+    cy.get('#repo-name').contains('GetEasy');
+    cy.get('#add-button').click();
+    cy.contains("Save").click();
+    cy.contains("My portfolio").click();
+    cy.contains('GetEasy');
+  });
+  it('should allow users to see their projects via their portfolios on GitHub', function () {
+    cy.contains("My portfolio").click();
+    cy.contains('GetEasy');
+    cy.get("a").click().should('not.include', 'localhost');
+  })
+  it('should allow users to delete from their portfolios', function () {
+    cy.contains("My portfolio").click();
+    cy.contains("GetEasy");
+    cy.get("#delete-button").click();
+    cy.get("#portfolio-div").should("not.contain", "GetEasy");
+  })
+  it.only('should give user option to add a skill which is displayed under profile', function () {
+  })
+  it('should allow users to delete skills on profile', function () {
+  })
+  it('should allow user to edit profile and show these changes immediately', function () {
+
+  })
+  it('should go to email when email is clicked', function () {
+    cy.get("#email-link").should('have.attr', 'href').should('match', /^mailto:/);
+  });
 });

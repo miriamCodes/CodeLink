@@ -85,7 +85,7 @@ export default function UserProfile({value, setValue, value1, setValue1, addSkil
         <p>
           <b>Email</b>
         </p>
-        <Link className={styles.link} href={`mailto:${profile.user.email}`}>
+        <Link id="email-link" className={styles.link} href={`mailto:${profile.user.email}`}>
           <p>{profile.user.email}</p>
         </Link>
       </div>
@@ -95,6 +95,7 @@ export default function UserProfile({value, setValue, value1, setValue1, addSkil
         </p>
         <p>
           <Link
+            id="github-link"
             className={styles.link}
             href={`http://github.com/${profile.user.gitHub}`}
           >

@@ -35,7 +35,7 @@ export default function Feed() {
   return (
     <div className={styles.feed}>
       {news.map((article) => (
-        <div key="article" className={styles.article}>
+        <div id="news-item" key="article" className={styles.article}>
           <div className={styles.news_image} key="image">
             {article.urlToImage ? (
               <Image
@@ -43,14 +43,15 @@ export default function Feed() {
                 src={article.urlToImage}
                 width={700}
                 height={400}
-              />) :
+              />
+            ) : (
               <Image
                 alt="News article image"
-                src='/news-default.jpg'
+                src="/news-default.jpg"
                 width={700}
                 height={400}
               />
-            }
+            )}
           </div>
           <div className={styles.news_text}>
             <div className={styles.news_title} key="title">
@@ -62,7 +63,7 @@ export default function Feed() {
               <h3 className={styles.font}>{article.description}</h3>
             </div>
             <div className={styles.news_url} key="url">
-              <Link className={styles.news_link} href={article.url}>
+              <Link id="url-link" className={styles.news_link} href={article.url}>
                 Check out the full story here.
               </Link>
             </div>

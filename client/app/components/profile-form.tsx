@@ -94,6 +94,7 @@ export default function ProfileForm({
       setBio('');
       setGitHub('');
     }
+    handleClick();
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {

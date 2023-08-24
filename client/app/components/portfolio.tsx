@@ -217,7 +217,7 @@ export default function Portfolio({
                     className={styles.link}
                     href={`https://github.com/${profile.user.gitHub}/${repo.name}`}
                   >
-                    <p className={styles.repo_details}>{repo.name}</p>
+                    <p id="repo-name" className={styles.repo_details}>{repo.name}</p>
                   </Link>
                   <p className={styles.repo_details} key={repo.language}>
                     {repo.language}
@@ -226,6 +226,7 @@ export default function Portfolio({
                     {convertDate(repo.created_at)}
                   </p>
                   <button
+                    id="add-button"
                     className={styles.add_button}
                     type="submit"
                     onClick={() => handleSavedRepos(repo)}
@@ -313,6 +314,7 @@ export default function Portfolio({
                 </p>
               </div>
               <button
+                id="delete-button"
                 className={styles.small_button}
                 onClick={() => handleRepoDelete(p)}
               >

@@ -18,7 +18,7 @@ export default function Home() {
                 A new platform for developers to meet and share their skills.
               </h3>
             </div>
-            <div className="news_div">
+            <div id="news_div" className="news_div">
               <Feed />
             </div>
           </div>
